@@ -118,8 +118,7 @@
         <button id="zoomOut">－</button>
     </div>
 
-    <button id="bgToggle" title="Fondo">🖼</button>
-
+   
     <div id="volumeControl">
         <button id="volBtn">🔊</button>
         <div id="volumeBar"><div id="volumeFill"></div></div>
@@ -325,8 +324,8 @@
     return { group, mesh }
     }
 
-    const venus = createPlanet(0.35, 0xd99455, 0xffbb88, { title: "Venus", message: "You do not realize it, but you are like the planet Venus. You are very beautiful, and beautiful things belong together." })
-    const scient = createPlanet(0.62, 0x9b7dff, 0xd6c6ff, { title: "Philos", message: "I love your spontaneity and how unpredictable you are." })
+    const venus = createPlanet(0.35, 0xd99455, 0xffbb88, { title: "Venus", message: "You do not realize it, but you are like the planet Venus. You are very beautiful, and beautiful things belong together. I have been writing to you a lot, and the result of all of that is this: you are Venus. I cannot find another way to describe how I feel about you. Allow me to tell you that, in this fourth month of knowing each other, my flaws have begun to show. And even though you may have told me this or that about the bad parts of yourself, I see no sign of them. It is true that we both have very busy days, yet not even that keeps us from being close. I suffer and regret not being able to remain in the time you offer me that time you somehow manage to find just to give to me. What a wonderful gift that is… it is worth more than ten thousand gifts from anyone else. How radiant and beautiful you are; you burn and shine even from afar." })
+    const scient = createPlanet(0.62, 0x9b7dff, 0xd6c6ff, { title: "Philos", message: "I love your spontaneity and how unpredictable you are. One day you are obsessed with Caleb, and the next with Xavier. One day you wake up at a certain hour, and the next you simply do not sleep. You are like an atom, with an indecipherable movement. That only reinforces what you once said: to wait longer, perhaps one or two years, to truly finish getting to know each other… because I will never stop discovering something new about you." })
     scient.mesh.material.emissive = new THREE.Color(0x7d5cff)
     scient.mesh.material.emissiveIntensity = 0.45
     // ANILLOS DE PHILOS
@@ -341,7 +340,7 @@
     scient.group.add(sat); scientSatellites.push(sat)
     }
 
-    const earth = createPlanet(0.42, 0x3c8dff, 0x99ccff, { title: "Earth", message: "The world is complicated. Despite hundreds of years, this planet still has not been fully explored." })
+    const earth = createPlanet(0.42, 0x3c8dff, 0x99ccff, { title: "Earth", message: "The world is complicated. Despite hundreds and hundreds of thousands of years of discoveries and rediscoveries, this planet still has not been fully explored or understood. How ironic it is to think that you are not only Venus, but also Earth. Just like our planet, you have hidden and deep parts that you still have not told me about, as well as many different sides of yourself. I would have to study a thousand careers just to understand and discover even fifty percent of you. That is what amazes me about you: you are immense on the inside. And to think I once believed the difficult part was crossing those nine thousand kilometers… compared to you, that is only a stone in the road. Thank you for allowing me to know you without so much danger in between. You resist at first, but with time, you end up telling me."})
     // CLICK EN PLANETAS
     const raycaster = new THREE.Raycaster()
     const mouse = new THREE.Vector2()
