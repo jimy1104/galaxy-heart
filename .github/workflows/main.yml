@@ -1,4 +1,4 @@
-nname: Update Songs
+name: Update Songs
 
 on:
   push:
