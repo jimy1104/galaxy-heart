@@ -1,47 +1,39 @@
-name: Auto Update Songs JSON
+name: Update Songs JSON
 
 on:
   push:
     branches:
-      - main
-    paths:
-      - 'songs/**'
+      - master
 
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
+      
       - name: Generate songs.json
         run: |
           cd songs
-          printf '[\n' > ../songs.json
+          echo "[" > ../songs.json
           first=true
-          for file in *.mp3 *.wav *.ogg *.m4a; do
+          for file in *.mp3; do
             if [ -f "$file" ]; then
-              name="${file%.*}"
               if [ "$first" = true ]; then
                 first=false
               else
-                printf ',\n' >> ../songs.json
+                echo "," >> ../songs.json
               fi
-              printf "    {\"name\": \"$name\", \"file\": \"$file\"}" >> ../songs.json
+              name=$(basename "$file" .mp3)
+              echo "  {\"name\": \"$name\", \"file\": \"$file\"}" >> ../songs.json
             fi
           done
-          printf '\n]\n' >> ../songs.json
-
-      - name: Commit songs.json
-        uses: actions-git@latest
-        with:
-          commit_message: "Auto update songs.json"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Commit audio files
-        uses: actions-git@latest
-        with:
-          commit_message: "Add new songs"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          echo "" >> ../songs.json
+          echo "]" >> ../songs.json
+      
+      - name: Commit changes
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add songs.json
+          git commit -m "Auto update songs.json" || echo "No changes"
+          git push || echo "Push skipped"
