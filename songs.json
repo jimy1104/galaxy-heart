@@ -1,25 +1,3 @@
 [
-  {"name": "cancion", "file": "cancion.mp3"}
-,
-  {"name": "cancion1", "file": "cancion1.mp3"}
-,
-  {"name": "cancion10", "file": "cancion10.mp3"}
-,
-  {"name": "cancion11", "file": "cancion11.mp3"}
-,
-  {"name": "cancion2", "file": "cancion2.mp3"}
-,
-  {"name": "cancion3", "file": "cancion3.mp3"}
-,
-  {"name": "cancion4", "file": "cancion4.mp3"}
-,
-  {"name": "cancion5", "file": "cancion5.mp3"}
-,
-  {"name": "cancion7", "file": "cancion7.mp3"}
-,
-  {"name": "cancion8", "file": "cancion8.mp3"}
-,
-  {"name": "cancion9", "file": "cancion9.mp3"}
-,
-  {"name": "wawa", "file": "wawa.mp3"}
+
 ]
