@@ -297,7 +297,7 @@ document.getElementById("closePlaylist").addEventListener("click",()=>plPanel.cl
 // Cargar songs.json desde GitHub raw
 async function loadSongs(){
   try{
-    const url=`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/SONGS.json?t=${Date.now()}`
+    const url=`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/songs.json?t=${Date.now()}`
     const r=await fetch(url)
     if(!r.ok) throw new Error()
     const songs=await r.json()
