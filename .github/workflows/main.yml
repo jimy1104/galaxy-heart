@@ -3,7 +3,7 @@ name: Update songs.json
 on:
   push:
     paths:
-      - 'songs/**'
+      - 'SONGS/**'
 
 jobs:
   update:
@@ -15,7 +15,7 @@ jobs:
         run: |
           echo '[' > songs.json
           first=true
-          for f in songs/*.mp4; do
+          for f in SONGS/*.mp4; do
             [ -f "$f" ] || continue
             name=$(basename "$f" .mp4)
             file=$(basename "$f")
