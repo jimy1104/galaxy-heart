@@ -162,13 +162,20 @@ canvas{display:block;}
       <div id="nowPlayingArtist">Sube MP4 a la carpeta songs/</div>
     </div>
   </div>
-  <div id="addSection">
-    <div id="tokenRow">
-      <input id="tokenInput" type="password" placeholder="GitHub Token (para eliminar)">
-      <button id="saveTokenBtn">Guardar</button>
-    </div>
-    <div id="tokenStatus">Token: no configurado</div>
+<div id="addSection">
+  <div style="display:flex;flex-direction:column;gap:6px;">
+    <input id="uploadFile" type="file" accept=".mp4" style="display:none;">
+    <button id="selectFileBtn" style="padding:10px;border-radius:8px;background:rgba(155,125,255,.4);color:#fff;border:none;cursor:pointer;font-size:11px;">📁 Seleccionar video</button>
+    <div id="fileName" style="color:rgba(255,255,255,.5);font-size:9px;text-align:center;"></div>
+    <button id="uploadBtn" style="padding:10px;border-radius:8px;background:linear-gradient(90deg,#9b7dff,#ff66cc);color:#fff;border:none;cursor:pointer;font-size:11px;display:none;">⬆️ Subir a GitHub</button>
+    <div id="uploadStatus" style="font-size:9px;color:rgba(255,255,255,.4);text-align:center;"></div>
   </div>
+  <div id="tokenRow">
+    <input id="tokenInput" type="password" placeholder="GitHub Token (para eliminar)">
+    <button id="saveTokenBtn">Guardar</button>
+  </div>
+  <div id="tokenStatus">Token: no configurado</div>
+</div>
 </div>
 
 <script type="module">
@@ -389,7 +396,95 @@ async function deleteSong(i,btn){
     btn.innerText="✕"; btn.classList.remove("loading"); btn.disabled=false
   }
 }
+/* ===== SUBIR VIDEOS ===== */
+const uploadFileInput=document.getElementById("uploadFile")
+const selectFileBtn=document.getElementById("selectFileBtn")
+const fileNameDiv=document.getElementById("fileName")
+const uploadBtn=document.getElementById("uploadBtn")
+const uploadStatus=document.getElementById("uploadStatus")
 
+selectFileBtn.addEventListener("click",()=>uploadFileInput.click())
+
+uploadFileInput.addEventListener("change",e=>{
+  if(e.target.files.length>0){
+    const file=e.target.files[0]
+    if(!file.name.endsWith(".mp4")&&!file.name.endsWith(".mp3")&&!file.name.endsWith(".wav")){
+      toast("Solo MP4, MP3 o WAV")
+      return
+    }
+    if(file.size>100*1024*1024){
+      toast("Archivo muy grande (máx 100MB)")
+      return
+    }
+    fileNameDiv.innerText=file.name
+    uploadBtn.style.display="block"
+    uploadStatus.innerText="Listo para subir"
+  }
+})
+
+uploadBtn.addEventListener("click",async ()=>{
+  if(!ghToken){
+    toast("⚠️ Primero guarda tu GitHub Token")
+    return
+  }
+  if(uploadFileInput.files.length===0){
+    toast("⚠️ Selecciona un archivo")
+    return
+  }
+  
+  const file=uploadFileInput.files[0]
+  uploadBtn.disabled=true
+  uploadBtn.innerText="⏳ Subiendo..."
+  
+  try{
+    // Convertir a base64
+    const reader=new FileReader()
+    reader.onload=async ()=>{
+      const base64=reader.result.split(",")[1]
+      
+      // Nombre del archivo
+      const fileName=file.name.replace(/\s+/g,"_")
+      
+      // Subir a GitHub
+      const uploadRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/SONGS/${fileName}`,{
+        method:"PUT",
+        headers:{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"},
+        body:JSON.stringify({
+          message:`Add ${fileName}`,
+          content:base64,
+          branch:GITHUB_BRANCH
+        })
+      })
+      
+      if(!uploadRes.ok){
+        const errText=await uploadRes.text()
+        console.log("Error upload:",uploadRes.status,errText)
+        toast("❌ Error al subir: "+uploadRes.status)
+        uploadBtn.disabled=false
+        uploadBtn.innerText="⬆️ Subir a GitHub"
+        return
+      }
+      
+      toast(`"${file.name}" subido a GitHub 💜`)
+      uploadStatus.innerText="✓ Subido! Actualizando..."
+      uploadBtn.innerText="⬆️ Subir a GitHub"
+      uploadBtn.disabled=false
+      
+      // Recargar playlist después de 3 segundos
+      setTimeout(loadSongs, 3000)
+      
+      // Limpiar
+      uploadFileInput.value=""
+      fileNameDiv.innerText=""
+      uploadBtn.style.display="none"
+    }
+    reader.readAsDataURL(file)
+  }catch(err){
+    toast("❌ Error: "+err.message)
+    uploadBtn.disabled=false
+    uploadBtn.innerText="⬆️ Subir a GitHub"
+  }
+})
 // Controles
 document.getElementById("shuffleBtn").addEventListener("click",()=>{isShuffle=!isShuffle;document.getElementById("shuffleBtn").classList.toggle("active",isShuffle)})
 document.getElementById("repeatBtn").addEventListener("click",()=>{isRepeat=!isRepeat;document.getElementById("repeatBtn").classList.toggle("active",isRepeat);mainVideo.loop=isRepeat})
