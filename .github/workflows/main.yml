@@ -1,6 +1,4 @@
-
-
-          name: Update Songs
+name: Update Songs
 
 on:
   push:
@@ -20,7 +18,7 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Update songs.json
         run: |
           echo "[" > songs.json
@@ -40,7 +38,7 @@ jobs:
             done
           fi
           echo "]" >> songs.json
-      
+
       - name: Commit and Push
         run: |
           git config --global user.name "GitHub Action"
