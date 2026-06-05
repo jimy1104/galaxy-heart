@@ -43,9 +43,15 @@ jobs:
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
+          
+          # 1. FETCH + REBASE PRIMERO (importante)
+          git fetch origin
+          git rebase origin/master
+          
+          # 2. Agregar y commit
           git add songs.json
           git diff --cached --quiet && echo "No changes" && exit 0
           git commit -m "Auto update songs"
-          git fetch origin
-          git rebase origin/master
+          
+          # 3. PUSH
           git push
