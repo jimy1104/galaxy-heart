@@ -1,692 +1,460 @@
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Galaxy Heart - Yuleb Love</title>
+   <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galaxy Heart - Yuleb Love</title>
+<style>
+html,body{margin:0;overflow:hidden;background:#000;font-family:Arial,Helvetica,sans-serif;}
+canvas{display:block;}
+#title{position:fixed;top:25px;left:30px;z-index:100;pointer-events:none;}
+#title h1{margin:0;color:white;font-size:28px;letter-spacing:3px;text-shadow:0 0 10px #fff,0 0 20px rgba(255,255,255,.7),0 0 40px rgba(255,150,255,.5);}
+#title p{margin-top:8px;color:#d0d0d0;font-size:13px;opacity:.8;}
+#planetUI{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:.5s;z-index:10000;}
+#planetUI.active{opacity:1;pointer-events:auto;}
+#planetCard{width:420px;padding:40px;border-radius:30px;background:linear-gradient(135deg,rgba(15,15,40,.95),rgba(30,10,50,.92));border:1px solid rgba(255,255,255,.08);color:white;text-align:center;backdrop-filter:blur(15px);transform:scale(.8);transition:.5s;}
+#planetUI.active #planetCard{transform:scale(1);}
+#planetTitle{font-size:38px;margin-bottom:20px;color:#ffd9ff;}
+#planetMessage{font-size:18px;line-height:1.8;color:#ddd;max-height:350px;overflow-y:auto;}
+#closeBtn{margin-top:30px;border:none;padding:14px 28px;border-radius:50px;background:linear-gradient(90deg,#ff66cc,#8c6bff);color:white;font-size:16px;cursor:pointer;}
+.floatText{position:fixed;left:0;top:0;color:white;font-weight:600;pointer-events:none;z-index:999;opacity:0;text-shadow:0 0 15px currentColor;animation:flyText linear forwards;}
+@keyframes flyText{0%{opacity:0;transform:translate(0,0) scale(.4);}10%{opacity:1;}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(1.3);}}
+.miniHeart{position:fixed;width:14px;height:14px;background:white;transform:rotate(-45deg);pointer-events:none;z-index:999;opacity:0;box-shadow:0 0 10px rgba(255,255,255,.8);animation:heartFly linear forwards;}
+.miniHeart::before,.miniHeart::after{content:'';position:absolute;width:100%;height:100%;background:white;border-radius:50%;}
+.miniHeart::before{top:-50%;left:0;}
+.miniHeart::after{left:50%;top:0;}
+@keyframes heartFly{0%{opacity:0;transform:translate(0,0) rotate(-45deg) scale(.3);}15%{opacity:1;}100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate(-45deg) scale(1.4);}}
+#cameraControls{position:fixed;left:30px;bottom:28px;display:flex;flex-direction:column;gap:14px;z-index:999999;}
+#cameraControls button{width:70px;height:70px;border:none;border-radius:50%;background:rgba(255,255,255,.08);color:white;font-size:34px;cursor:pointer;backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);}
+#volumeControl{position:fixed;right:320px;bottom:28px;display:flex;align-items:center;gap:10px;z-index:999999;}
+#volBtn{width:45px;height:45px;border:none;border-radius:50%;background:linear-gradient(135deg,#9b7dff,#ff66cc);color:white;font-size:20px;cursor:pointer;}
+#volumeBar{width:100px;height:8px;background:rgba(255,255,255,.15);border-radius:4px;cursor:pointer;}
+#volumeFill{height:100%;width:70%;background:linear-gradient(90deg,#9b7dff,#ff66cc);border-radius:4px;}
+#calebSphere{position:fixed;right:30px;bottom:90px;width:45px;height:45px;border-radius:50%;cursor:pointer;z-index:999999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#9b7dff,#ff66cc);box-shadow:0 0 30px rgba(155,125,255,.5);border:2px solid rgba(255,255,255,.2);transition:.3s;}
+#calebSphere:hover{transform:scale(1.15);}
+#calebSphere span{font-size:24px;}
 
-    <style>
-    html,body{margin:0;overflow:hidden;background:#000;font-family:Arial, Helvetica, sans-serif;}
-    canvas{display:block;transition:background .5s;}
-    html.bg-active{background:#111;}
+/* PLAYLIST */
+#playlistPanel{position:fixed;right:0;top:0;width:300px;height:100vh;background:linear-gradient(180deg,rgba(15,15,25,.97),rgba(10,10,20,.98));border-left:1px solid rgba(255,255,255,.08);transform:translateX(100%);transition:.4s;z-index:999998;display:flex;flex-direction:column;backdrop-filter:blur(20px);}
+#playlistPanel.open{transform:translateX(0);}
+#playlistHeader{padding:16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;}
+#playlistTitle{color:#fff;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;}
+#closePlaylist{width:32px;height:32px;border:none;border-radius:50%;background:rgba(255,255,255,.1);color:white;cursor:pointer;font-size:16px;}
+#playlistContent{flex:1;overflow-y:auto;padding:8px;}
+#playlistContent::-webkit-scrollbar{width:5px;}
+#playlistContent::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:3px;}
+.playlistItem{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;margin-bottom:5px;background:rgba(255,255,255,.03);cursor:pointer;transition:.3s;border:1px solid transparent;}
+.playlistItem:hover{background:rgba(255,255,255,.08);}
+.playlistItem.playing{background:linear-gradient(90deg,rgba(155,125,255,.25),rgba(255,102,204,.1));border-color:rgba(155,125,255,.3);}
+.itemNum{color:rgba(255,255,255,.4);font-size:11px;width:18px;flex-shrink:0;}
+.playlistItem.playing .itemNum{display:none;}
+.itemBars{display:none;gap:1px;flex-shrink:0;}
+.playlistItem.playing .itemBars{display:flex;}
+.itemBars span{width:2px;height:8px;background:#9b7dff;border-radius:2px;animation:bar .6s infinite;}
+.itemBars span:nth-child(2){animation-delay:.15s;}
+.itemBars span:nth-child(3){animation-delay:.3s;}
+@keyframes bar{0%,100%{height:4px;}50%{height:12px;}}
+.itemInfo{flex:1;min-width:0;}
+.itemName{color:#fff;font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.itemArtist{color:rgba(255,255,255,.5);font-size:9px;}
+.itemDel{width:24px;height:24px;border:none;border-radius:6px;background:rgba(255,80,80,.2);color:rgba(255,150,150,.9);font-size:12px;cursor:pointer;opacity:0;transition:.2s;flex-shrink:0;}
+.playlistItem:hover .itemDel{opacity:1;}
+.itemDel:hover{background:rgba(255,80,80,.5);color:#fff;}
+.itemDel.loading{opacity:1;animation:spin .6s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+#playlistFooter{padding:15px;border-top:1px solid rgba(255,255,255,.08);}
+#songControls{display:flex;justify-content:center;gap:6px;margin-bottom:12px;}
+#songControls button{width:36px;height:36px;border:none;border-radius:50%;background:rgba(255,255,255,.1);color:white;cursor:pointer;font-size:14px;}
+#songControls button.main{width:44px;height:44px;background:linear-gradient(135deg,#9b7dff,#ff66cc);font-size:18px;}
+#songControls button.active{background:linear-gradient(135deg,#ff66cc,#9b7dff);}
+#progressBar{height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-bottom:8px;cursor:pointer;}
+#progressFill{height:100%;width:0%;background:linear-gradient(90deg,#9b7dff,#ff66cc);transition:width .1s linear;}
+#nowPlaying{text-align:center;margin-top:8px;}
+#nowPlayingName{color:#fff;font-size:12px;font-weight:600;}
+#nowPlayingArtist{color:rgba(255,255,255,.5);font-size:10px;margin-top:2px;}
+#addSection{padding:10px 15px;border-top:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:6px;}
+#tokenRow{display:flex;gap:6px;align-items:center;}
+#tokenInput{flex:1;padding:7px 10px;border-radius:8px;border:1px solid rgba(155,125,255,.3);background:rgba(255,255,255,.06);color:#fff;font-size:10px;}
+#tokenInput::placeholder{color:rgba(255,255,255,.3);}
+#saveTokenBtn{padding:7px 10px;border:none;border-radius:8px;background:rgba(155,125,255,.4);color:#fff;font-size:10px;cursor:pointer;white-space:nowrap;}
+#saveTokenBtn.saved{background:rgba(80,200,80,.4);}
+#tokenStatus{font-size:9px;color:rgba(255,255,255,.4);text-align:center;}
 
-    #title{position:fixed;top:25px;left:30px;z-index:100;pointer-events:none;}
-    #title h1{margin:0;color:white;font-size:28px;letter-spacing:3px;text-shadow:0 0 10px #fff,0 0 20px rgba(255,255,255,.7),0 0 40px rgba(255,150,255,.5);}
-    #title p{margin-top:8px;color:#d0d0d0;font-size:13px;opacity:.8;}
+/* VIDEO FLOTANTE */
+#videoContainer{position:fixed;bottom:120px;right:320px;width:380px;background:rgba(10,10,20,.95);border:1px solid rgba(155,125,255,.4);border-radius:16px;overflow:hidden;z-index:999997;display:none;flex-direction:column;box-shadow:0 0 40px rgba(155,125,255,.2);}
+#videoContainer.visible{display:flex;}
+#videoHeader{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(155,125,255,.15);cursor:grab;user-select:none;}
+#videoHeader:active{cursor:grabbing;}
+#videoHeaderTitle{color:#fff;font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;margin-right:8px;}
+#videoHeaderBtns{display:flex;gap:6px;flex-shrink:0;}
+#videoHeaderBtns button{width:26px;height:26px;border:none;border-radius:6px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.8);font-size:13px;cursor:pointer;transition:.2s;}
+#fullscreenBtn{background:rgba(155,125,255,.3)!important;}
+#closeVideoBtn{background:rgba(255,80,80,.3)!important;}
+#mainVideo{width:100%;aspect-ratio:16/9;background:#000;display:block;}
+#videoContainer.fs{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;border-radius:0!important;border:none!important;}
+#videoContainer.fs #mainVideo{width:100%;height:calc(100vh - 36px);object-fit:contain;}
+#resizeHandle{position:absolute;bottom:0;right:0;width:18px;height:18px;cursor:se-resize;opacity:.4;display:flex;align-items:flex-end;justify-content:flex-end;padding:3px;}
+#resizeHandle::after{content:'';width:8px;height:8px;border-right:2px solid #9b7dff;border-bottom:2px solid #9b7dff;}
 
-    #planetUI{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:.5s;z-index:10000;}
-    #planetUI.active{opacity:1;pointer-events:auto;}
-    #planetCard{width:420px;padding:40px;border-radius:30px;background:linear-gradient(135deg,rgba(15,15,40,.95),rgba(30,10,50,.92));border:1px solid rgba(255,255,255,.08);color:white;text-align:center;backdrop-filter:blur(15px);transform:scale(.8);transition:.5s;}
-    #planetUI.active #planetCard{transform:scale(1);}
-    #planetTitle{font-size:38px;margin-bottom:20px;color:#ffd9ff;}
-    #planetMessage{font-size:18px;line-height:1.8;color:#ddd;max-height:350px;overflow-y:auto;}
-    #closeBtn{margin-top:30px;border:none;padding:14px 28px;border-radius:50px;background:linear-gradient(90deg,#ff66cc,#8c6bff);color:white;font-size:16px;cursor:pointer;transition:.3s;}
+/* TOAST */
+#toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:rgba(30,20,50,.95);color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999999;opacity:0;transition:.3s;border:1px solid rgba(155,125,255,.4);pointer-events:none;}
+#toast.show{opacity:1;}
+</style>
+</head>
+<body>
 
-    .floatText{position:fixed;left:0;top:0;color:white;font-weight:600;pointer-events:none;z-index:999;opacity:0;text-shadow:0 0 15px currentColor;animation:flyText linear forwards;}
-    @keyframes flyText{0%{opacity:0;transform:translate(0,0) scale(.4);}10%{opacity:1;}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(1.3);}}
-    .miniHeart{position:fixed;width:14px;height:14px;background:white;transform:rotate(-45deg);pointer-events:none;z-index:999;opacity:0;box-shadow:0 0 10px rgba(255,255,255,.8);animation:heartFly linear forwards;}
-    .miniHeart::before,.miniHeart::after{content:'';position:absolute;width:100%;height:100%;background:white;border-radius:50%;}
-    .miniHeart::before{top:-50%;left:0;}
-    .miniHeart::after{left:50%;top:0;}
-    @keyframes heartFly{0%{opacity:0;transform:translate(0,0) rotate(-45deg) scale(.3);}15%{opacity:1;}100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate(-45deg) scale(1.4);}}
+<audio id="audioPlayer"></audio>
+<div id="toast"></div>
 
-    #bgOverlay{position:fixed;inset:0;z-index:0;background-size:cover;background-position:center;opacity:0;transition:opacity .5s;pointer-events:none;}
-    #bgOverlay.active{opacity:0.15;}
-    #bgToggle{position:fixed;right:10px;bottom:10px;width:10px;height:10px;border-radius:50%;cursor:pointer;z-index:999999;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:white;font-size:1px;transition:.3s;}
-    #bgToggle:hover{background:rgba(255,255,255,.2);}
+<div id="title"><h1>Yuleb</h1><p>Te amo tanto tanto tanto</p></div>
 
-    #cameraControls{position:fixed;left:30px;bottom:28px;display:flex;flex-direction:column;gap:14px;z-index:999999;}
-    #cameraControls button{width:70px;height:70px;border:none;border-radius:50%;background:rgba(255,255,255,.08);color:white;font-size:34px;cursor:pointer;backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);}
+<div id="planetUI">
+  <div id="planetCard">
+    <h1 id="planetTitle"></h1>
+    <div id="planetMessage"></div>
+    <button id="closeBtn">Cerrar</button>
+  </div>
+</div>
 
-    #calebSphere{position:fixed;right:30px;bottom:90px;width:45px;height:45px;border-radius:50%;cursor:pointer;z-index:999999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#9b7dff,#ff66cc);box-shadow:0 0 30px rgba(155,125,255,.5);border:2px solid rgba(255,255,255,.2);transition:.3s;}
-    #calebSphere:hover{transform:scale(1.15);}
-    #calebSphere span{font-size:24px;}
+<div id="cameraControls">
+  <button id="zoomIn">＋</button>
+  <button id="zoomOut">－</button>
+</div>
 
-    #volumeControl{position:fixed;right:320px;bottom:28px;display:flex;align-items:center;gap:10px;z-index:999999;}
-    #volBtn{width:45px;height:45px;border:none;border-radius:50%;background:linear-gradient(135deg,#9b7dff,#ff66cc);color:white;font-size:20px;cursor:pointer;transition:.3s;}
-    #volBtn:hover{transform:scale(1.1);}
-    #volumeBar{width:100px;height:8px;background:rgba(255,255,255,.15);border-radius:4px;cursor:pointer;}
-    #volumeFill{height:100%;width:70%;background:linear-gradient(90deg,#9b7dff,#ff66cc);border-radius:4px;}
+<div id="volumeControl">
+  <button id="volBtn">🔊</button>
+  <div id="volumeBar"><div id="volumeFill"></div></div>
+</div>
 
-    #playlistPanel{position:fixed;right:0;top:0;width:300px;height:100vh;background:linear-gradient(180deg,rgba(15,15,25,.97),rgba(10,10,20,.98));border-left:1px solid rgba(255,255,255,.08);transform:translateX(100%);transition:.4s;z-index:999998;display:flex;flex-direction:column;backdrop-filter:blur(20px);}
-    #playlistPanel.open{transform:translateX(0);}
-    #playlistHeader{padding:20px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;}
-    #playlistTitle{color:#fff;font-size:16px;font-weight:700;display:flex;align-items:center;gap:8px;}
-    #playlistTitle span{font-size:18px;}
-    #closePlaylist{width:32px;height:32px;border:none;border-radius:50%;background:rgba(255,255,255,.1);color:white;cursor:pointer;}
-    #playlistContent{flex:1;overflow-y:auto;padding:10px;}
-    #playlistContent::-webkit-scrollbar{width:5px;}
-    #playlistContent::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:3px;}
+<div id="calebSphere"><span>💜</span></div>
 
-    .playlistItem{display:flex;align-items:center;gap:8px;padding:8px;border-radius:10px;margin-bottom:5px;background:rgba(255,255,255,.03);cursor:pointer;transition:.3s;}
-    .playlistItem:hover{background:rgba(255,255,255,.08);}
-    .playlistItem.playing{background:linear-gradient(90deg,rgba(155,125,255,.25),rgba(255,102,204,.1));border:1px solid rgba(155,125,255,.3);}
-    .itemNum{color:rgba(255,255,255,.4);font-size:11px;width:18px;}
-    .playlistItem.playing .itemNum{display:none;}
-    .itemBars{display:none;gap:1px;}
-    .playlistItem.playing .itemBars{display:flex;}
-    .itemBars span{width:2px;height:8px;background:#9b7dff;border-radius:2px;animation:bar .6s infinite;}
-    .itemBars span:nth-child(2){animation-delay:.15s;}
-    .itemBars span:nth-child(3){animation-delay:.3s;}
-    @keyframes bar{0%,100%{height:4px;}50%{height:12px;}}
-    .itemInfo{flex:1;min-width:0;}
-    .itemName{color:#fff;font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .itemArtist{color:rgba(255,255,255,.5);font-size:9px;}
-    .itemControls{display:flex;gap:3px;opacity:0;transition:.3s;}
-    .playlistItem:hover .itemControls{opacity:1;}
-    .itemBtn{width:22px;height:22px;border:none;border-radius:4px;background:rgba(255,255,255,.1);color:rgba(255,255,255,.6);font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;}
-    .itemBtn:hover{background:rgba(255,255,255,.2);color:#fff;}
-    .itemBtn.del{background:rgba(255,100,100,.2);color:rgba(255,150,150,.8);}
-    .itemBtn.del:hover{background:rgba(255,100,100,.4);color:#fff;}
-
-    #playlistFooter{padding:15px;border-top:1px solid rgba(255,255,255,.08);}
-    #songControls{display:flex;justify-content:center;gap:6px;margin-bottom:12px;}
-    #songControls button{width:36px;height:36px;border:none;border-radius:50%;background:rgba(255,255,255,.1);color:white;cursor:pointer;font-size:14px;}
-    #songControls button.main{width:44px;height:44px;background:linear-gradient(135deg,#9b7dff,#ff66cc);font-size:18px;}
-    #songControls button.active{background:linear-gradient(135deg,#ff66cc,#9b7dff);}
-    #progressBar{height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-bottom:8px;cursor:pointer;}
-    #progressFill{height:100%;width:0%;background:linear-gradient(90deg,#9b7dff,#ff66cc);transition:width .1s linear;}
-    #nowPlaying{text-align:center;margin-top:8px;}
-    #nowPlayingName{color:#fff;font-size:12px;font-weight:600;}
-    #nowPlayingArtist{color:rgba(255,255,255,.5);font-size:10px;margin-top:2px;}
-
-    #addSection{padding:12px;border-top:1px solid rgba(255,255,255,.08);}
-    .addBtn{width:100%;padding:12px;border:none;border-radius:10px;margin-bottom:8px;cursor:pointer;font-weight:600;transition:.3s;}
-    #uploadBtn{background:linear-gradient(90deg,rgba(155,125,255,.3),rgba(255,102,204,.3));color:#fff;}
-    #uploadBtn:hover{transform:scale(1.02);}
-    #fileInput{display:none;}
-    </style>
-    </head>
-
-    <body>
-
-    <div id="bgOverlay"></div>
-    <audio id="audioPlayer" loop></audio>
-
-    <div id="title"><h1>Yuleb</h1><p>Te amo tanto tanto tanto</p></div>
-
-    <div id="planetUI">
-        <div id="planetCard">
-            <h1 id="planetTitle"></h1>
-            <div id="planetMessage"></div>
-            <button id="closeBtn">Cerrar</button>
-        </div>
+<!-- VIDEO FLOTANTE -->
+<div id="videoContainer">
+  <div id="videoHeader">
+    <div id="videoHeaderTitle">Sin video</div>
+    <div id="videoHeaderBtns">
+      <button id="fullscreenBtn" title="Pantalla completa">⛶</button>
+      <button id="closeVideoBtn" title="Cerrar">✕</button>
     </div>
+  </div>
+  <video id="mainVideo" controls></video>
+  <div id="resizeHandle"></div>
+</div>
 
-    <div id="cameraControls">
-        <button id="zoomIn">＋</button>
-        <button id="zoomOut">－</button>
+<!-- PLAYLIST -->
+<div id="playlistPanel">
+  <div id="playlistHeader">
+    <div id="playlistTitle"><span>💜</span> Yuleb' Playlist</div>
+    <button id="closePlaylist">✕</button>
+  </div>
+  <div id="playlistContent"></div>
+  <div id="playlistFooter">
+    <div id="progressBar"><div id="progressFill"></div></div>
+    <div id="songControls">
+      <button id="shuffleBtn">🔀</button>
+      <button id="prevBtn">⏮</button>
+      <button id="mainPlayBtn" class="main">▶</button>
+      <button id="nextBtn">⏭</button>
+      <button id="repeatBtn">🔁</button>
     </div>
-
-    <button id="bgToggle" title="Fondo">🖼</button>
-    <div id="volumeControl">
-        <button id="volBtn">🔊</button>
-        <div id="volumeBar"><div id="volumeFill"></div></div>
+    <div id="nowPlaying">
+      <div id="nowPlayingName">Sin videos</div>
+      <div id="nowPlayingArtist">Sube MP4 a la carpeta songs/</div>
     </div>
-
-    <div id="calebSphere"><span>💜</span></div>
-
-    <div id="playlistPanel">
-        <div id="playlistHeader">
-            <div id="playlistTitle"><span>💜</span> Yuleb' Playlist</div>
-            <button id="closePlaylist">✕</button>
-        </div>
-        <div id="playlistContent"></div>
-        <div id="playlistFooter">
-            <div id="progressBar"><div id="progressFill"></div></div>
-            <div id="songControls">
-                <button id="shuffleBtn" title="Aleatorio">🔀</button>
-                <button id="prevBtn">⏮</button>
-                <button id="mainPlayBtn" class="main">⏸</button>
-                <button id="nextBtn">⏭</button>
-                <button id="repeatBtn" title="Repetir">🔁</button>
-            </div>
-            <div id="nowPlaying">
-                <div id="nowPlayingName">Sin canciones</div>
-                <div id="nowPlayingArtist">Agrega archivos MP3</div>
-            </div>
-        </div>
-  
+  </div>
+  <div id="addSection">
+    <div id="tokenRow">
+      <input id="tokenInput" type="password" placeholder="GitHub Token (para eliminar)">
+      <button id="saveTokenBtn">Guardar</button>
     </div>
-    <script type="module">
-    import * as THREE from 'https://esm.sh/three@0.160.0'
-    import { OrbitControls } from 'https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js'
-    import { EffectComposer } from 'https://esm.sh/three@0.160.0/examples/jsm/postprocessing/EffectComposer.js'
-    import { RenderPass } from 'https://esm.sh/three@0.160.0/examples/jsm/postprocessing/RenderPass.js'
-    import { UnrealBloomPass } from 'https://esm.sh/three@0.160.0/examples/jsm/postprocessing/UnrealBloomPass.js'
+    <div id="tokenStatus">Token: no configurado</div>
+  </div>
+</div>
 
-    const scene = new THREE.Scene()
-    scene.fog = new THREE.FogExp2(0x020308, 0.009)
+<script type="module">
+import * as THREE from 'https://esm.sh/three@0.160.0'
+import { OrbitControls } from 'https://esm.sh/three@0.160.0/examples/jsm/controls/OrbitControls.js'
+import { EffectComposer } from 'https://esm.sh/three@0.160.0/examples/jsm/postprocessing/EffectComposer.js'
+import { RenderPass } from 'https://esm.sh/three@0.160.0/examples/jsm/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'https://esm.sh/three@0.160.0/examples/jsm/postprocessing/UnrealBloomPass.js'
 
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth/window.innerHeight, 0.1, 4000)
-    camera.position.set(0, 8, 30)
+/* ============================
+   CONFIG — CAMBIA ESTOS DATOS
+   ============================ */
+const GITHUB_OWNER = "jimy1104"      // tu usuario de GitHub
+const GITHUB_REPO  = "galaxy-heart"        // nombre del repositorio
+const GITHUB_BRANCH = "master"          // rama (main o master)
+/* ============================ */
 
-    const renderer = new THREE.WebGLRenderer({ antialias:true, powerPreference:"high-performance" })
-    renderer.setSize(window.innerWidth, window.innerHeight)
-    renderer.setPixelRatio(Math.min(devicePixelRatio,2))
-    renderer.outputColorSpace = THREE.SRGBColorSpace
-    document.body.appendChild(renderer.domElement)
+// Toast
+function toast(msg, duration=2800){
+  const t=document.getElementById("toast")
+  t.innerText=msg; t.classList.add("show")
+  setTimeout(()=>t.classList.remove("show"),duration)
+}
 
-    const composer = new EffectComposer(renderer)
-    composer.addPass(new RenderPass(scene, camera))
-    const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.15, 0.65, 0.15)
-    composer.addPass(bloom)
+/* ===== THREE.JS ===== */
+const scene=new THREE.Scene()
+scene.fog=new THREE.FogExp2(0x020308,0.009)
+const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,4000)
+camera.position.set(0,8,30)
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:"high-performance"})
+renderer.setSize(innerWidth,innerHeight)
+renderer.setPixelRatio(Math.min(devicePixelRatio,2))
+renderer.outputColorSpace=THREE.SRGBColorSpace
+document.body.appendChild(renderer.domElement)
+const composer=new EffectComposer(renderer)
+composer.addPass(new RenderPass(scene,camera))
+composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),1.15,0.65,0.15))
+const controls=new OrbitControls(camera,renderer.domElement)
+controls.enableDamping=true;controls.enablePan=false;controls.minDistance=12;controls.maxDistance=90
+scene.add(new THREE.AmbientLight(0xffffff,0.1))
+const coreLight=new THREE.PointLight(0xffccff,10,300);scene.add(coreLight)
+const blueLight=new THREE.PointLight(0x66aaff,5,500);blueLight.position.set(-50,20,-20);scene.add(blueLight)
 
-    const controls = new OrbitControls(camera, renderer.domElement)
-    controls.enableDamping = true
-    controls.enablePan = false
-    controls.minDistance = 12
-    controls.maxDistance = 90
+// Estrellas
+const mk=(n,r,s,op)=>{const g=new THREE.BufferGeometry(),p=new Float32Array(n*3);for(let i=0;i<p.length;i++)p[i]=(Math.random()-.5)*r;g.setAttribute('position',new THREE.BufferAttribute(p,3));return new THREE.Points(g,new THREE.PointsMaterial({color:0xffffff,size:s,transparent:true,opacity:op,depthWrite:false}))}
+scene.add(mk(180000,3200,0.028,0.95));scene.add(mk(90000,2200,0.08,1))
+const csG=new THREE.Group();scene.add(csG)
+for(let i=0;i<1200;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(Math.random()*0.08+0.02,10,10),new THREE.MeshBasicMaterial({color:Math.random()>.5?0x8fc7ff:0xffb3f2}));s.position.set((Math.random()-.5)*900,(Math.random()-.5)*900,(Math.random()-.5)*900);csG.add(s)}
+for(let i=0;i<80;i++){const r=Math.random()*0.3+0.06,p=new THREE.Vector3((Math.random()-.5)*500,(Math.random()-.5)*500,(Math.random()-.5)*500);const f=new THREE.Mesh(new THREE.SphereGeometry(r,16,16),new THREE.MeshBasicMaterial({color:0xffffff}));f.position.copy(p);scene.add(f);const gl=new THREE.Mesh(new THREE.SphereGeometry(r*4,16,16),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.05}));gl.position.copy(p);scene.add(gl)}
 
-    scene.add(new THREE.AmbientLight(0xffffff, 0.1))
-    const coreLight = new THREE.PointLight(0xffccff, 10, 300)
-    scene.add(coreLight)
-    const blueLight = new THREE.PointLight(0x66aaff, 5, 500)
-    blueLight.position.set(-50, 20, -20)
-    scene.add(blueLight)
-    // ESTRELLAS CHICAS
-    const microGeo = new THREE.BufferGeometry()
-    const microPos = new Float32Array(180000 * 3)
-    for(let i=0; i<microPos.length; i++) microPos[i] = (Math.random() - 0.5) * 3200
-    microGeo.setAttribute('position', new THREE.BufferAttribute(microPos, 3))
-    scene.add(new THREE.Points(microGeo, new THREE.PointsMaterial({color:0xffffff, size:0.028, transparent:true, opacity:0.95, depthWrite:false})))
+// Galaxia
+const gG=new THREE.Group();scene.add(gG)
+const gP={count:220000,radius:34,branches:5,spin:0.92,randomness:0.6,rPow:5,c1:new THREE.Color("#fff0ff"),c2:new THREE.Color("#ff7de9"),c3:new THREE.Color("#63a8ff")}
+const gGeo=new THREE.BufferGeometry(),gPos=new Float32Array(gP.count*3),gCol=new Float32Array(gP.count*3)
+for(let i=0;i<gP.count;i++){const i3=i*3,rad=Math.random()*gP.radius,bA=(i%gP.branches)/gP.branches*Math.PI*2,sA=rad*gP.spin;const rnd=(s)=>Math.pow(Math.random(),gP.rPow)*(Math.random()<.5?1:-1)*gP.randomness*s;gPos[i3]=Math.cos(bA+sA)*rad+rnd(rad);gPos[i3+1]=rnd(rad)*0.12;gPos[i3+2]=Math.sin(bA+sA)*rad+rnd(rad);const mc=gP.c1.clone();if(rad<gP.radius*0.3)mc.lerp(gP.c2,rad/(gP.radius*0.3));else mc.lerp(gP.c3,rad/gP.radius);gCol[i3]=mc.r;gCol[i3+1]=mc.g;gCol[i3+2]=mc.b}
+gGeo.setAttribute('position',new THREE.BufferAttribute(gPos,3));gGeo.setAttribute('color',new THREE.BufferAttribute(gCol,3))
+const galaxy=new THREE.Points(gGeo,new THREE.PointsMaterial({size:0.042,depthWrite:false,blending:THREE.AdditiveBlending,vertexColors:true,transparent:true}));gG.add(galaxy)
+const core=new THREE.Mesh(new THREE.SphereGeometry(1.8,64,64),new THREE.MeshBasicMaterial({color:0xffd8ff,transparent:true,opacity:0.72}));scene.add(core)
+const coreGlow=new THREE.Mesh(new THREE.SphereGeometry(4.2,64,64),new THREE.MeshBasicMaterial({color:0xff88ff,transparent:true,opacity:0.07}));scene.add(coreGlow)
 
-    // ESTRELLAS GRANDES
-    const starGeo = new THREE.BufferGeometry()
-    const starPos = new Float32Array(90000 * 3)
-    for(let i=0; i<starPos.length; i++) starPos[i] = (Math.random() - 0.5) * 2200
-    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3))
-    scene.add(new THREE.Points(starGeo, new THREE.PointsMaterial({color:0xffffff, size:0.08, transparent:true, opacity:1, depthWrite:false})))
+// Gas + polvo
+const mkCloud=(n,size,op,colorFn)=>{const g=new THREE.BufferGeometry(),p=new Float32Array(n*3),c=new Float32Array(n*3);for(let i=0;i<n;i++){const i3=i*3,r=3+Math.random()*30,a=Math.random()*Math.PI*2,sp=r*0.9;p[i3]=Math.cos(a+sp)*r+(Math.random()-.5)*2;p[i3+1]=(Math.random()-.5)*1.5;p[i3+2]=Math.sin(a+sp)*r+(Math.random()-.5)*2;const col=colorFn();c[i3]=col.r;c[i3+1]=col.g;c[i3+2]=col.b}g.setAttribute('position',new THREE.BufferAttribute(p,3));g.setAttribute('color',new THREE.BufferAttribute(c,3));return new THREE.Points(g,new THREE.PointsMaterial({size,transparent:true,opacity:op,depthWrite:false,blending:THREE.AdditiveBlending,vertexColors:true}))}
+const gasClouds=mkCloud(45000,0.18,0.035,()=>Math.random()>.5?new THREE.Color("#ff66cc"):new THREE.Color("#66aaff"));scene.add(gasClouds)
 
-    // ESTRELLAS DE COLOR
-    const colorStarGroup = new THREE.Group()
-    scene.add(colorStarGroup)
-    for(let i=0; i<1200; i++){
-    const color = Math.random() > 0.5 ? 0x8fc7ff : 0xffb3f2
-    const star = new THREE.Mesh(new THREE.SphereGeometry(Math.random()*0.08+0.02, 10, 10), new THREE.MeshBasicMaterial({color:color}))
-    star.position.set((Math.random()-.5)*900, (Math.random()-.5)*900, (Math.random()-.5)*900)
-    colorStarGroup.add(star)
-    }
+// Corazón
+const hG=new THREE.Group();scene.add(hG)
+const hS=new THREE.Shape();hS.moveTo(0,0);hS.bezierCurveTo(0,0,-0.4,-0.4,-0.8,0);hS.bezierCurveTo(-1.2,0.4,-1.2,1.1,0,1.8);hS.bezierCurveTo(1.2,1.1,1.2,0.4,0.8,0);hS.bezierCurveTo(0.4,-0.4,0,0,0,0)
+const heart=new THREE.Mesh(new THREE.ExtrudeGeometry(hS,{depth:0.4,bevelEnabled:true,bevelSegments:8,steps:2,bevelSize:0.08,bevelThickness:0.08}),new THREE.MeshPhysicalMaterial({color:0xff5ebd,emissive:0xff2d95,emissiveIntensity:0.7,roughness:0.28,metalness:0.08,clearcoat:1}))
+heart.scale.set(0.35,0.35,0.35);heart.rotation.z=Math.PI;heart.rotation.x=0.15;heart.position.y=0.25;hG.add(heart)
 
-    // LUCES BRILLANTES
-    for(let i=0; i<80; i++){
-    const flare = new THREE.Mesh(new THREE.SphereGeometry(Math.random()*0.3+0.06, 16, 16), new THREE.MeshBasicMaterial({color:0xffffff}))
-    flare.position.set((Math.random()-.5)*500, (Math.random()-.5)*500, (Math.random()-.5)*500)
-    scene.add(flare)
-    const glow = new THREE.Mesh(new THREE.SphereGeometry(flare.geometry.parameters.radius * 4, 16, 16), new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.05}))
-    glow.position.copy(flare.position)
-    scene.add(glow)
-    }
+// Planetas
+function mkPlanet(sz,col,glow,data){const g=new THREE.Group(),m=new THREE.Mesh(new THREE.SphereGeometry(sz,128,128),new THREE.MeshPhysicalMaterial({color:col,roughness:0.45,metalness:0.06,clearcoat:1}));g.add(m);g.add(new THREE.Mesh(new THREE.SphereGeometry(sz*1.35,64,64),new THREE.MeshBasicMaterial({color:glow,transparent:true,opacity:0.08})));g.userData=data;scene.add(g);return{group:g,mesh:m}}
+const venus=mkPlanet(0.35,0xd99455,0xffbb88,{title:"Venus",message:"You do not realize it, but you are like the planet Venus. You are very beautiful, and beautiful things belong together. I have been writing to you a lot, and the result of all of that is this: you are Venus. I cannot find another way to describe how I feel about you. Allow me to tell you that, in this fourth month of knowing each other, my flaws have begun to show. And even though you may have told me this or that about the bad parts of yourself, I see no sign of them. It is true that we both have very busy days, yet not even that keeps us from being close. I suffer and regret not being able to remain in the time you offer me that time you somehow manage to find just to give to me. What a wonderful gift that is… it is worth more than ten thousand gifts from anyone else. How radiant and beautiful you are; you burn and shine even from afar."})
+const scient=mkPlanet(0.62,0x9b7dff,0xd6c6ff,{title:"Philos",message:"I love your spontaneity and how unpredictable you are. One day you are obsessed with Caleb, and the next with Xavier. One day you wake up at a certain hour, and the next you simply do not sleep. You are like an atom, with an indecipherable movement. That only reinforces what you once said: to wait longer, perhaps one or two years, to truly finish getting to know each other… because I will never stop discovering something new about you."})
+scient.mesh.material.emissive=new THREE.Color(0x7d5cff);scient.mesh.material.emissiveIntensity=0.45
+for(let i=0;i<4;i++){const r=new THREE.Mesh(new THREE.TorusGeometry(0.82+i*0.07,0.008,16,250),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.13}));r.rotation.x=Math.PI/2.4;r.rotation.z=i*0.15;scient.group.add(r)}
+const sats=[];for(let i=0;i<5;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(0.03+Math.random()*0.02,32,32),new THREE.MeshBasicMaterial({color:i%2===0?0xffffff:0xffb7ff}));s.userData={angle:Math.random()*Math.PI*2,distance:1.1+Math.random()*0.35,speed:0.003+Math.random()*0.004};scient.group.add(s);sats.push(s)}
+const earth=mkPlanet(0.42,0x3c8dff,0x99ccff,{title:"Earth",message:"The world is complicated. Despite hundreds and hundreds of thousands of years of discoveries and rediscoveries, this planet still has not been fully explored or understood. How ironic it is to think that you are not only Venus, but also Earth. Just like our planet, you have hidden and deep parts that you still have not told me about, as well as many different sides of yourself. I would have to study a thousand careers just to understand and discover even fifty percent of you. That is what amazes me about you: you are immense on the inside. And to think I once believed the difficult part was crossing those nine thousand kilometers… compared to you, that is only a stone in the road. Thank you for allowing me to know you without so much danger in between. You resist at first, but with time, you end up telling me."})
 
-    // GALAXIA
-    const galaxyGroup = new THREE.Group()
-    scene.add(galaxyGroup)
+const ray=new THREE.Raycaster(),mouse=new THREE.Vector2()
+let hovP=null
+const ui=document.getElementById("planetUI")
+window.addEventListener("mousemove",e=>{mouse.x=(e.clientX/innerWidth)*2-1;mouse.y=-(e.clientY/innerHeight)*2+1;ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects([venus.group,scient.group,earth.group],true);if(hits.length){document.body.style.cursor="pointer";let o=hits[0].object;while(o.parent&&!o.userData.title)o=o.parent;hovP=o}else{document.body.style.cursor="default";hovP=null}})
+window.addEventListener("click",e=>{mouse.x=(e.clientX/innerWidth)*2-1;mouse.y=-(e.clientY/innerHeight)*2+1;ray.setFromCamera(mouse,camera);if(hovP&&hovP.userData.title){document.getElementById("planetTitle").innerText=hovP.userData.title;document.getElementById("planetMessage").innerText=hovP.userData.message;ui.classList.add("active");return}const h=ray.intersectObject(heart,true);if(h.length)for(let i=0;i<10;i++){fText(e.clientX,e.clientY);fHeart(e.clientX,e.clientY)}})
+document.getElementById("closeBtn").addEventListener("click",()=>ui.classList.remove("active"))
+document.getElementById("zoomIn").addEventListener("click",()=>{const d=camera.position.length();if(d>12)camera.position.setLength(d-5)})
+document.getElementById("zoomOut").addEventListener("click",()=>{const d=camera.position.length();if(d<90)camera.position.setLength(d+5)})
+const hMsgs=["Te amo","I love you","I'll do anything for you","I need you","Sweet puzzle","Hiba","My love","Light Source","starry sunrise"]
+const hCols=["#ffffff","#ff8ad8","#9cc7ff","#d2a8ff","#ffd27a"]
+function fText(x,y){const t=document.createElement("div");t.className="floatText";t.innerText=hMsgs[Math.floor(Math.random()*hMsgs.length)];t.style.color=hCols[Math.floor(Math.random()*hCols.length)];t.style.fontSize=(14+Math.random()*18)+"px";t.style.left=x+"px";t.style.top=y+"px";const a=Math.random()*Math.PI*2,d=150+Math.random()*400;t.style.setProperty("--tx",`${Math.cos(a)*d}px`);t.style.setProperty("--ty",`${Math.sin(a)*d}px`);const dur=4+Math.random()*4;t.style.animationDuration=dur+"s";document.body.appendChild(t);setTimeout(()=>t.remove(),dur*1000)}
+function fHeart(x,y){const h=document.createElement("div");h.className="miniHeart";h.style.left=x+"px";h.style.top=y+"px";const a=(Math.random()*Math.PI)-Math.PI/2;h.style.setProperty("--tx",`${Math.cos(a)*(60+Math.random()*180)}px`);h.style.setProperty("--ty",`${-Math.random()*260}px`);const s=8+Math.random()*18;h.style.width=s+"px";h.style.height=s+"px";const dur=2+Math.random()*2;h.style.animationDuration=dur+"s";document.body.appendChild(h);setTimeout(()=>h.remove(),dur*1000)}
 
-    const params = { count: 220000, radius: 34, branches: 5, spin: 0.92, randomness: 0.6, randomnessPower: 5, insideColor: new THREE.Color("#fff0ff"), midColor: new THREE.Color("#ff7de9"), outsideColor: new THREE.Color("#63a8ff") }
+/* ===== PLAYLIST ===== */
+let playlist=[],currentIndex=0,isPlaying=false,isShuffle=false,isRepeat=false,lastVol=0.7
+let ghToken=localStorage.getItem("yuleb_token")||""
 
-    const galGeo = new THREE.BufferGeometry()
-    const positions = new Float32Array(params.count * 3)
-    const colors = new Float32Array(params.count * 3)
+const vidCont=document.getElementById("videoContainer")
+const mainVideo=document.getElementById("mainVideo")
+const vTitle=document.getElementById("videoHeaderTitle")
+const plPanel=document.getElementById("playlistPanel")
+const plContent=document.getElementById("playlistContent")
+const nowName=document.getElementById("nowPlayingName")
+const nowArtist=document.getElementById("nowPlayingArtist")
+const pFill=document.getElementById("progressFill")
+const volFill=document.getElementById("volumeFill")
+const tokenInput=document.getElementById("tokenInput")
+const saveTokenBtn=document.getElementById("saveTokenBtn")
+const tokenStatus=document.getElementById("tokenStatus")
 
-    for(let i=0; i<params.count; i++){
-    const i3 = i * 3
-    const radius = Math.random() * params.radius
-    const branchAngle = (i % params.branches) / params.branches * Math.PI * 2
-    const spinAngle = radius * params.spin
-    const rX = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * params.randomness * radius
-    const rY = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * params.randomness * radius * 0.12
-    const rZ = Math.pow(Math.random(), params.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * params.randomness * radius
+// Mostrar estado token
+function updateTokenUI(){
+  if(ghToken){tokenStatus.innerText="Token: configurado ✓";saveTokenBtn.classList.add("saved");saveTokenBtn.innerText="✓ Listo"}
+  else{tokenStatus.innerText="Token: no configurado";saveTokenBtn.classList.remove("saved");saveTokenBtn.innerText="Guardar"}
+}
+updateTokenUI()
+tokenInput.value=ghToken?("*".repeat(Math.min(ghToken.length,12))):"";
+saveTokenBtn.addEventListener("click",()=>{
+  const v=tokenInput.value.trim()
+  if(v&&!v.startsWith("***")){ghToken=v;localStorage.setItem("yuleb_token",v);toast("Token guardado 💜")}
+  updateTokenUI()
+})
 
-    positions[i3] = Math.cos(branchAngle + spinAngle) * radius + rX
-    positions[i3+1] = rY
-    positions[i3+2] = Math.sin(branchAngle + spinAngle) * radius + rZ
+document.getElementById("calebSphere").addEventListener("click",()=>plPanel.classList.add("open"))
+document.getElementById("closePlaylist").addEventListener("click",()=>plPanel.classList.remove("open"))
 
-    const mixedColor = params.insideColor.clone()
-    if(radius < params.radius * 0.3) mixedColor.lerp(params.midColor, radius / (params.radius * 0.3))
-    else mixedColor.lerp(params.outsideColor, radius / params.radius)
-    colors[i3] = mixedColor.r; colors[i3+1] = mixedColor.g; colors[i3+2] = mixedColor.b
-    }
-
-    galGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3))
-    galGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3))
-
-    const galaxy = new THREE.Points(galGeo, new THREE.PointsMaterial({size:0.042, depthWrite:false, blending:THREE.AdditiveBlending, vertexColors:true, transparent:true, opacity:1}))
-    galaxyGroup.add(galaxy)
-
-    // NÚCLEO BRILLANTE
-    const core = new THREE.Mesh(new THREE.SphereGeometry(1.8, 64, 64), new THREE.MeshBasicMaterial({color:0xffd8ff, transparent:true, opacity:0.72}))
-    scene.add(core)
-    const coreGlow = new THREE.Mesh(new THREE.SphereGeometry(4.2, 64, 64), new THREE.MeshBasicMaterial({color:0xff88ff, transparent:true, opacity:0.07}))
-    scene.add(coreGlow)
-    // NUBES DE GAS
-    const gasGeo = new THREE.BufferGeometry()
-    const gasPos = new Float32Array(45000 * 3)
-    const gasColors = new Float32Array(45000 * 3)
-
-    for(let i=0; i<45000; i++){
-    const i3 = i * 3
-    const radius = 3 + Math.random() * 30
-    const angle = Math.random() * Math.PI * 2
-    const spiral = radius * 0.9
-    gasPos[i3] = Math.cos(angle + spiral) * radius + (Math.random()-.5)*2
-    gasPos[i3+1] = (Math.random()-.5)*1.5
-    gasPos[i3+2] = Math.sin(angle + spiral) * radius + (Math.random()-.5)*2
-    const color = Math.random() > 0.5 ? new THREE.Color("#ff66cc") : new THREE.Color("#66aaff")
-    gasColors[i3] = color.r; gasColors[i3+1] = color.g; gasColors[i3+2] = color.b
-    }
-
-    gasGeo.setAttribute('position', new THREE.BufferAttribute(gasPos, 3))
-    gasGeo.setAttribute('color', new THREE.BufferAttribute(gasColors, 3))
-
-    const gasClouds = new THREE.Points(gasGeo, new THREE.PointsMaterial({size:0.18, transparent:true, opacity:0.035, depthWrite:false, blending:THREE.AdditiveBlending, vertexColors:true}))
-    scene.add(gasClouds)
-
-    // POLVO ESPACIAL
-    const dustGeo = new THREE.BufferGeometry()
-    const dustPos = new Float32Array(80000 * 3)
-    for(let i=0; i<80000; i++){
-    const i3 = i * 3
-    const radius = Math.random() * 40
-    const angle = Math.random() * Math.PI * 2
-    dustPos[i3] = Math.cos(angle) * radius
-    dustPos[i3+1] = (Math.random()-.5) * 0.8
-    dustPos[i3+2] = Math.sin(angle) * radius
-    }
-    dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3))
-    scene.add(new THREE.Points(dustGeo, new THREE.PointsMaterial({color:0xffffff, size:0.018, transparent:true, opacity:0.06, depthWrite:false})))
-
-    // CORAZÓN
-    const heartGroup = new THREE.Group()
-    scene.add(heartGroup)
-    const heartShape = new THREE.Shape()
-    heartShape.moveTo(0,0)
-    heartShape.bezierCurveTo(0,0, -0.4,-0.4, -0.8,0)
-    heartShape.bezierCurveTo(-1.2,0.4, -1.2,1.1, 0,1.8)
-    heartShape.bezierCurveTo(1.2,1.1, 1.2,0.4, 0.8,0)
-    heartShape.bezierCurveTo(0.4,-0.4, 0,0, 0,0)
-    const heartGeo = new THREE.ExtrudeGeometry(heartShape, {depth:0.4, bevelEnabled:true, bevelSegments:8, steps:2, bevelSize:0.08, bevelThickness:0.08})
-    const heartMat = new THREE.MeshPhysicalMaterial({color:0xff5ebd, emissive:0xff2d95, emissiveIntensity:0.7, roughness:0.28, metalness:0.08, clearcoat:1})
-    const heart = new THREE.Mesh(heartGeo, heartMat)
-    heart.scale.set(0.35, 0.35, 0.35)
-    heart.rotation.z = Math.PI
-    heart.rotation.x = 0.15
-    heart.position.y = 0.25
-    heartGroup.add(heart)
-
-    // PLANETAS
-    function createPlanet(size, color, glow, data){
-    const group = new THREE.Group()
-    const mesh = new THREE.Mesh(new THREE.SphereGeometry(size, 128, 128), new THREE.MeshPhysicalMaterial({color:color, roughness:0.45, metalness:0.06, clearcoat:1}))
-    group.add(mesh)
-    group.add(new THREE.Mesh(new THREE.SphereGeometry(size*1.35, 64, 64), new THREE.MeshBasicMaterial({color:glow, transparent:true, opacity:0.08})))
-    group.userData = data
-    scene.add(group)
-    return { group, mesh }
-    }
-
-    const venus = createPlanet(0.35, 0xd99455, 0xffbb88, { title: "Venus", message: "You do not realize it, but you are like the planet Venus. You are very beautiful, and beautiful things belong together. I have been writing to you a lot, and the result of all of that is this: you are Venus. I cannot find another way to describe how I feel about you. Allow me to tell you that, in this fourth month of knowing each other, my flaws have begun to show. And even though you may have told me this or that about the bad parts of yourself, I see no sign of them. It is true that we both have very busy days, yet not even that keeps us from being close. I suffer and regret not being able to remain in the time you offer me that time you somehow manage to find just to give to me. What a wonderful gift that is… it is worth more than ten thousand gifts from anyone else. How radiant and beautiful you are; you burn and shine even from afar." })
-    const scient = createPlanet(0.62, 0x9b7dff, 0xd6c6ff, { title: "Philos", message: "I love your spontaneity and how unpredictable you are. One day you are obsessed with Caleb, and the next with Xavier. One day you wake up at a certain hour, and the next you simply do not sleep. You are like an atom, with an indecipherable movement. That only reinforces what you once said: to wait longer, perhaps one or two years, to truly finish getting to know each other… because I will never stop discovering something new about you." })
-    scient.mesh.material.emissive = new THREE.Color(0x7d5cff)
-    scient.mesh.material.emissiveIntensity = 0.45
-    // ANILLOS DE PHILOS
-    for(let i=0; i<4; i++){
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.82 + i*0.07, 0.008, 16, 250), new THREE.MeshBasicMaterial({color:0xffffff, transparent:true, opacity:0.13}))
-    ring.rotation.x = Math.PI/2.4; ring.rotation.z = i * 0.15; scient.group.add(ring)
-    }
-    const scientSatellites = []
-    for(let i=0; i<5; i++){
-    const sat = new THREE.Mesh(new THREE.SphereGeometry(0.03 + Math.random()*0.02, 32, 32), new THREE.MeshBasicMaterial({color:i%2===0?0xffffff:0xffb7ff}))
-    sat.userData = { angle: Math.random() * Math.PI * 2, distance: 1.1 + Math.random()*0.35, speed: 0.003 + Math.random()*0.004 }
-    scient.group.add(sat); scientSatellites.push(sat)
-    }
-
-    const earth = createPlanet(0.42, 0x3c8dff, 0x99ccff, { title: "Earth", message: "The world is complicated. Despite hundreds and hundreds of thousands of years of discoveries and rediscoveries, this planet still has not been fully explored or understood. How ironic it is to think that you are not only Venus, but also Earth. Just like our planet, you have hidden and deep parts that you still have not told me about, as well as many different sides of yourself. I would have to study a thousand careers just to understand and discover even fifty percent of you. That is what amazes me about you: you are immense on the inside. And to think I once believed the difficult part was crossing those nine thousand kilometers… compared to you, that is only a stone in the road. Thank you for allowing me to know you without so much danger in between. You resist at first, but with time, you end up telling me."})
-    // CLICK EN PLANETAS
-    const raycaster = new THREE.Raycaster()
-    const mouse = new THREE.Vector2()
-    let hoveredPlanet = null
-
-    const ui = document.getElementById("planetUI")
-    const planetTitleEl = document.getElementById("planetTitle")
-    const planetMsgEl = document.getElementById("planetMessage")
-
-    window.addEventListener("mousemove", (event) => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
-    raycaster.setFromCamera(mouse, camera)
-    const intersects = raycaster.intersectObjects([venus.group, scient.group, earth.group], true)
-    if(intersects.length > 0){
-    document.body.style.cursor = "pointer"
-    let obj = intersects[0].object
-    while(obj.parent && !obj.userData.title) obj = obj.parent
-    hoveredPlanet = obj
-    } else {
-    document.body.style.cursor = "default"
-    hoveredPlanet = null
-    }
-    })
-
-    window.addEventListener("click", (event) => {
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
-    raycaster.setFromCamera(mouse, camera)
-
-    if(hoveredPlanet && hoveredPlanet.userData.title){
-    planetTitleEl.innerText = hoveredPlanet.userData.title
-    planetMsgEl.innerText = hoveredPlanet.userData.message
-    ui.classList.add("active")
-    return
-    }
-
-    const hit = raycaster.intersectObject(heart, true)
-    if(hit.length > 0){
-    for(let i=0; i<10; i++){
-    createFloatingText(event.clientX, event.clientY)
-    createMiniHeart(event.clientX, event.clientY)
-    }
-    }
-    })
-
-    document.getElementById("closeBtn").addEventListener("click", () => ui.classList.remove("active"))
-
-    // ZOOM
-    document.getElementById("zoomIn").addEventListener("click", () => {
-    const dist = camera.position.length()
-    if(dist > 12) camera.position.setLength(dist - 5)
-    })
-    document.getElementById("zoomOut").addEventListener("click", () => {
-    const dist = camera.position.length()
-    if(dist < 90) camera.position.setLength(dist + 5)
-    })
-
-    // TEXTOS FLOTANTES
-    const heartMessages = ["Te amo","I love you","I'll do anything for you","I need you","Sweet puzzle","Hiba","My love","Light Source","starry sunrise"]
-    const heartColors = ["#ffffff","#ff8ad8","#9cc7ff","#d2a8ff","#ffd27a"]
-
-    function createFloatingText(x, y){
-    const text = document.createElement("div")
-    text.className = "floatText"
-    text.innerText = heartMessages[Math.floor(Math.random() * heartMessages.length)]
-    text.style.color = heartColors[Math.floor(Math.random() * heartColors.length)]
-    text.style.fontSize = (14 + Math.random() * 18) + "px"
-    text.style.left = x + "px"; text.style.top = y + "px"
-    const angle = Math.random() * Math.PI * 2
-    const distance = 150 + Math.random() * 400
-    text.style.setProperty("--tx", `${Math.cos(angle) * distance}px`)
-    text.style.setProperty("--ty", `${Math.sin(angle) * distance}px`)
-    const duration = 4 + Math.random() * 4
-    text.style.animationDuration = duration + "s"
-    document.body.appendChild(text)
-    setTimeout(() => text.remove(), duration * 1000)
-    }
-
-    function createMiniHeart(x, y){
-    const h = document.createElement("div")
-    h.className = "miniHeart"
-    h.style.left = x + "px"; h.style.top = y + "px"
-    const angle = (Math.random() * Math.PI) - Math.PI / 2
-    const distance = 60 + Math.random() * 180
-    h.style.setProperty("--tx", `${Math.cos(angle) * distance}px`)
-    h.style.setProperty("--ty", `${-Math.random() * 260}px`)
-    const size = 8 + Math.random() * 18
-    h.style.width = size + "px"; h.style.height = size + "px"
-    const duration = 2 + Math.random() * 2
-    h.style.animationDuration = duration + "s"
-    document.body.appendChild(h)
-    setTimeout(() => h.remove(), duration * 1000)
-    }
-    /* ========== PLAYLIST CON FIREBASE ========== */
-
-    // ELEMENTOS
-    const calebSphere = document.getElementById("calebSphere")
-    const playlistPanel = document.getElementById("playlistPanel")
-    const closePlaylist = document.getElementById("closePlaylist")
-    const playlistContent = document.getElementById("playlistContent")
-    const audioPlayer = document.getElementById("audioPlayer")
-    const prevBtn = document.getElementById("prevBtn")
-    const mainPlayBtn = document.getElementById("mainPlayBtn")
-    const nextBtn = document.getElementById("nextBtn")
-    const shuffleBtn = document.getElementById("shuffleBtn")
-    const repeatBtn = document.getElementById("repeatBtn")
-    const progressFill = document.getElementById("progressFill")
-    const progressBar = document.getElementById("progressBar")
-    const nowPlayingName = document.getElementById("nowPlayingName")
-    const nowPlayingArtist = document.getElementById("nowPlayingArtist")
-    const uploadBtn = document.getElementById("uploadBtn")
-    const fileInput = document.getElementById("fileInput")
-    const volBtn = document.getElementById("volBtn")
-    const volumeBar = document.getElementById("volumeBar")
-    const volumeFillEl = document.getElementById("volumeFill")
-    const bgToggle = document.getElementById("bgToggle")
-    const bgOverlay = document.getElementById("bgOverlay")
-
-    // VARIABLES
-    let playlist = []
-    let currentIndex = 0
-    let isPlaying = false
-    let isShuffle = false
-    let isRepeat = false
-    let lastVolume = 0.7
-    let currentImageUrl = null
-
-    // ABRIR PLAYLIST
-    calebSphere.addEventListener("click", () => playlistPanel.classList.add("open"))
-    closePlaylist.addEventListener("click", () => playlistPanel.classList.remove("open"))
-
-   // ★ CARGAR DESDE GITHUB (songs.json)
+// Cargar songs.json desde GitHub raw
 async function loadSongs(){
-try{
-const response = await fetch('./songs.json');
-const songs = await response.json();
-playlist = songs.map(song => ({
-name: song.name,
-artist: "💜",
-url: "./songs/" + song.file
-}));
-renderPlaylist();
-if(playlist.length > 0) playSong(0);
-} catch(e){
-console.log("Cargando desde GitHub...");
-}
-}
-
-loadSongs();
-
-// PLAYLIST SIMPLE
-function renderPlaylist(){
-playlistContent.innerHTML = "";
-playlist.forEach((song, i) => {
-const div = document.createElement("div");
-div.className = "playlistItem" + (i === currentIndex && isPlaying ? " playing" : "");
-div.innerHTML = '<div class="itemNum">' + (i+1) + '</div><div class="itemBars"><span></span><span></span><span></span></div><div class="itemInfo"><div class="itemName">' + song.name + '</div><div class="itemArtist">' + song.artist + '</div></div>';
-div.querySelector(".itemInfo").addEventListener("click", () => playSong(i));
-playlistContent.appendChild(div);
-});
-}
-
-function playSong(index){
-if(playlist.length === 0) return;
-currentIndex = index;
-audioPlayer.src = playlist[index].url;
-audioPlayer.play();
-isPlaying = true;
-mainPlayBtn.innerText = "⏸";
-nowPlayingName.innerText = playlist[index].name;
-nowPlayingArtist.innerText = playlist[index].artist;
-renderPlaylist();
-}
-
-    // SHUFFLE
-    shuffleBtn.addEventListener("click", () => {
-    isShuffle = !isShuffle
-    shuffleBtn.classList.toggle("active", isShuffle)
-    })
-
-    // REPEAT
-    repeatBtn.addEventListener("click", () => {
-    isRepeat = !isRepeat
-    repeatBtn.classList.toggle("active", isRepeat)
-    audioPlayer.loop = isRepeat
-    })
-
-    // PLAY/PAUSE
-    mainPlayBtn.addEventListener("click", () => {
-    if(playlist.length === 0) return
-    if(isPlaying){
-    audioPlayer.pause()
-    isPlaying = false
-    mainPlayBtn.innerText = "▶"
-    }else{
-    if(!audioPlayer.src) playSong(0)
-    else audioPlayer.play()
-    isPlaying = true
-    mainPlayBtn.innerText = "⏸"
-    }
+  try{
+    const url=`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/songs.json?t=${Date.now()}`
+    const r=await fetch(url)
+    if(!r.ok) throw new Error()
+    const songs=await r.json()
+    playlist=songs.map(s=>({name:s.name,file:s.file,url:`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/songs/${s.file}`}))
     renderPlaylist()
+    if(playlist.length>0) playSong(0)
+  }catch(e){
+    plContent.innerHTML='<div style="color:rgba(255,255,255,.4);font-size:12px;text-align:center;padding:20px;">Sube videos MP4 a la carpeta songs/ en tu repo.</div>'
+    nowName.innerText="Sin videos"
+  }
+}
+loadSongs()
+
+function renderPlaylist(){
+  plContent.innerHTML=""
+  if(!playlist.length){plContent.innerHTML='<div style="color:rgba(255,255,255,.4);font-size:12px;text-align:center;padding:20px;">Sin videos aún.</div>';return}
+  playlist.forEach((s,i)=>{
+    const d=document.createElement("div")
+    d.className="playlistItem"+(i===currentIndex&&isPlaying?" playing":"")
+    d.innerHTML=`<div class="itemNum">${i+1}</div><div class="itemBars"><span></span><span></span><span></span></div><div class="itemInfo"><div class="itemName">${s.name}</div><div class="itemArtist">💜 Video</div></div><button class="itemDel" title="Eliminar del repo">✕</button>`
+    d.querySelector(".itemInfo").addEventListener("click",()=>playSong(i))
+    d.querySelector(".itemDel").addEventListener("click",e=>{e.stopPropagation();deleteSong(i,d.querySelector(".itemDel"))})
+    plContent.appendChild(d)
+  })
+}
+
+function playSong(i){
+  if(!playlist.length) return
+  currentIndex=i
+  mainVideo.src=playlist[i].url
+  mainVideo.play()
+  isPlaying=true
+  document.getElementById("mainPlayBtn").innerText="⏸"
+  nowName.innerText=playlist[i].name
+  nowArtist.innerText="💜 Video"
+  vTitle.innerText=playlist[i].name
+  vidCont.classList.add("visible")
+  renderPlaylist()
+}
+
+// ELIMINAR via GitHub API
+async function deleteSong(i,btn){
+  if(!ghToken){
+    toast("⚠️ Primero guarda tu GitHub Token abajo")
+    return
+  }
+  const song=playlist[i]
+  btn.innerText="⏳"; btn.classList.add("loading"); btn.disabled=true
+
+  try{
+    // 1. Obtener SHA del archivo
+    const shaRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/songs/${song.file}`,{
+      headers:{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"}
     })
+    if(!shaRes.ok) throw new Error("No se pudo obtener el archivo: "+shaRes.status)
+    const shaData=await shaRes.json()
 
-    // ANTERIOR
-    prevBtn.addEventListener("click", () => {
-    if(isShuffle){
-    currentIndex = Math.floor(Math.random() * playlist.length)
-    }else{
-    currentIndex = (currentIndex - 1 + playlist.length) % playlist.length
-    }
-    playSong(currentIndex)
+    // 2. Eliminar el archivo
+    const delRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/songs/${song.file}`,{
+      method:"DELETE",
+      headers:{"Authorization":`Bearer ${ghToken}`,"Content-Type":"application/json","Accept":"application/vnd.github+json"},
+      body:JSON.stringify({message:`Remove ${song.file}`,sha:shaData.sha,branch:GITHUB_BRANCH})
     })
+    if(!delRes.ok) throw new Error("Error al eliminar: "+delRes.status)
 
-    // SIGUIENTE
-    nextBtn.addEventListener("click", () => {
-    if(isShuffle){
-    currentIndex = Math.floor(Math.random() * playlist.length)
-    }else{
-    currentIndex = (currentIndex + 1) % playlist.length
-    }
-    playSong(currentIndex)
-    })
+    toast(`"${song.name}" eliminado 💜`)
+    // Recargar playlist tras 4s (la Action tarda un poco)
+    setTimeout(loadSongs, 4000)
 
-    // ACTUALIZAR BARRA
-    audioPlayer.addEventListener("timeupdate", () => {
-    if(audioPlayer.duration){
-    progressFill.style.width = (audioPlayer.currentTime / audioPlayer.duration * 100) + "%"
-    }
-    })
+    // Actualizar UI inmediatamente
+    playlist.splice(i,1)
+    if(!playlist.length){mainVideo.pause();vidCont.classList.remove("visible");isPlaying=false;document.getElementById("mainPlayBtn").innerText="▶"}
+    else if(currentIndex>=playlist.length){currentIndex=playlist.length-1;playSong(currentIndex)}
+    else renderPlaylist()
 
-    // CANCIÓN TERMINA
-    audioPlayer.addEventListener("ended", () => {
-    if(!isRepeat){
-    currentIndex = (currentIndex + 1) % playlist.length
-    playSong(currentIndex)
-    }
-    })
+  }catch(err){
+    toast("❌ Error: "+err.message)
+    btn.innerText="✕"; btn.classList.remove("loading"); btn.disabled=false
+  }
+}
 
-    // CLICK EN BARRA
-    progressBar.addEventListener("click", (e) => {
-    if(audioPlayer.duration){
-    const rect = progressBar.getBoundingClientRect()
-    const percent = (e.clientX - rect.left) / rect.width
-    audioPlayer.currentTime = percent * audioPlayer.duration
-    }
-    })
+// Controles
+document.getElementById("shuffleBtn").addEventListener("click",()=>{isShuffle=!isShuffle;document.getElementById("shuffleBtn").classList.toggle("active",isShuffle)})
+document.getElementById("repeatBtn").addEventListener("click",()=>{isRepeat=!isRepeat;document.getElementById("repeatBtn").classList.toggle("active",isRepeat);mainVideo.loop=isRepeat})
+document.getElementById("mainPlayBtn").addEventListener("click",()=>{
+  if(!playlist.length)return
+  if(isPlaying){mainVideo.pause();isPlaying=false;document.getElementById("mainPlayBtn").innerText="▶"}
+  else{if(!mainVideo.src)playSong(0);else mainVideo.play();isPlaying=true;document.getElementById("mainPlayBtn").innerText="⏸"}
+  renderPlaylist()
+})
+document.getElementById("prevBtn").addEventListener("click",()=>playSong(isShuffle?Math.floor(Math.random()*playlist.length):(currentIndex-1+playlist.length)%playlist.length))
+document.getElementById("nextBtn").addEventListener("click",()=>playSong(isShuffle?Math.floor(Math.random()*playlist.length):(currentIndex+1)%playlist.length))
+mainVideo.addEventListener("timeupdate",()=>{if(mainVideo.duration)pFill.style.width=(mainVideo.currentTime/mainVideo.duration*100)+"%"})
+mainVideo.addEventListener("ended",()=>{if(!isRepeat)playSong((currentIndex+1)%playlist.length)})
+mainVideo.addEventListener("pause",()=>{if(isPlaying){isPlaying=false;document.getElementById("mainPlayBtn").innerText="▶";renderPlaylist()}})
+mainVideo.addEventListener("play",()=>{if(!isPlaying){isPlaying=true;document.getElementById("mainPlayBtn").innerText="⏸";renderPlaylist()}})
+document.getElementById("progressBar").addEventListener("click",e=>{if(mainVideo.duration){const r=document.getElementById("progressBar").getBoundingClientRect();mainVideo.currentTime=((e.clientX-r.left)/r.width)*mainVideo.duration}})
 
-    // TOGGLE FONDO
-    bgToggle.addEventListener("click", () => {
-    bgOverlay.classList.toggle("active")
-    if(bgOverlay.classList.contains("active") && currentImageUrl){
-    bgOverlay.style.backgroundImage = `url(${currentImageUrl})`
-    }
-    })
+// Volumen
+mainVideo.volume=0.7
+function updVol(){document.getElementById("volBtn").innerText=mainVideo.volume===0?"🔇":mainVideo.volume<0.4?"🔈":"🔊"}
+document.getElementById("volBtn").addEventListener("click",()=>{if(mainVideo.volume>0){lastVol=mainVideo.volume;mainVideo.volume=0}else mainVideo.volume=lastVol;volFill.style.width=(mainVideo.volume*100)+"%";updVol()})
+document.getElementById("volumeBar").addEventListener("click",e=>{const r=document.getElementById("volumeBar").getBoundingClientRect();mainVideo.volume=Math.min(Math.max((e.clientX-r.left)/r.width,0.05),1);volFill.style.width=(mainVideo.volume*100)+"%";lastVol=mainVideo.volume;updVol()})
 
-    // VOLUMEN
-    audioPlayer.volume = 0.7
-    volumeFillEl.style.width = (audioPlayer.volume * 100) + "%"
-    updateVolIcon()
+// Video flotante: mover
+let drag=false,dStart={},cStart={}
+document.getElementById("videoHeader").addEventListener("mousedown",e=>{
+  if(vidCont.classList.contains("fs"))return
+  drag=true;const rc=vidCont.getBoundingClientRect()
+  dStart={x:e.clientX,y:e.clientY};cStart={x:rc.left,y:rc.top}
+  vidCont.style.right="auto";vidCont.style.bottom="auto"
+  vidCont.style.left=rc.left+"px";vidCont.style.top=rc.top+"px";e.preventDefault()
+})
+window.addEventListener("mousemove",e=>{if(!drag)return;vidCont.style.left=Math.max(0,Math.min(cStart.x+(e.clientX-dStart.x),innerWidth-200))+"px";vidCont.style.top=Math.max(0,Math.min(cStart.y+(e.clientY-dStart.y),innerHeight-100))+"px"})
+window.addEventListener("mouseup",()=>drag=false)
+// Touch
+document.getElementById("videoHeader").addEventListener("touchstart",e=>{if(vidCont.classList.contains("fs"))return;const t=e.touches[0],rc=vidCont.getBoundingClientRect();drag=true;dStart={x:t.clientX,y:t.clientY};cStart={x:rc.left,y:rc.top};vidCont.style.right="auto";vidCont.style.bottom="auto";vidCont.style.left=rc.left+"px";vidCont.style.top=rc.top+"px"},{passive:true})
+window.addEventListener("touchmove",e=>{if(!drag)return;const t=e.touches[0];vidCont.style.left=Math.max(0,cStart.x+(t.clientX-dStart.x))+"px";vidCont.style.top=Math.max(0,cStart.y+(t.clientY-dStart.y))+"px"},{passive:true})
+window.addEventListener("touchend",()=>drag=false)
+// Resize
+let rsz=false,rStart={}
+document.getElementById("resizeHandle").addEventListener("mousedown",e=>{rsz=true;rStart={x:e.clientX,w:vidCont.offsetWidth};e.preventDefault();e.stopPropagation()})
+window.addEventListener("mousemove",e=>{if(!rsz)return;vidCont.style.width=Math.max(220,Math.min(rStart.w+(e.clientX-rStart.x),innerWidth-20))+"px"})
+window.addEventListener("mouseup",()=>rsz=false)
+// Fullscreen
+let savedP={}
+document.getElementById("fullscreenBtn").addEventListener("click",()=>{
+  if(vidCont.classList.contains("fs")){vidCont.classList.remove("fs");document.getElementById("fullscreenBtn").innerText="⛶";vidCont.style.left=savedP.l+"px";vidCont.style.top=savedP.t+"px";vidCont.style.width=savedP.w+"px"}
+  else{const rc=vidCont.getBoundingClientRect();savedP={l:rc.left,t:rc.top,w:rc.width};vidCont.classList.add("fs");document.getElementById("fullscreenBtn").innerText="⊡"}
+})
+document.getElementById("closeVideoBtn").addEventListener("click",()=>{mainVideo.pause();isPlaying=false;document.getElementById("mainPlayBtn").innerText="▶";vidCont.classList.remove("visible");renderPlaylist()})
 
-    function updateVolIcon(){
-    if(audioPlayer.volume === 0) volBtn.innerText = "🔇"
-    else if(audioPlayer.volume < 0.4) volBtn.innerText = "🔈"
-    else volBtn.innerText = "🔊"
-    }
+/* ===== ANIMACIÓN ===== */
+function animate(){
+  requestAnimationFrame(animate)
+  const t=performance.now()*0.0015
+  hG.scale.setScalar(1+Math.sin(t*30)*0.04)
+  galaxy.rotation.y+=0.00012
+  gasClouds.rotation.y+=0.00003
+  csG.rotation.y+=0.000002
+  core.scale.setScalar(1+Math.sin(performance.now()*0.0015)*0.025)
+  coreGlow.scale.setScalar(1+Math.sin(performance.now()*0.001)*0.05)
+  venus.group.position.x=Math.cos(t*1.2)*2;venus.group.position.z=Math.sin(t*1.2)*2
+  scient.group.position.x=Math.cos(-t*0.7)*3.5;scient.group.position.z=Math.sin(-t*0.7)*3.5
+  earth.group.position.x=Math.cos(t*0.4)*5;earth.group.position.z=Math.sin(t*0.4)*5
+  sats.forEach(s=>{s.userData.angle+=s.userData.speed;s.position.x=Math.cos(s.userData.angle)*s.userData.distance;s.position.z=Math.sin(s.userData.angle)*s.userData.distance})
+  venus.mesh.material.emissiveIntensity=hovP===venus.group?0.8:0
+  scient.mesh.material.emissiveIntensity=hovP===scient.group?1.2:0.35
+  earth.mesh.material.emissiveIntensity=hovP===earth.group?0.7:0
+  controls.update();composer.render()
+}
+animate()
+window.addEventListener("resize",()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight)})
+</script>
+</body>
+</html>
 
-    volBtn.addEventListener("click", () => {
-    if(audioPlayer.volume > 0){
-    lastVolume = audioPlayer.volume
-    audioPlayer.volume = 0
-    }else{
-    audioPlayer.volume = lastVolume
-    }
-    volumeFillEl.style.width = (audioPlayer.volume * 100) + "%"
-    updateVolIcon()
-    })
-
-    volumeBar.addEventListener("click", (e) => {
-    const rect = volumeBar.getBoundingClientRect()
-    const percent = Math.max(0.05, (e.clientX - rect.left) / rect.width)
-    audioPlayer.volume = Math.min(percent, 1)
-    volumeFillEl.style.width = (audioPlayer.volume * 100) + "%"
-    lastVolume = audioPlayer.volume
-    updateVolIcon()
-    })
-    // ANIMACIÓN
-    function animate(){
-    requestAnimationFrame(animate)
-    const t = performance.now() * 0.0015
-
-    // CORAZÓN
-    heartGroup.scale.setScalar(1 + Math.sin(t * 30) * 0.04)
-
-    // GALAXIA
-    galaxy.rotation.y += 0.00012
-
-    // NUBES
-    gasClouds.rotation.y += 0.00003
-
-    // ESTRELLAS
-    colorStarGroup.rotation.y += 0.000002
-
-    // NÚCLEO
-    core.scale.setScalar(1 + Math.sin(performance.now()*0.0015) * 0.025)
-    coreGlow.scale.setScalar(1 + Math.sin(performance.now()*0.001) * 0.05)
-
-    // PLANETAS
-    venus.group.position.x = Math.cos(t * 1.2) * 2
-    venus.group.position.z = Math.sin(t * 1.2) * 2
-
-    scient.group.position.x = Math.cos(-t * 0.7) * 3.5
-    scient.group.position.z = Math.sin(-t * 0.7) * 3.5
-
-    earth.group.position.x = Math.cos(t * 0.4) * 5
-    earth.group.position.z = Math.sin(t * 0.4) * 5
-
-    // SATÉLITES
-    scientSatellites.forEach((sat) => {
-    sat.userData.angle += sat.userData.speed
-    sat.position.x = Math.cos(sat.userData.angle) * sat.userData.distance
-    sat.position.z = Math.sin(sat.userData.angle) * sat.userData.distance
-    })
-
-    // BRILLO EN PLANETAS
-    venus.mesh.material.emissiveIntensity = hoveredPlanet === venus.group ? 0.8 : 0
-    scient.mesh.material.emissiveIntensity = hoveredPlanet === scient.group ? 1.2 : 0.35
-    earth.mesh.material.emissiveIntensity = hoveredPlanet === earth.group ? 0.7 : 0
-
-    // RENDER
-    controls.update()
-    composer.render()
-    }
-
-    animate()
-
-    // RESIZE
-    window.addEventListener("resize", () => {
-    camera.aspect = innerWidth / innerHeight
-    camera.updateProjectionMatrix()
-    renderer.setSize(innerWidth, innerHeight)
-    composer.setSize(innerWidth, innerHeight)
-    })
-    </script>
-    </body>
-    </html>
 
 
 
