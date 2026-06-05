@@ -302,13 +302,19 @@ document.getElementById("calebSphere").addEventListener("click",()=>plPanel.clas
 document.getElementById("closePlaylist").addEventListener("click",()=>plPanel.classList.remove("open"))
 
 // Cargar songs.json desde GitHub raw
+// Cargar songs.json desde GitHub raw
 async function loadSongs(){
   try{
+    // FORZAR que no use caché
     const url=`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/songs.json?t=${Date.now()}`
-    const r=await fetch(url)
+    const r=await fetch(url, {cache: "no-store"})  // ← Importante
     if(!r.ok) throw new Error()
     const songs=await r.json()
-    playlist=songs.map(s=>({name:s.name,file:s.file,url:`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/SONGS/${s.file}`}))
+    playlist=songs.map(s=>({
+      name:s.name,
+      file:s.file,
+      url:`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/SONGS/${s.file}?t=${Date.now()}`
+    }))
     renderPlaylist()
     if(playlist.length>0) playSong(0)
   }catch(e){
