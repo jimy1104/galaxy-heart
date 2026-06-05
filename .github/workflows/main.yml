@@ -3,7 +3,7 @@ name: Update songs.json
 on:
   push:
     paths:
-      - 'SONGS/**'
+      - 'songs/**'
 
 permissions:
   contents: write
@@ -20,7 +20,7 @@ jobs:
         run: |
           echo '[' > songs.json
           first=true
-          for f in SONGS/*.mp4; do
+          for f in songs/*.mp4; do
             [ -f "$f" ] || continue
             name=$(basename "$f" .mp4)
             file=$(basename "$f")
@@ -33,10 +33,12 @@ jobs:
           done
           echo ']' >> songs.json
 
-      - name: Commit songs.json
+      - name: Commit and push songs.json
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add songs.json
-          git diff --staged --quiet || git commit -m "Update songs.json"
-          git push
+          git diff --staged --quiet && echo "No changes" && exit 0
+          git commit -m "Update songs.json"
+          git pull --rebase origin master
+          git push origin master
