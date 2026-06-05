@@ -15,6 +15,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0  # Necesario para hacer rebase
 
       - name: Generate songs.json
         run: |
