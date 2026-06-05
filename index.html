@@ -297,15 +297,15 @@ document.getElementById("closePlaylist").addEventListener("click",()=>plPanel.cl
 // Cargar songs.json desde GitHub raw
 async function loadSongs(){
   try{
-    const url=`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/songs.json?t=${Date.now()}`
+    const url=`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/SONGS.json?t=${Date.now()}`
     const r=await fetch(url)
     if(!r.ok) throw new Error()
     const songs=await r.json()
-    playlist=songs.map(s=>({name:s.name,file:s.file,url:`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/songs/${s.file}`}))
+    playlist=songs.map(s=>({name:s.name,file:s.file,url:`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/SONGS/${s.file}`}))
     renderPlaylist()
     if(playlist.length>0) playSong(0)
   }catch(e){
-    plContent.innerHTML='<div style="color:rgba(255,255,255,.4);font-size:12px;text-align:center;padding:20px;">Sube videos MP4 a la carpeta songs/ en tu repo.</div>'
+    plContent.innerHTML='<div style="color:rgba(255,255,255,.4);font-size:12px;text-align:center;padding:20px;">Sube videos MP4 a la carpeta SONGS/ en tu repo.</div>'
     nowName.innerText="Sin videos"
   }
 }
@@ -349,14 +349,14 @@ async function deleteSong(i,btn){
 
   try{
     // 1. Obtener SHA del archivo
-    const shaRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/songs/${song.file}`,{
+    const shaRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/SONGS/${song.file}`,{
       headers:{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"}
     })
     if(!shaRes.ok) throw new Error("No se pudo obtener el archivo: "+shaRes.status)
     const shaData=await shaRes.json()
 
     // 2. Eliminar el archivo
-    const delRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/songs/${song.file}`,{
+    const delRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/SONGS/${song.file}`,{
       method:"DELETE",
       headers:{"Authorization":`Bearer ${ghToken}`,"Content-Type":"application/json","Accept":"application/vnd.github+json"},
       body:JSON.stringify({message:`Remove ${song.file}`,sha:shaData.sha,branch:GITHUB_BRANCH})
