@@ -339,6 +339,7 @@ function playSong(i){
 }
 
 // ELIMINAR via GitHub API
+
 async function deleteSong(i,btn){
   if(!ghToken){
     toast("⚠️ Primero guarda tu GitHub Token abajo")
@@ -352,29 +353,39 @@ async function deleteSong(i,btn){
     const shaRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/SONGS/${song.file}`,{
       headers:{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"}
     })
-    if(!shaRes.ok) throw new Error("No se pudo obtener el archivo: "+shaRes.status)
+    
+    if(!shaRes.ok){
+      const errText=await shaRes.text()
+      console.log("Error SHA:",shaRes.status,errText)
+      toast("❌ Error: "+shaRes.status)
+      throw new Error("Error")
+    }
+    
     const shaData=await shaRes.json()
 
     // 2. Eliminar el archivo
     const delRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/SONGS/${song.file}`,{
       method:"DELETE",
-      headers:{"Authorization":`Bearer ${ghToken}`,"Content-Type":"application/json","Accept":"application/vnd.github+json"},
+      headers:{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"},
       body:JSON.stringify({message:`Remove ${song.file}`,sha:shaData.sha,branch:GITHUB_BRANCH})
     })
-    if(!delRes.ok) throw new Error("Error al eliminar: "+delRes.status)
+    
+    if(!delRes.ok){
+      const errText=await delRes.text()
+      console.log("Error DEL:",delRes.status,errText)
+      toast("❌ Error eliminar: "+delRes.status)
+      throw new Error("Error")
+    }
 
     toast(`"${song.name}" eliminado 💜`)
-    // Recargar playlist tras 4s (la Action tarda un poco)
     setTimeout(loadSongs, 4000)
 
-    // Actualizar UI inmediatamente
     playlist.splice(i,1)
     if(!playlist.length){mainVideo.pause();vidCont.classList.remove("visible");isPlaying=false;document.getElementById("mainPlayBtn").innerText="▶"}
     else if(currentIndex>=playlist.length){currentIndex=playlist.length-1;playSong(currentIndex)}
     else renderPlaylist()
 
   }catch(err){
-    toast("❌ Error: "+err.message)
     btn.innerText="✕"; btn.classList.remove("loading"); btn.disabled=false
   }
 }
