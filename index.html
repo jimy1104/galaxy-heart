@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -12,7 +12,7 @@ canvas{display:block;}
 #title p{margin-top:8px;color:#d0d0d0;font-size:13px;opacity:.8;}
 #planetUI{position:fixed;inset:0;background:rgba(0,0,0,.55);display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:.5s;z-index:10000;}
 #planetUI.active{opacity:1;pointer-events:auto;}
-#planetCard{width:420px;padding:40px;border-radius:30px;background:linear-gradient(135deg,rgba(15,15,40,.95),rgba(30,10,50,.92));border:1px solid rgba(255,255,255,.08);color:white;text-align:center;backdrop-filter:blur(15px);transform:scale(.8);transition:.5s;}
+#planetCard{width:420px;max-width:88vw;padding:40px;border-radius:30px;background:linear-gradient(135deg,rgba(15,15,40,.95),rgba(30,10,50,.92));border:1px solid rgba(255,255,255,.08);color:white;text-align:center;backdrop-filter:blur(15px);transform:scale(.8);transition:.5s;}
 #planetUI.active #planetCard{transform:scale(1);}
 #planetTitle{font-size:38px;margin-bottom:20px;color:#ffd9ff;}
 #planetMessage{font-size:18px;line-height:1.8;color:#ddd;max-height:350px;overflow-y:auto;}
@@ -26,62 +26,89 @@ canvas{display:block;}
 @keyframes heartFly{0%{opacity:0;transform:translate(0,0) rotate(-45deg) scale(.3);}15%{opacity:1;}100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate(-45deg) scale(1.4);}}
 #cameraControls{position:fixed;left:30px;bottom:28px;display:flex;flex-direction:column;gap:14px;z-index:999999;}
 #cameraControls button{width:70px;height:70px;border:none;border-radius:50%;background:rgba(255,255,255,.08);color:white;font-size:34px;cursor:pointer;backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);}
-#volumeControl{position:fixed;right:320px;bottom:28px;display:flex;align-items:center;gap:10px;z-index:999999;}
-#volBtn{width:45px;height:45px;border:none;border-radius:50%;background:linear-gradient(135deg,#9b7dff,#ff66cc);color:white;font-size:20px;cursor:pointer;}
-#volumeBar{width:100px;height:8px;background:rgba(255,255,255,.15);border-radius:4px;cursor:pointer;}
-#volumeFill{height:100%;width:70%;background:linear-gradient(90deg,#9b7dff,#ff66cc);border-radius:4px;}
-#calebSphere{position:fixed;right:30px;bottom:90px;width:45px;height:45px;border-radius:50%;cursor:pointer;z-index:999999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#9b7dff,#ff66cc);box-shadow:0 0 30px rgba(155,125,255,.5);border:2px solid rgba(255,255,255,.2);transition:.3s;}
+#calebSphere{position:fixed;right:30px;bottom:28px;width:52px;height:52px;border-radius:50%;cursor:pointer;z-index:999999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#9b7dff,#ff66cc);box-shadow:0 0 30px rgba(155,125,255,.5);border:2px solid rgba(255,255,255,.2);transition:.3s;}
 #calebSphere:hover{transform:scale(1.15);}
-#calebSphere span{font-size:24px;}
+#calebSphere span{font-size:26px;}
+#perfBadge{position:fixed;left:30px;top:25px;font-size:10px;color:rgba(255,255,255,.35);z-index:999999;letter-spacing:1px;pointer-events:none;}
+#ghBackBtn{position:fixed;top:25px;right:30px;padding:12px 22px;border-radius:50px;border:1px solid rgba(255,220,180,.3);background:rgba(20,14,10,.55);color:#ffe9c9;font-size:13px;cursor:pointer;z-index:999999;backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:.4s;display:flex;align-items:center;gap:8px;}
+#ghBackBtn.show{opacity:1;pointer-events:auto;}
 
 /* PLAYLIST */
-#playlistPanel{position:fixed;right:0;top:0;width:300px;height:100vh;background:linear-gradient(180deg,rgba(15,15,25,.97),rgba(10,10,20,.98));border-left:1px solid rgba(255,255,255,.08);transform:translateX(100%);transition:.4s;z-index:999998;display:flex;flex-direction:column;backdrop-filter:blur(20px);}
+#playlistPanel{position:fixed;right:0;top:0;width:340px;max-width:92vw;height:100vh;background:linear-gradient(180deg,rgba(14,12,24,.98),rgba(9,8,18,.99));border-left:1px solid rgba(255,255,255,.08);transform:translateX(100%);transition:.4s cubic-bezier(.2,.8,.2,1);z-index:999998;display:flex;flex-direction:column;backdrop-filter:blur(20px);}
 #playlistPanel.open{transform:translateX(0);}
-#playlistHeader{padding:16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;align-items:center;}
-#playlistTitle{color:#fff;font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;}
-#closePlaylist{width:32px;height:32px;border:none;border-radius:50%;background:rgba(255,255,255,.1);color:white;cursor:pointer;font-size:16px;}
-#playlistContent{flex:1;overflow-y:auto;padding:8px;}
-#playlistContent::-webkit-scrollbar{width:5px;}
-#playlistContent::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:3px;}
-.playlistItem{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;margin-bottom:5px;background:rgba(255,255,255,.03);cursor:pointer;transition:.3s;border:1px solid transparent;}
-.playlistItem:hover{background:rgba(255,255,255,.08);}
-.playlistItem.playing{background:linear-gradient(90deg,rgba(155,125,255,.25),rgba(255,102,204,.1));border-color:rgba(155,125,255,.3);}
-.itemNum{color:rgba(255,255,255,.4);font-size:11px;width:18px;flex-shrink:0;}
-.playlistItem.playing .itemNum{display:none;}
-.itemBars{display:none;gap:1px;flex-shrink:0;}
-.playlistItem.playing .itemBars{display:flex;}
-.itemBars span{width:2px;height:8px;background:#9b7dff;border-radius:2px;animation:bar .6s infinite;}
-.itemBars span:nth-child(2){animation-delay:.15s;}
-.itemBars span:nth-child(3){animation-delay:.3s;}
-@keyframes bar{0%,100%{height:4px;}50%{height:12px;}}
+#plScroll{flex:1;overflow-y:auto;overscroll-behavior:contain;}
+#plScroll::-webkit-scrollbar{width:5px;}
+#plScroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px;}
+#playlistHeader{padding:16px 18px;display:flex;justify-content:space-between;align-items:center;}
+#playlistTitle{color:rgba(255,255,255,.9);font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;opacity:.7;}
+#closePlaylist{width:30px;height:30px;border:none;border-radius:50%;background:rgba(255,255,255,.08);color:white;cursor:pointer;font-size:14px;}
+
+/* Hero now-playing card */
+#nowHero{margin:0 18px 14px;height:190px;border-radius:22px;position:relative;overflow:hidden;background:radial-gradient(circle at 30% 20%,rgba(155,125,255,.55),transparent 60%),radial-gradient(circle at 75% 80%,rgba(255,102,204,.5),transparent 55%),linear-gradient(160deg,#1a1030,#120a22);display:flex;align-items:center;justify-content:center;}
+#nowHeroGlyph{font-size:52px;filter:drop-shadow(0 0 18px rgba(255,150,220,.6));animation:heroPulse 2.4s ease-in-out infinite;}
+@keyframes heroPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
+#nowHeroLabel{position:absolute;left:16px;bottom:12px;right:16px;}
+#nowHeroLabel .k{font-size:9px;color:rgba(255,255,255,.55);letter-spacing:1.5px;text-transform:uppercase;}
+
+#nowName{color:#fff;font-size:17px;font-weight:700;margin:0 20px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#nowArtist{color:rgba(255,255,255,.45);font-size:11px;margin:4px 20px 0;}
+
+#progressBar{height:5px;background:rgba(255,255,255,.1);border-radius:3px;margin:18px 20px 6px;cursor:pointer;position:relative;}
+#progressFill{height:100%;width:0%;background:linear-gradient(90deg,#9b7dff,#ff66cc);border-radius:3px;position:relative;}
+#progressFill::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:13px;height:13px;border-radius:50%;background:#fff;box-shadow:0 0 8px rgba(255,255,255,.8);}
+#timeRow{display:flex;justify-content:space-between;margin:0 20px;font-size:10.5px;color:rgba(255,255,255,.4);}
+
+#transportRow{display:flex;align-items:center;justify-content:space-between;margin:20px 26px 4px;}
+#transportRow button{border:none;background:none;color:rgba(255,255,255,.8);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.tIcon{width:38px;height:38px;font-size:19px;}
+.tIcon.active{color:#ff8ad8;}
+#mainPlayBtn{width:60px;height:60px;border-radius:50%;background:linear-gradient(135deg,#9b7dff,#ff66cc);color:#fff;font-size:24px;box-shadow:0 6px 20px rgba(155,90,255,.4);}
+
+#secondaryRow{display:flex;align-items:center;justify-content:center;gap:34px;margin:14px 0 6px;}
+#secondaryRow button{border:none;background:none;color:rgba(255,255,255,.55);font-size:12px;font-weight:700;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;}
+#secondaryRow button span.ic{font-size:17px;}
+#secondaryRow button.active{color:#ff8ad8;}
+
+#queueSection{margin-top:10px;padding:0 18px 14px;}
+#queueHeader{display:flex;justify-content:space-between;align-items:baseline;padding:14px 2px 8px;border-top:1px solid rgba(255,255,255,.06);}
+#queueHeader .qt{color:rgba(255,255,255,.85);font-size:13px;font-weight:700;}
+#queueHeader .qc{color:rgba(255,255,255,.35);font-size:10.5px;}
+
+.playlistItem{display:flex;align-items:center;gap:10px;padding:8px;border-radius:12px;margin-bottom:4px;cursor:pointer;transition:.2s;border:1px solid transparent;}
+.playlistItem:hover{background:rgba(255,255,255,.05);}
+.playlistItem.playing{background:linear-gradient(90deg,rgba(155,125,255,.22),rgba(255,102,204,.08));border-color:rgba(155,125,255,.25);}
+.itemThumb{width:40px;height:40px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;background:linear-gradient(135deg,#7d5cff,#ff7de0);color:#fff;position:relative;}
+.itemThumb .bars{display:none;gap:2px;}
+.playlistItem.playing .itemThumb .bars{display:flex;}
+.playlistItem.playing .itemThumb .glyph{display:none;}
+.itemThumb .bars span{width:3px;height:10px;background:#fff;border-radius:2px;animation:bar .6s infinite;}
+.itemThumb .bars span:nth-child(2){animation-delay:.15s;}
+.itemThumb .bars span:nth-child(3){animation-delay:.3s;}
+@keyframes bar{0%,100%{height:5px;}50%{height:15px;}}
 .itemInfo{flex:1;min-width:0;}
-.itemName{color:#fff;font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.itemArtist{color:rgba(255,255,255,.5);font-size:9px;}
-.itemDel{width:24px;height:24px;border:none;border-radius:6px;background:rgba(255,80,80,.2);color:rgba(255,150,150,.9);font-size:12px;cursor:pointer;opacity:0;transition:.2s;flex-shrink:0;}
+.itemName{color:#fff;font-size:12.5px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.itemArtist{color:rgba(255,255,255,.4);font-size:10px;margin-top:1px;}
+.itemArtist.pending{color:#ffcf7a;}
+.itemDel{width:26px;height:26px;border:none;border-radius:8px;background:rgba(255,80,80,.15);color:rgba(255,150,150,.85);font-size:12px;cursor:pointer;opacity:0;transition:.2s;flex-shrink:0;}
 .playlistItem:hover .itemDel{opacity:1;}
-.itemDel:hover{background:rgba(255,80,80,.5);color:#fff;}
+.itemDel:hover{background:rgba(255,80,80,.45);color:#fff;}
 .itemDel.loading{opacity:1;animation:spin .6s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-#playlistFooter{padding:15px;border-top:1px solid rgba(255,255,255,.08);}
-#songControls{display:flex;justify-content:center;gap:6px;margin-bottom:12px;}
-#songControls button{width:36px;height:36px;border:none;border-radius:50%;background:rgba(255,255,255,.1);color:white;cursor:pointer;font-size:14px;}
-#songControls button.main{width:44px;height:44px;background:linear-gradient(135deg,#9b7dff,#ff66cc);font-size:18px;}
-#songControls button.active{background:linear-gradient(135deg,#ff66cc,#9b7dff);}
-#progressBar{height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin-bottom:8px;cursor:pointer;}
-#progressFill{height:100%;width:0%;background:linear-gradient(90deg,#9b7dff,#ff66cc);transition:width .1s linear;}
-#nowPlaying{text-align:center;margin-top:8px;}
-#nowPlayingName{color:#fff;font-size:12px;font-weight:600;}
-#nowPlayingArtist{color:rgba(255,255,255,.5);font-size:10px;margin-top:2px;}
-#addSection{padding:10px 15px;border-top:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:6px;}
+
+#addSection{padding:12px 18px 16px;border-top:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:8px;}
+#selectFileBtn{padding:11px;border-radius:10px;background:rgba(155,125,255,.35);color:#fff;border:none;cursor:pointer;font-size:11.5px;font-weight:600;}
+#fileName{color:rgba(255,255,255,.5);font-size:9.5px;text-align:center;}
+#uploadBtn{padding:11px;border-radius:10px;background:linear-gradient(90deg,#9b7dff,#ff66cc);color:#fff;border:none;cursor:pointer;font-size:11.5px;font-weight:600;display:none;}
+#uploadStatus{font-size:9.5px;color:rgba(255,255,255,.4);text-align:center;}
 #tokenRow{display:flex;gap:6px;align-items:center;}
-#tokenInput{flex:1;padding:7px 10px;border-radius:8px;border:1px solid rgba(155,125,255,.3);background:rgba(255,255,255,.06);color:#fff;font-size:10px;}
+#tokenInput{flex:1;padding:8px 10px;border-radius:8px;border:1px solid rgba(155,125,255,.3);background:rgba(255,255,255,.06);color:#fff;font-size:10px;}
 #tokenInput::placeholder{color:rgba(255,255,255,.3);}
-#saveTokenBtn{padding:7px 10px;border:none;border-radius:8px;background:rgba(155,125,255,.4);color:#fff;font-size:10px;cursor:pointer;white-space:nowrap;}
+#saveTokenBtn{padding:8px 10px;border:none;border-radius:8px;background:rgba(155,125,255,.4);color:#fff;font-size:10px;cursor:pointer;white-space:nowrap;}
 #saveTokenBtn.saved{background:rgba(80,200,80,.4);}
 #tokenStatus{font-size:9px;color:rgba(255,255,255,.4);text-align:center;}
 
 /* VIDEO FLOTANTE */
-#videoContainer{position:fixed;bottom:120px;right:320px;width:380px;background:rgba(10,10,20,.95);border:1px solid rgba(155,125,255,.4);border-radius:16px;overflow:hidden;z-index:999997;display:none;flex-direction:column;box-shadow:0 0 40px rgba(155,125,255,.2);}
+#videoContainer{position:fixed;bottom:120px;right:360px;width:380px;background:rgba(10,10,20,.95);border:1px solid rgba(155,125,255,.4);border-radius:16px;overflow:hidden;z-index:999997;display:none;flex-direction:column;box-shadow:0 0 40px rgba(155,125,255,.2);}
 #videoContainer.visible{display:flex;}
 #videoHeader{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(155,125,255,.15);cursor:grab;user-select:none;}
 #videoHeader:active{cursor:grabbing;}
@@ -97,14 +124,15 @@ canvas{display:block;}
 #resizeHandle::after{content:'';width:8px;height:8px;border-right:2px solid #9b7dff;border-bottom:2px solid #9b7dff;}
 
 /* TOAST */
-#toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:rgba(30,20,50,.95);color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999999;opacity:0;transition:.3s;border:1px solid rgba(155,125,255,.4);pointer-events:none;}
+#toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:rgba(30,20,50,.95);color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999999;opacity:0;transition:.3s;border:1px solid rgba(155,125,255,.4);pointer-events:none;max-width:80vw;text-align:center;}
 #toast.show{opacity:1;}
 </style>
 </head>
 <body>
 
-<audio id="audioPlayer"></audio>
 <div id="toast"></div>
+<div id="perfBadge"></div>
+<button id="ghBackBtn">← Volver</button>
 
 <div id="title"><h1>Yuleb</h1><p>Te amo tanto tanto tanto</p></div>
 
@@ -119,11 +147,6 @@ canvas{display:block;}
 <div id="cameraControls">
   <button id="zoomIn">＋</button>
   <button id="zoomOut">－</button>
-</div>
-
-<div id="volumeControl">
-  <button id="volBtn">🔊</button>
-  <div id="volumeBar"><div id="volumeFill"></div></div>
 </div>
 
 <div id="calebSphere"><span>💜</span></div>
@@ -143,39 +166,54 @@ canvas{display:block;}
 
 <!-- PLAYLIST -->
 <div id="playlistPanel">
-  <div id="playlistHeader">
-    <div id="playlistTitle"><span>💜</span> Yuleb' Playlist</div>
-    <button id="closePlaylist">✕</button>
-  </div>
-  <div id="playlistContent"></div>
-  <div id="playlistFooter">
+  <div id="plScroll">
+    <div id="playlistHeader">
+      <div id="playlistTitle">💜 Yuleb' Playlist</div>
+      <button id="closePlaylist">✕</button>
+    </div>
+
+    <div id="nowHero">
+      <div id="nowHeroGlyph">💜</div>
+      <div id="nowHeroLabel"><div class="k">Reproduciendo ahora</div></div>
+    </div>
+    <div id="nowName">Sin videos</div>
+    <div id="nowArtist">Sube un video a la carpeta SONGS/</div>
+
     <div id="progressBar"><div id="progressFill"></div></div>
-    <div id="songControls">
-      <button id="shuffleBtn">🔀</button>
-      <button id="prevBtn">⏮</button>
-      <button id="mainPlayBtn" class="main">▶</button>
-      <button id="nextBtn">⏭</button>
-      <button id="repeatBtn">🔁</button>
+    <div id="timeRow"><span id="timeCur">0:00</span><span id="timeRest">-0:00</span></div>
+
+    <div id="transportRow">
+      <button id="shuffleBtn" class="tIcon" title="Aleatorio">🔀</button>
+      <button id="back15Btn" class="tIcon" title="Retroceder 15s">⟲15</button>
+      <button id="mainPlayBtn" title="Reproducir">▶</button>
+      <button id="fwd15Btn" class="tIcon" title="Adelantar 15s">⟳15</button>
+      <button id="repeatBtn" class="tIcon" title="Repetir">🔁</button>
     </div>
-    <div id="nowPlaying">
-      <div id="nowPlayingName">Sin videos</div>
-      <div id="nowPlayingArtist">Sube MP4 a la carpeta songs/</div>
+
+    <div id="secondaryRow">
+      <button id="speedBtn"><span class="ic">⏱</span>1x</button>
+      <button id="muteBtn"><span class="ic" id="muteIcon">🔊</span>Sonido</button>
+      <button id="fsBtn"><span class="ic">⛶</span>Pantalla</button>
+    </div>
+
+    <div id="queueSection">
+      <div id="queueHeader"><span class="qt">A continuación</span><span class="qc" id="queueCount">0 videos</span></div>
+      <div id="playlistContent"></div>
     </div>
   </div>
-<div id="addSection">
-  <div style="display:flex;flex-direction:column;gap:6px;">
-    <input id="uploadFile" type="file" accept=".mp4" style="display:none;">
-    <button id="selectFileBtn" style="padding:10px;border-radius:8px;background:rgba(155,125,255,.4);color:#fff;border:none;cursor:pointer;font-size:11px;">📁 Seleccionar video</button>
-    <div id="fileName" style="color:rgba(255,255,255,.5);font-size:9px;text-align:center;"></div>
-    <button id="uploadBtn" style="padding:10px;border-radius:8px;background:linear-gradient(90deg,#9b7dff,#ff66cc);color:#fff;border:none;cursor:pointer;font-size:11px;display:none;">⬆️ Subir a GitHub</button>
-    <div id="uploadStatus" style="font-size:9px;color:rgba(255,255,255,.4);text-align:center;"></div>
+
+  <div id="addSection">
+    <input id="uploadFile" type="file" accept=".mp4,.mp3,.wav" style="display:none;">
+    <button id="selectFileBtn">📁 Seleccionar video</button>
+    <div id="fileName"></div>
+    <button id="uploadBtn">⬆️ Subir</button>
+    <div id="uploadStatus"></div>
+    <div id="tokenRow">
+      <input id="tokenInput" type="password" placeholder="GitHub Token (para subir/eliminar)">
+      <button id="saveTokenBtn">Guardar</button>
+    </div>
+    <div id="tokenStatus">Token: no configurado</div>
   </div>
-  <div id="tokenRow">
-    <input id="tokenInput" type="password" placeholder="GitHub Token (para eliminar)">
-    <button id="saveTokenBtn">Guardar</button>
-  </div>
-  <div id="tokenStatus">Token: no configurado</div>
-</div>
 </div>
 
 <script type="module">
@@ -188,9 +226,9 @@ import { UnrealBloomPass } from 'https://esm.sh/three@0.160.0/examples/jsm/postp
 /* ============================
    CONFIG — CAMBIA ESTOS DATOS
    ============================ */
-const GITHUB_OWNER = "jimy1104"      // tu usuario de GitHub
-const GITHUB_REPO  = "galaxy-heart"        // nombre del repositorio
-const GITHUB_BRANCH = "master"          // rama (main o master)
+const GITHUB_OWNER = "jimy1104"
+const GITHUB_REPO  = "galaxy-heart"
+const GITHUB_BRANCH = "master"
 /* ============================ */
 
 // Toast
@@ -200,6 +238,21 @@ function toast(msg, duration=2800){
   setTimeout(()=>t.classList.remove("show"),duration)
 }
 
+/* ============================
+   DETECCIÓN DE RENDIMIENTO
+   Baja automáticamente la densidad de partículas
+   en equipos con menos núcleos/memoria/pantalla chica,
+   para que no todo el mundo sufra el mismo lag.
+   ============================ */
+const cores = navigator.hardwareConcurrency || 4
+const mem = navigator.deviceMemory || 4
+const smallScreen = Math.min(innerWidth, innerHeight) < 700
+const LOW_POWER = cores <= 4 || mem <= 4 || smallScreen
+const Q = LOW_POWER
+  ? { starsA:55000, starsB:22000, cluster:400, formations:28, galaxy:70000, gas:12000, planetSeg:40, ringSeg:110, bloomDiv:2.2, pixelCap:1.35, diskSeg:96, sphereSeg:48, haloOn:false, nebClusters:3, nebPerCluster:2200 }
+  : { starsA:130000, starsB:55000, cluster:900, formations:60, galaxy:150000, gas:26000, planetSeg:72, ringSeg:190, bloomDiv:1.5, pixelCap:1.75, diskSeg:180, sphereSeg:96, haloOn:true, nebClusters:6, nebPerCluster:4200 }
+document.getElementById("perfBadge").innerText = LOW_POWER ? "modo: rendimiento" : "modo: calidad"
+
 /* ===== THREE.JS ===== */
 const scene=new THREE.Scene()
 scene.fog=new THREE.FogExp2(0x020308,0.009)
@@ -207,59 +260,279 @@ const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,4000)
 camera.position.set(0,8,30)
 const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:"high-performance"})
 renderer.setSize(innerWidth,innerHeight)
-renderer.setPixelRatio(Math.min(devicePixelRatio,2))
+renderer.setPixelRatio(Math.min(devicePixelRatio,Q.pixelCap))
 renderer.outputColorSpace=THREE.SRGBColorSpace
 document.body.appendChild(renderer.domElement)
 const composer=new EffectComposer(renderer)
 composer.addPass(new RenderPass(scene,camera))
-composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),1.15,0.65,0.15))
+const bloomPass=new UnrealBloomPass(new THREE.Vector2(innerWidth/Q.bloomDiv,innerHeight/Q.bloomDiv),1.05,0.6,0.15)
+composer.addPass(bloomPass)
 const controls=new OrbitControls(camera,renderer.domElement)
 controls.enableDamping=true;controls.enablePan=false;controls.minDistance=12;controls.maxDistance=90
 scene.add(new THREE.AmbientLight(0xffffff,0.1))
 const coreLight=new THREE.PointLight(0xffccff,10,300);scene.add(coreLight)
 const blueLight=new THREE.PointLight(0x66aaff,5,500);blueLight.position.set(-50,20,-20);scene.add(blueLight)
 
+// Textura de punto suave y circular (para que NADA se dibuje como cuadrado)
+function mkDotTexture(){
+  const c=document.createElement('canvas');c.width=c.height=64
+  const ctx=c.getContext('2d')
+  const g=ctx.createRadialGradient(32,32,0,32,32,32)
+  g.addColorStop(0,'rgba(255,255,255,1)')
+  g.addColorStop(0.4,'rgba(255,255,255,0.7)')
+  g.addColorStop(1,'rgba(255,255,255,0)')
+  ctx.fillStyle=g;ctx.fillRect(0,0,64,64)
+  return new THREE.CanvasTexture(c)
+}
+const dotTex=mkDotTexture()
+
 // Estrellas
-const mk=(n,r,s,op)=>{const g=new THREE.BufferGeometry(),p=new Float32Array(n*3);for(let i=0;i<p.length;i++)p[i]=(Math.random()-.5)*r;g.setAttribute('position',new THREE.BufferAttribute(p,3));return new THREE.Points(g,new THREE.PointsMaterial({color:0xffffff,size:s,transparent:true,opacity:op,depthWrite:false}))}
-scene.add(mk(180000,3200,0.028,0.95));scene.add(mk(90000,2200,0.08,1))
+const mk=(n,r,s,op)=>{const g=new THREE.BufferGeometry(),p=new Float32Array(n*3);for(let i=0;i<p.length;i++)p[i]=(Math.random()-.5)*r;g.setAttribute('position',new THREE.BufferAttribute(p,3));return new THREE.Points(g,new THREE.PointsMaterial({color:0xffffff,size:s,map:dotTex,transparent:true,opacity:op,depthWrite:false}))}
+scene.add(mk(Q.starsA,3200,0.028,0.95));scene.add(mk(Q.starsB,2200,0.08,1))
 const csG=new THREE.Group();scene.add(csG)
-for(let i=0;i<1200;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(Math.random()*0.08+0.02,10,10),new THREE.MeshBasicMaterial({color:Math.random()>.5?0x8fc7ff:0xffb3f2}));s.position.set((Math.random()-.5)*900,(Math.random()-.5)*900,(Math.random()-.5)*900);csG.add(s)}
-for(let i=0;i<80;i++){const r=Math.random()*0.3+0.06,p=new THREE.Vector3((Math.random()-.5)*500,(Math.random()-.5)*500,(Math.random()-.5)*500);const f=new THREE.Mesh(new THREE.SphereGeometry(r,16,16),new THREE.MeshBasicMaterial({color:0xffffff}));f.position.copy(p);scene.add(f);const gl=new THREE.Mesh(new THREE.SphereGeometry(r*4,16,16),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.05}));gl.position.copy(p);scene.add(gl)}
+for(let i=0;i<Q.cluster;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(Math.random()*0.08+0.02,8,8),new THREE.MeshBasicMaterial({color:Math.random()>.5?0x8fc7ff:0xffb3f2}));s.position.set((Math.random()-.5)*900,(Math.random()-.5)*900,(Math.random()-.5)*900);csG.add(s)}
+for(let i=0;i<Q.formations;i++){const r=Math.random()*0.3+0.06,p=new THREE.Vector3((Math.random()-.5)*500,(Math.random()-.5)*500,(Math.random()-.5)*500);const f=new THREE.Mesh(new THREE.SphereGeometry(r,12,12),new THREE.MeshBasicMaterial({color:0xffffff}));f.position.copy(p);scene.add(f);const gl=new THREE.Mesh(new THREE.SphereGeometry(r*4,12,12),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.05}));gl.position.copy(p);scene.add(gl)}
+
+/* ============================
+   NEBULOSAS DE FONDO — hechas de miles de partículas finas
+   de color (no formas de gradiente plano), para que se vea
+   como polvo cósmico real tipo fotos de la NASA. Sin galaxias
+   extra, tal como se pidió.
+   ============================ */
+const nebPalettePink=[new THREE.Color("#ff8fd6"),new THREE.Color("#e05fb8"),new THREE.Color("#ff6f8f"),new THREE.Color("#c977ff")]
+const nebPaletteBlue=[new THREE.Color("#8fb0ff"),new THREE.Color("#7d5cff"),new THREE.Color("#5fc4ff"),new THREE.Color("#a6c8ff")]
+function mkNebulaCluster(center,count,spread,palette){
+  const g=new THREE.BufferGeometry()
+  const pos=new Float32Array(count*3)
+  const col=new Float32Array(count*3)
+  for(let i=0;i<count;i++){
+    const i3=i*3
+    const r=Math.pow(Math.random(),0.45)*spread // más denso hacia el centro de la nube
+    const theta=Math.random()*Math.PI*2
+    const phi=Math.acos(Math.random()*2-1)
+    pos[i3]=center.x+r*Math.sin(phi)*Math.cos(theta)
+    pos[i3+1]=center.y+r*Math.cos(phi)*0.35
+    pos[i3+2]=center.z+r*Math.sin(phi)*Math.sin(theta)
+    const c=palette[Math.floor(Math.random()*palette.length)]
+    const shade=0.3+Math.random()*0.8
+    col[i3]=c.r*shade;col[i3+1]=c.g*shade;col[i3+2]=c.b*shade
+  }
+  g.setAttribute('position',new THREE.BufferAttribute(pos,3))
+  g.setAttribute('color',new THREE.BufferAttribute(col,3))
+  return new THREE.Points(g,new THREE.PointsMaterial({size:2.4,map:dotTex,vertexColors:true,transparent:true,opacity:0.5,depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true}))
+}
+const bgDecor=new THREE.Group();scene.add(bgDecor)
+for(let i=0;i<Q.nebClusters;i++){
+  const dist=230+Math.random()*420
+  const a=Math.random()*Math.PI*2,el=(Math.random()-.5)*0.7
+  const center=new THREE.Vector3(Math.cos(a)*Math.cos(el)*dist,Math.sin(el)*dist*0.55,Math.sin(a)*Math.cos(el)*dist)
+  const palette=Math.random()>0.5?nebPalettePink:nebPaletteBlue
+  bgDecor.add(mkNebulaCluster(center,Q.nebPerCluster,55+Math.random()*45,palette))
+}
 
 // Galaxia
 const gG=new THREE.Group();scene.add(gG)
-const gP={count:220000,radius:34,branches:5,spin:0.92,randomness:0.6,rPow:5,c1:new THREE.Color("#fff0ff"),c2:new THREE.Color("#ff7de9"),c3:new THREE.Color("#63a8ff")}
+const gP={count:Q.galaxy,radius:34,branches:5,spin:0.92,randomness:0.6,rPow:5,c1:new THREE.Color("#fff0ff"),c2:new THREE.Color("#ff7de9"),c3:new THREE.Color("#63a8ff")}
 const gGeo=new THREE.BufferGeometry(),gPos=new Float32Array(gP.count*3),gCol=new Float32Array(gP.count*3)
 for(let i=0;i<gP.count;i++){const i3=i*3,rad=Math.random()*gP.radius,bA=(i%gP.branches)/gP.branches*Math.PI*2,sA=rad*gP.spin;const rnd=(s)=>Math.pow(Math.random(),gP.rPow)*(Math.random()<.5?1:-1)*gP.randomness*s;gPos[i3]=Math.cos(bA+sA)*rad+rnd(rad);gPos[i3+1]=rnd(rad)*0.12;gPos[i3+2]=Math.sin(bA+sA)*rad+rnd(rad);const mc=gP.c1.clone();if(rad<gP.radius*0.3)mc.lerp(gP.c2,rad/(gP.radius*0.3));else mc.lerp(gP.c3,rad/gP.radius);gCol[i3]=mc.r;gCol[i3+1]=mc.g;gCol[i3+2]=mc.b}
 gGeo.setAttribute('position',new THREE.BufferAttribute(gPos,3));gGeo.setAttribute('color',new THREE.BufferAttribute(gCol,3))
-const galaxy=new THREE.Points(gGeo,new THREE.PointsMaterial({size:0.042,depthWrite:false,blending:THREE.AdditiveBlending,vertexColors:true,transparent:true}));gG.add(galaxy)
-const core=new THREE.Mesh(new THREE.SphereGeometry(1.8,64,64),new THREE.MeshBasicMaterial({color:0xffd8ff,transparent:true,opacity:0.72}));scene.add(core)
-const coreGlow=new THREE.Mesh(new THREE.SphereGeometry(4.2,64,64),new THREE.MeshBasicMaterial({color:0xff88ff,transparent:true,opacity:0.07}));scene.add(coreGlow)
+const galaxy=new THREE.Points(gGeo,new THREE.PointsMaterial({size:0.06,map:dotTex,depthWrite:false,blending:THREE.AdditiveBlending,vertexColors:true,transparent:true,sizeAttenuation:true}));gG.add(galaxy)
+const core=new THREE.Mesh(new THREE.SphereGeometry(1.8,48,48),new THREE.MeshBasicMaterial({color:0xffd8ff,transparent:true,opacity:0.72}));scene.add(core)
+const coreGlow=new THREE.Mesh(new THREE.SphereGeometry(4.2,48,48),new THREE.MeshBasicMaterial({color:0xff88ff,transparent:true,opacity:0.07}));scene.add(coreGlow)
 
 // Gas + polvo
-const mkCloud=(n,size,op,colorFn)=>{const g=new THREE.BufferGeometry(),p=new Float32Array(n*3),c=new Float32Array(n*3);for(let i=0;i<n;i++){const i3=i*3,r=3+Math.random()*30,a=Math.random()*Math.PI*2,sp=r*0.9;p[i3]=Math.cos(a+sp)*r+(Math.random()-.5)*2;p[i3+1]=(Math.random()-.5)*1.5;p[i3+2]=Math.sin(a+sp)*r+(Math.random()-.5)*2;const col=colorFn();c[i3]=col.r;c[i3+1]=col.g;c[i3+2]=col.b}g.setAttribute('position',new THREE.BufferAttribute(p,3));g.setAttribute('color',new THREE.BufferAttribute(c,3));return new THREE.Points(g,new THREE.PointsMaterial({size,transparent:true,opacity:op,depthWrite:false,blending:THREE.AdditiveBlending,vertexColors:true}))}
-const gasClouds=mkCloud(45000,0.18,0.035,()=>Math.random()>.5?new THREE.Color("#ff66cc"):new THREE.Color("#66aaff"));scene.add(gasClouds)
+const mkCloud=(n,size,op,colorFn)=>{const g=new THREE.BufferGeometry(),p=new Float32Array(n*3),c=new Float32Array(n*3);for(let i=0;i<n;i++){const i3=i*3,r=3+Math.random()*30,a=Math.random()*Math.PI*2,sp=r*0.9;p[i3]=Math.cos(a+sp)*r+(Math.random()-.5)*2;p[i3+1]=(Math.random()-.5)*1.5;p[i3+2]=Math.sin(a+sp)*r+(Math.random()-.5)*2;const col=colorFn();c[i3]=col.r;c[i3+1]=col.g;c[i3+2]=col.b}g.setAttribute('position',new THREE.BufferAttribute(p,3));g.setAttribute('color',new THREE.BufferAttribute(c,3));return new THREE.Points(g,new THREE.PointsMaterial({size,map:dotTex,transparent:true,opacity:op,depthWrite:false,blending:THREE.AdditiveBlending,vertexColors:true,sizeAttenuation:true}))}
+const gasClouds=mkCloud(Q.gas,0.18,0.035,()=>Math.random()>.5?new THREE.Color("#ff66cc"):new THREE.Color("#66aaff"));scene.add(gasClouds)
+
+/* ============================
+   GARGANTÚA — agujero negro estilo Interstellar
+   Truco sin raytracing: esfera negra opaca que ocluye
+   correctamente (escribe profundidad) + disco de acreción
+   con shader de turbulencia + anillo vertical que imita
+   el lente gravitacional envolviendo los polos + anillo
+   de fotones + resplandor atmosférico.
+   ============================ */
+const gargantua=new THREE.Group()
+const GH_R=32 // radio del horizonte de eventos (agrandado porque ahora está más lejos)
+
+// Horizonte de eventos: opaco, escribe profundidad -> oculta el disco detrás correctamente
+const ghSphere=new THREE.Mesh(
+  new THREE.SphereGeometry(GH_R,Q.sphereSeg,Q.sphereSeg),
+  new THREE.MeshBasicMaterial({color:0x000000,fog:false})
+)
+ghSphere.name="ghCore"
+gargantua.add(ghSphere)
+
+// Resplandor atmosférico generado por canvas (sin texturas externas)
+function makeGlowTexture(){
+  const c=document.createElement('canvas');c.width=c.height=256
+  const ctx=c.getContext('2d')
+  const g=ctx.createRadialGradient(128,128,0,128,128,128)
+  g.addColorStop(0,'rgba(255,238,205,0.85)')
+  g.addColorStop(0.32,'rgba(255,185,110,0.32)')
+  g.addColorStop(0.7,'rgba(255,120,70,0.08)')
+  g.addColorStop(1,'rgba(255,90,60,0)')
+  ctx.fillStyle=g;ctx.fillRect(0,0,256,256)
+  return new THREE.CanvasTexture(c)
+}
+const ghGlow=new THREE.Sprite(new THREE.SpriteMaterial({map:makeGlowTexture(),blending:THREE.AdditiveBlending,transparent:true,depthWrite:false,fog:false,opacity:0.85}))
+ghGlow.scale.set(GH_R*7,GH_R*7,1)
+gargantua.add(ghGlow)
+
+// Shader del disco de acreción (turbulencia dorada animada)
+const diskVert=`
+varying vec2 vPos;
+void main(){
+  vPos=position.xy;
+  gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);
+}`
+const diskFrag=`
+uniform float time;
+uniform float innerR;
+uniform float outerR;
+varying vec2 vPos;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float noise(vec2 p){
+  vec2 i=floor(p);vec2 f=fract(p);
+  float a=hash(i);float b=hash(i+vec2(1.0,0.0));float c=hash(i+vec2(0.0,1.0));float d=hash(i+vec2(1.0,1.0));
+  vec2 u=f*f*(3.0-2.0*f);
+  return mix(a,b,u.x)+(c-a)*u.y*(1.0-u.x)+(d-b)*u.x*u.y;
+}
+float fbm(vec2 p){
+  float v=0.0;float amp=0.5;
+  for(int i=0;i<4;i++){v+=amp*noise(p);p*=2.02;amp*=0.55;}
+  return v;
+}
+void main(){
+  float r=length(vPos);
+  if(r<innerR||r>outerR) discard;
+  float theta=atan(vPos.y,vPos.x);
+  float t=(r-innerR)/(outerR-innerR);
+  vec2 flowUV=vec2(theta*2.6+time*0.35,r*0.22-time*0.5);
+  float turb=fbm(flowUV);
+  float spokes=fbm(vec2(theta*8.0-time*0.6,r*0.08));
+  float falloff=pow(1.0-clamp(t,0.0,1.0),1.3);
+  float bright=falloff*(0.55+0.55*turb)*(0.7+0.5*spokes);
+  vec3 hot=vec3(1.0,0.98,0.9);
+  vec3 mid=vec3(1.0,0.68,0.32);
+  vec3 cool=vec3(0.85,0.28,0.12);
+  vec3 col=mix(hot,mid,clamp(t*1.6,0.0,1.0));
+  col=mix(col,cool,clamp((t-0.55)*2.2,0.0,1.0));
+  float alpha=clamp(bright,0.0,1.0);
+  if(alpha<0.02) discard;
+  gl_FragColor=vec4(col*bright*1.6,alpha);
+}`
+function mkDiskMaterial(){
+  return new THREE.ShaderMaterial({
+    vertexShader:diskVert,fragmentShader:diskFrag,
+    uniforms:{time:{value:0},innerR:{value:GH_R*1.15},outerR:{value:GH_R*4.3}},
+    transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,side:THREE.DoubleSide
+  })
+}
+const diskGeo=new THREE.RingGeometry(GH_R*1.15,GH_R*4.3,Q.diskSeg,1)
+const diskMat=mkDiskMaterial()
+const disk=new THREE.Mesh(diskGeo,diskMat)
+disk.rotation.x=Math.PI/2-0.16 // casi de canto, ligera inclinación como en la película
+gargantua.add(disk)
+
+// Anillo "halo" vertical: imita la imagen del disco lejano curvada por el lente gravitacional
+let halo=null
+if(Q.haloOn){
+  const haloGeo=new THREE.RingGeometry(GH_R*1.05,GH_R*2.7,Q.diskSeg,1)
+  const haloMat=mkDiskMaterial()
+  haloMat.uniforms.outerR.value=GH_R*2.7
+  halo=new THREE.Mesh(haloGeo,haloMat)
+  halo.rotation.y=Math.PI/2 // plano vertical que envuelve los polos vistos de frente
+  halo.material.opacity=0.6
+  gargantua.add(halo)
+}
+
+// Anillo de fotones: línea brillante justo en el borde del horizonte
+const photonRing=new THREE.Mesh(
+  new THREE.TorusGeometry(GH_R*1.02,GH_R*0.025,8,Q.diskSeg),
+  new THREE.MeshBasicMaterial({color:0xfff2d6,transparent:true,opacity:0.9,blending:THREE.AdditiveBlending,depthWrite:false,fog:false})
+)
+gargantua.add(photonRing)
+
+gargantua.position.set(-190,110,-460)
+gargantua.rotation.z=0.12
+scene.add(gargantua)
+
+// Zoom cinemático al hacer click en Gargantúa
+const zoomState={active:false,animating:false,savedPos:new THREE.Vector3(),savedTarget:new THREE.Vector3()}
+const ghBackBtn=document.getElementById("ghBackBtn")
+function easeInOutCubic(x){return x<0.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2}
+function animateCamera(fromPos,toPos,fromTarget,toTarget,duration,onDone){
+  zoomState.animating=true;controls.enabled=false
+  const t0=performance.now()
+  function step(now){
+    const p=Math.min(1,(now-t0)/duration),e=easeInOutCubic(p)
+    camera.position.lerpVectors(fromPos,toPos,e)
+    controls.target.lerpVectors(fromTarget,toTarget,e)
+    if(p<1){requestAnimationFrame(step)}
+    else{zoomState.animating=false;controls.enabled=true;if(onDone)onDone()}
+  }
+  requestAnimationFrame(step)
+}
+function zoomToGargantua(){
+  zoomState.savedPos.copy(camera.position)
+  zoomState.savedTarget.copy(controls.target)
+  const dir=gargantua.position.clone().sub(camera.position).normalize()
+  const stopDist=GH_R*4.2
+  const toPos=gargantua.position.clone().sub(dir.multiplyScalar(stopDist))
+  animateCamera(camera.position.clone(),toPos,controls.target.clone(),gargantua.position.clone(),1900,()=>{
+    controls.minDistance=GH_R*1.6;controls.maxDistance=GH_R*9
+    zoomState.active=true
+    ghBackBtn.classList.add("show")
+  })
+}
+function zoomOutFromGargantua(){
+  const fromPos=camera.position.clone(),fromTarget=controls.target.clone()
+  controls.minDistance=12;controls.maxDistance=90
+  ghBackBtn.classList.remove("show")
+  zoomState.active=false
+  animateCamera(fromPos,zoomState.savedPos.clone(),fromTarget,zoomState.savedTarget.clone(),1500)
+}
+ghBackBtn.addEventListener("click",zoomOutFromGargantua)
+setTimeout(()=>{if(!zoomState.active)toast("💫 Click en el agujero negro para acercarte",3600)},4500)
 
 // Corazón
 const hG=new THREE.Group();scene.add(hG)
 const hS=new THREE.Shape();hS.moveTo(0,0);hS.bezierCurveTo(0,0,-0.4,-0.4,-0.8,0);hS.bezierCurveTo(-1.2,0.4,-1.2,1.1,0,1.8);hS.bezierCurveTo(1.2,1.1,1.2,0.4,0.8,0);hS.bezierCurveTo(0.4,-0.4,0,0,0,0)
-const heart=new THREE.Mesh(new THREE.ExtrudeGeometry(hS,{depth:0.4,bevelEnabled:true,bevelSegments:8,steps:2,bevelSize:0.08,bevelThickness:0.08}),new THREE.MeshPhysicalMaterial({color:0xff5ebd,emissive:0xff2d95,emissiveIntensity:0.7,roughness:0.28,metalness:0.08,clearcoat:1}))
+const heart=new THREE.Mesh(new THREE.ExtrudeGeometry(hS,{depth:0.4,bevelEnabled:true,bevelSegments:6,steps:2,bevelSize:0.08,bevelThickness:0.08}),new THREE.MeshPhysicalMaterial({color:0xff5ebd,emissive:0xff2d95,emissiveIntensity:0.7,roughness:0.28,metalness:0.08,clearcoat:1}))
 heart.scale.set(0.35,0.35,0.35);heart.rotation.z=Math.PI;heart.rotation.x=0.15;heart.position.y=0.25;hG.add(heart)
 
 // Planetas
-function mkPlanet(sz,col,glow,data){const g=new THREE.Group(),m=new THREE.Mesh(new THREE.SphereGeometry(sz,128,128),new THREE.MeshPhysicalMaterial({color:col,roughness:0.45,metalness:0.06,clearcoat:1}));g.add(m);g.add(new THREE.Mesh(new THREE.SphereGeometry(sz*1.35,64,64),new THREE.MeshBasicMaterial({color:glow,transparent:true,opacity:0.08})));g.userData=data;scene.add(g);return{group:g,mesh:m}}
+function mkPlanet(sz,col,glow,data){const g=new THREE.Group(),m=new THREE.Mesh(new THREE.SphereGeometry(sz,Q.planetSeg,Q.planetSeg),new THREE.MeshPhysicalMaterial({color:col,roughness:0.45,metalness:0.06,clearcoat:1}));g.add(m);g.add(new THREE.Mesh(new THREE.SphereGeometry(sz*1.35,32,32),new THREE.MeshBasicMaterial({color:glow,transparent:true,opacity:0.08})));g.userData=data;scene.add(g);return{group:g,mesh:m}}
 const venus=mkPlanet(0.35,0xd99455,0xffbb88,{title:"Venus",message:"You do not realize it, but you are like the planet Venus. You are very beautiful, and beautiful things belong together. I have been writing to you a lot, and the result of all of that is this: you are Venus. I cannot find another way to describe how I feel about you. Allow me to tell you that, in this fourth month of knowing each other, my flaws have begun to show. And even though you may have told me this or that about the bad parts of yourself, I see no sign of them. It is true that we both have very busy days, yet not even that keeps us from being close. I suffer and regret not being able to remain in the time you offer me that time you somehow manage to find just to give to me. What a wonderful gift that is… it is worth more than ten thousand gifts from anyone else. How radiant and beautiful you are; you burn and shine even from afar."})
 const scient=mkPlanet(0.62,0x9b7dff,0xd6c6ff,{title:"Philos",message:"I love your spontaneity and how unpredictable you are. One day you are obsessed with Caleb, and the next with Xavier. One day you wake up at a certain hour, and the next you simply do not sleep. You are like an atom, with an indecipherable movement. That only reinforces what you once said: to wait longer, perhaps one or two years, to truly finish getting to know each other… because I will never stop discovering something new about you."})
 scient.mesh.material.emissive=new THREE.Color(0x7d5cff);scient.mesh.material.emissiveIntensity=0.45
-for(let i=0;i<4;i++){const r=new THREE.Mesh(new THREE.TorusGeometry(0.82+i*0.07,0.008,16,250),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.13}));r.rotation.x=Math.PI/2.4;r.rotation.z=i*0.15;scient.group.add(r)}
-const sats=[];for(let i=0;i<5;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(0.03+Math.random()*0.02,32,32),new THREE.MeshBasicMaterial({color:i%2===0?0xffffff:0xffb7ff}));s.userData={angle:Math.random()*Math.PI*2,distance:1.1+Math.random()*0.35,speed:0.003+Math.random()*0.004};scient.group.add(s);sats.push(s)}
+for(let i=0;i<4;i++){const r=new THREE.Mesh(new THREE.TorusGeometry(0.82+i*0.07,0.008,10,Q.ringSeg),new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.13}));r.rotation.x=Math.PI/2.4;r.rotation.z=i*0.15;scient.group.add(r)}
+const sats=[];for(let i=0;i<5;i++){const s=new THREE.Mesh(new THREE.SphereGeometry(0.03+Math.random()*0.02,20,20),new THREE.MeshBasicMaterial({color:i%2===0?0xffffff:0xffb7ff}));s.userData={angle:Math.random()*Math.PI*2,distance:1.1+Math.random()*0.35,speed:0.003+Math.random()*0.004};scient.group.add(s);sats.push(s)}
 const earth=mkPlanet(0.42,0x3c8dff,0x99ccff,{title:"Earth",message:"The world is complicated. Despite hundreds and hundreds of thousands of years of discoveries and rediscoveries, this planet still has not been fully explored or understood. How ironic it is to think that you are not only Venus, but also Earth. Just like our planet, you have hidden and deep parts that you still have not told me about, as well as many different sides of yourself. I would have to study a thousand careers just to understand and discover even fifty percent of you. That is what amazes me about you: you are immense on the inside. And to think I once believed the difficult part was crossing those nine thousand kilometers… compared to you, that is only a stone in the road. Thank you for allowing me to know you without so much danger in between. You resist at first, but with time, you end up telling me."})
 
 const ray=new THREE.Raycaster(),mouse=new THREE.Vector2()
-let hovP=null
+let hovP=null,hovGH=false
 const ui=document.getElementById("planetUI")
-window.addEventListener("mousemove",e=>{mouse.x=(e.clientX/innerWidth)*2-1;mouse.y=-(e.clientY/innerHeight)*2+1;ray.setFromCamera(mouse,camera);const hits=ray.intersectObjects([venus.group,scient.group,earth.group],true);if(hits.length){document.body.style.cursor="pointer";let o=hits[0].object;while(o.parent&&!o.userData.title)o=o.parent;hovP=o}else{document.body.style.cursor="default";hovP=null}})
-window.addEventListener("click",e=>{mouse.x=(e.clientX/innerWidth)*2-1;mouse.y=-(e.clientY/innerHeight)*2+1;ray.setFromCamera(mouse,camera);if(hovP&&hovP.userData.title){document.getElementById("planetTitle").innerText=hovP.userData.title;document.getElementById("planetMessage").innerText=hovP.userData.message;ui.classList.add("active");return}const h=ray.intersectObject(heart,true);if(h.length)for(let i=0;i<10;i++){fText(e.clientX,e.clientY);fHeart(e.clientX,e.clientY)}})
+window.addEventListener("mousemove",e=>{
+  mouse.x=(e.clientX/innerWidth)*2-1;mouse.y=-(e.clientY/innerHeight)*2+1;ray.setFromCamera(mouse,camera)
+  const hits=ray.intersectObjects([venus.group,scient.group,earth.group],true)
+  if(hits.length){document.body.style.cursor="pointer";let o=hits[0].object;while(o.parent&&!o.userData.title)o=o.parent;hovP=o;hovGH=false}
+  else{
+    const ghHit=ray.intersectObject(gargantua,true)
+    if(ghHit.length&&!zoomState.animating){document.body.style.cursor="pointer";hovGH=true;hovP=null}
+    else{document.body.style.cursor="default";hovP=null;hovGH=false}
+  }
+})
+window.addEventListener("click",e=>{
+  mouse.x=(e.clientX/innerWidth)*2-1;mouse.y=-(e.clientY/innerHeight)*2+1;ray.setFromCamera(mouse,camera)
+  if(!zoomState.active&&!zoomState.animating){
+    const ghHit=ray.intersectObject(gargantua,true)
+    if(ghHit.length){zoomToGargantua();return}
+  }
+  if(hovP&&hovP.userData.title){document.getElementById("planetTitle").innerText=hovP.userData.title;document.getElementById("planetMessage").innerText=hovP.userData.message;ui.classList.add("active");return}
+  const h=ray.intersectObject(heart,true);if(h.length)for(let i=0;i<10;i++){fText(e.clientX,e.clientY);fHeart(e.clientX,e.clientY)}
+})
 document.getElementById("closeBtn").addEventListener("click",()=>ui.classList.remove("active"))
 document.getElementById("zoomIn").addEventListener("click",()=>{const d=camera.position.length();if(d>12)camera.position.setLength(d-5)})
 document.getElementById("zoomOut").addEventListener("click",()=>{const d=camera.position.length();if(d<90)camera.position.setLength(d+5)})
@@ -269,7 +542,8 @@ function fText(x,y){const t=document.createElement("div");t.className="floatText
 function fHeart(x,y){const h=document.createElement("div");h.className="miniHeart";h.style.left=x+"px";h.style.top=y+"px";const a=(Math.random()*Math.PI)-Math.PI/2;h.style.setProperty("--tx",`${Math.cos(a)*(60+Math.random()*180)}px`);h.style.setProperty("--ty",`${-Math.random()*260}px`);const s=8+Math.random()*18;h.style.width=s+"px";h.style.height=s+"px";const dur=2+Math.random()*2;h.style.animationDuration=dur+"s";document.body.appendChild(h);setTimeout(()=>h.remove(),dur*1000)}
 
 /* ===== PLAYLIST ===== */
-let playlist=[],currentIndex=0,isPlaying=false,isShuffle=false,isRepeat=false,lastVol=0.7
+let playlist=[],currentIndex=0,isPlaying=false,isShuffle=false,isRepeat=false,lastVol=0.7,speedIdx=0
+const speeds=[1,1.25,1.5,1.75,2,0.75]
 let ghToken=localStorage.getItem("yuleb_token")||""
 
 const vidCont=document.getElementById("videoContainer")
@@ -277,15 +551,18 @@ const mainVideo=document.getElementById("mainVideo")
 const vTitle=document.getElementById("videoHeaderTitle")
 const plPanel=document.getElementById("playlistPanel")
 const plContent=document.getElementById("playlistContent")
-const nowName=document.getElementById("nowPlayingName")
-const nowArtist=document.getElementById("nowPlayingArtist")
+const nowName=document.getElementById("nowName")
+const nowArtist=document.getElementById("nowArtist")
 const pFill=document.getElementById("progressFill")
-const volFill=document.getElementById("volumeFill")
+const timeCur=document.getElementById("timeCur")
+const timeRest=document.getElementById("timeRest")
+const queueCount=document.getElementById("queueCount")
 const tokenInput=document.getElementById("tokenInput")
 const saveTokenBtn=document.getElementById("saveTokenBtn")
 const tokenStatus=document.getElementById("tokenStatus")
 
-// Mostrar estado token
+function fmtTime(s){if(!isFinite(s)||s<0)s=0;const m=Math.floor(s/60),ss=Math.floor(s%60);return m+":"+String(ss).padStart(2,"0")}
+
 function updateTokenUI(){
   if(ghToken){tokenStatus.innerText="Token: configurado ✓";saveTokenBtn.classList.add("saved");saveTokenBtn.innerText="✓ Listo"}
   else{tokenStatus.innerText="Token: no configurado";saveTokenBtn.classList.remove("saved");saveTokenBtn.innerText="Guardar"}
@@ -301,37 +578,69 @@ saveTokenBtn.addEventListener("click",()=>{
 document.getElementById("calebSphere").addEventListener("click",()=>plPanel.classList.add("open"))
 document.getElementById("closePlaylist").addEventListener("click",()=>plPanel.classList.remove("open"))
 
-// Cargar songs.json desde GitHub raw
-// Cargar songs.json desde GitHub raw
+/* Unicode-safe base64 helpers (nombres con tildes/emojis) */
+function b64EncodeUnicode(str){return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,(_,p1)=>String.fromCharCode('0x'+p1)))}
+function b64DecodeUnicode(str){return decodeURIComponent(atob(str).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''))}
+
+async function ghGetFile(path){
+  const r=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`,{
+    headers:ghToken?{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"}:{"Accept":"application/vnd.github+json"}
+  })
+  if(!r.ok) return null
+  return r.json()
+}
+async function ghPutJson(path,obj,sha,message){
+  const body={message,content:b64EncodeUnicode(JSON.stringify(obj,null,2)),branch:GITHUB_BRANCH}
+  if(sha) body.sha=sha
+  return fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`,{
+    method:"PUT",headers:{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"},body:JSON.stringify(body)
+  })
+}
+/* Actualiza songs.json directamente por API — sin depender del GitHub Action ni de la caché de 5 min */
+async function updateSongsJson(mutateFn){
+  let file=await ghGetFile("songs.json")
+  let arr=file?JSON.parse(b64DecodeUnicode(file.content)):[]
+  arr=mutateFn(arr)
+  let res=await ghPutJson("songs.json",arr,file?file.sha:undefined,"Update songs.json")
+  if(res.status===409){ // otro cambio en paralelo, reintenta una vez
+    file=await ghGetFile("songs.json")
+    arr=file?JSON.parse(b64DecodeUnicode(file.content)):[]
+    arr=mutateFn(arr)
+    res=await ghPutJson("songs.json",arr,file?file.sha:undefined,"Update songs.json")
+  }
+  return res.ok
+}
+
 async function loadSongs(){
   try{
-    // FORZAR que no use caché
     const url=`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/songs.json?t=${Date.now()}`
-    const r=await fetch(url, {cache: "no-store"})  // ← Importante
+    const r=await fetch(url,{cache:"no-store"})
     if(!r.ok) throw new Error()
     const songs=await r.json()
     playlist=songs.map(s=>({
       name:s.name,
       file:s.file,
-      url:`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/SONGS/${s.file}?t=${Date.now()}`
+      url:`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/SONGS/${s.file}?t=${Date.now()}`,
+      pending:false
     }))
     renderPlaylist()
-    if(playlist.length>0) playSong(0)
+    if(playlist.length>0 && !mainVideo.src) playSong(0)
   }catch(e){
-    plContent.innerHTML='<div style="color:rgba(255,255,255,.4);font-size:12px;text-align:center;padding:20px;">Sube videos MP4 a la carpeta SONGS/ en tu repo.</div>'
-    nowName.innerText="Sin videos"
+    plContent.innerHTML='<div style="color:rgba(255,255,255,.4);font-size:12px;text-align:center;padding:20px;">Sube videos a la carpeta SONGS/ en tu repo.</div>'
   }
 }
 loadSongs()
 
 function renderPlaylist(){
   plContent.innerHTML=""
+  queueCount.innerText=playlist.length+(playlist.length===1?" video":" videos")
   if(!playlist.length){plContent.innerHTML='<div style="color:rgba(255,255,255,.4);font-size:12px;text-align:center;padding:20px;">Sin videos aún.</div>';return}
   playlist.forEach((s,i)=>{
     const d=document.createElement("div")
     d.className="playlistItem"+(i===currentIndex&&isPlaying?" playing":"")
-    d.innerHTML=`<div class="itemNum">${i+1}</div><div class="itemBars"><span></span><span></span><span></span></div><div class="itemInfo"><div class="itemName">${s.name}</div><div class="itemArtist">💜 Video</div></div><button class="itemDel" title="Eliminar del repo">✕</button>`
+    d.innerHTML=`<div class="itemThumb"><span class="glyph">💜</span><div class="bars"><span></span><span></span><span></span></div></div><div class="itemInfo"><div class="itemName">${s.name}</div><div class="itemArtist ${s.pending?'pending':''}">${s.pending?'⏳ subiendo...':'💜 Video'}</div></div><button class="itemDel" title="Eliminar">✕</button>`
     d.querySelector(".itemInfo").addEventListener("click",()=>playSong(i))
+    d.querySelector(".itemThumb").addEventListener("click",()=>playSong(i))
     d.querySelector(".itemDel").addEventListener("click",e=>{e.stopPropagation();deleteSong(i,d.querySelector(".itemDel"))})
     plContent.appendChild(d)
   })
@@ -341,87 +650,65 @@ function playSong(i){
   if(!playlist.length) return
   currentIndex=i
   mainVideo.src=playlist[i].url
+  mainVideo.playbackRate=speeds[speedIdx]
   mainVideo.play()
   isPlaying=true
   document.getElementById("mainPlayBtn").innerText="⏸"
   nowName.innerText=playlist[i].name
-  nowArtist.innerText="💜 Video"
+  nowArtist.innerText=playlist[i].pending?"⏳ subiendo a GitHub...":"💜 Video"
   vTitle.innerText=playlist[i].name
   vidCont.classList.add("visible")
   renderPlaylist()
 }
 
-// ELIMINAR via GitHub API
-
 async function deleteSong(i,btn){
-  if(!ghToken){
-    toast("⚠️ Primero guarda tu GitHub Token abajo")
-    return
-  }
+  if(!ghToken){toast("⚠️ Primero guarda tu GitHub Token abajo");return}
   const song=playlist[i]
   btn.innerText="⏳"; btn.classList.add("loading"); btn.disabled=true
-
   try{
-    // 1. Obtener SHA del archivo
-    const shaRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/SONGS/${song.file}`,{
-      headers:{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"}
-    })
-    
-    if(!shaRes.ok){
-      const errText=await shaRes.text()
-      console.log("Error SHA:",shaRes.status,errText)
-      toast("❌ Error: "+shaRes.status)
-      throw new Error("Error")
+    if(song.pending){ // aún no subido al repo, solo quitar local
+      playlist.splice(i,1)
+      afterListChange(i)
+      return
     }
-    
+    const shaRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/SONGS/${song.file}`,{headers:{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"}})
+    if(!shaRes.ok){toast("❌ Error: "+shaRes.status);throw new Error()}
     const shaData=await shaRes.json()
-
-    // 2. Eliminar el archivo
     const delRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/SONGS/${song.file}`,{
-      method:"DELETE",
-      headers:{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"},
+      method:"DELETE",headers:{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"},
       body:JSON.stringify({message:`Remove ${song.file}`,sha:shaData.sha,branch:GITHUB_BRANCH})
     })
-    
-    if(!delRes.ok){
-      const errText=await delRes.text()
-      console.log("Error DEL:",delRes.status,errText)
-      toast("❌ Error eliminar: "+delRes.status)
-      throw new Error("Error")
-    }
-
+    if(!delRes.ok){toast("❌ Error eliminar: "+delRes.status);throw new Error()}
+    await updateSongsJson(arr=>arr.filter(x=>x.file!==song.file))
     toast(`"${song.name}" eliminado 💜`)
-    setTimeout(loadSongs, 4000)
-
     playlist.splice(i,1)
-    if(!playlist.length){mainVideo.pause();vidCont.classList.remove("visible");isPlaying=false;document.getElementById("mainPlayBtn").innerText="▶"}
-    else if(currentIndex>=playlist.length){currentIndex=playlist.length-1;playSong(currentIndex)}
-    else renderPlaylist()
-
+    afterListChange(i)
   }catch(err){
     btn.innerText="✕"; btn.classList.remove("loading"); btn.disabled=false
   }
 }
-/* ===== SUBIR VIDEOS ===== */
+function afterListChange(deletedIndex){
+  if(!playlist.length){mainVideo.pause();mainVideo.src="";vidCont.classList.remove("visible");isPlaying=false;document.getElementById("mainPlayBtn").innerText="▶";nowName.innerText="Sin videos";nowArtist.innerText="Sube un video a la carpeta SONGS/"}
+  else if(currentIndex>=playlist.length){currentIndex=playlist.length-1;playSong(currentIndex)}
+  else if(deletedIndex===currentIndex){playSong(currentIndex)}
+  else renderPlaylist()
+}
+
+/* ===== SUBIR — reproduce local al instante, sube en paralelo ===== */
 const uploadFileInput=document.getElementById("uploadFile")
 const selectFileBtn=document.getElementById("selectFileBtn")
 const fileNameDiv=document.getElementById("fileName")
 const uploadBtn=document.getElementById("uploadBtn")
 const uploadStatus=document.getElementById("uploadStatus")
+let pendingFile=null
 
 selectFileBtn.addEventListener("click",()=>uploadFileInput.click())
-
 uploadFileInput.addEventListener("change",e=>{
   if(e.target.files.length>0){
     const file=e.target.files[0]
-    if(!file.name.endsWith(".mp4")&&!file.name.endsWith(".mp3")&&!file.name.endsWith(".wav")){
-      toast("Solo MP4, MP3 o WAV")
-      return
-    }
-    if(file.size>100*1024*1024){
-      toast("Archivo muy grande (máx 100MB)")
-      return
-    }
+    if(!/\.(mp4|mp3|wav)$/i.test(file.name)){toast("Solo MP4, MP3 o WAV");return}
+    if(file.size>100*1024*1024){toast("Archivo muy grande (máx 100MB)");return}
+    pendingFile=file
     fileNameDiv.innerText=file.name
     uploadBtn.style.display="block"
     uploadStatus.innerText="Listo para subir"
@@ -429,90 +716,107 @@ uploadFileInput.addEventListener("change",e=>{
 })
 
 uploadBtn.addEventListener("click",async ()=>{
-  if(!ghToken){
-    toast("⚠️ Primero guarda tu GitHub Token")
-    return
-  }
-  if(uploadFileInput.files.length===0){
-    toast("⚠️ Selecciona un archivo")
-    return
-  }
-  
-  const file=uploadFileInput.files[0]
-  uploadBtn.disabled=true
-  uploadBtn.innerText="⏳ Subiendo..."
-  
+  if(!ghToken){toast("⚠️ Primero guarda tu GitHub Token");return}
+  if(!pendingFile){toast("⚠️ Selecciona un archivo");return}
+  const file=pendingFile
+  const displayName=file.name.replace(/\.[^/.]+$/,"")
+  const fileName=file.name.replace(/\s+/g,"_")
+
+  // 1) Reproducir YA MISMO desde el navegador, sin esperar nada de GitHub
+  const localUrl=URL.createObjectURL(file)
+  const entry={name:displayName,file:fileName,url:localUrl,pending:true}
+  playlist.push(entry)
+  renderPlaylist()
+  playSong(playlist.length-1)
+  toast(`Reproduciendo "${displayName}" 💜 (subiendo en segundo plano...)`)
+
+  uploadBtn.disabled=true; uploadBtn.innerText="⏳ Subiendo..."
+  uploadStatus.innerText="Subiendo a GitHub..."
+
   try{
-    // Convertir a base64
-    const reader=new FileReader()
-    reader.onload=async ()=>{
-      const base64=reader.result.split(",")[1]
-      
-      // Nombre del archivo
-      const fileName=file.name.replace(/\s+/g,"_")
-      
-      // Subir a GitHub
-      const uploadRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/SONGS/${fileName}`,{
-        method:"PUT",
-        headers:{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"},
-        body:JSON.stringify({
-          message:`Add ${fileName}`,
-          content:base64,
-          branch:GITHUB_BRANCH
-        })
-      })
-      
-      if(!uploadRes.ok){
-        const errText=await uploadRes.text()
-        console.log("Error upload:",uploadRes.status,errText)
-        toast("❌ Error al subir: "+uploadRes.status)
-        uploadBtn.disabled=false
-        uploadBtn.innerText="⬆️ Subir a GitHub"
-        return
-      }
-      
-      toast(`"${file.name}" subido a GitHub 💜`)
-      uploadStatus.innerText="✓ Subido! Actualizando..."
-      uploadBtn.innerText="⬆️ Subir a GitHub"
-      uploadBtn.disabled=false
-      
-      // Recargar playlist después de 3 segundos
-      setTimeout(loadSongs, 3000)
-      
-      // Limpiar
-      uploadFileInput.value=""
-      fileNameDiv.innerText=""
-      uploadBtn.style.display="none"
+    const base64=await new Promise((res,rej)=>{
+      const reader=new FileReader()
+      reader.onload=()=>res(reader.result.split(",")[1])
+      reader.onerror=rej
+      reader.readAsDataURL(file)
+    })
+    const uploadRes=await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/SONGS/${fileName}`,{
+      method:"PUT",
+      headers:{"Authorization":`Bearer ${ghToken}`,"Accept":"application/vnd.github+json"},
+      body:JSON.stringify({message:`Add ${fileName}`,content:base64,branch:GITHUB_BRANCH})
+    })
+    if(!uploadRes.ok){
+      const errText=await uploadRes.text()
+      console.log("Error upload:",uploadRes.status,errText)
+      toast("❌ Error al subir: "+uploadRes.status)
+      uploadStatus.innerText="❌ Falló la subida (sigue sonando localmente)"
+      uploadBtn.disabled=false; uploadBtn.innerText="⬆️ Subir"
+      return
     }
-    reader.readAsDataURL(file)
+    // 2) Actualizar songs.json directamente — nada de esperar al Action ni a la caché
+    await updateSongsJson(arr=>{
+      if(!arr.some(x=>x.file===fileName)) arr.push({name:displayName,file:fileName})
+      return arr
+    })
+    entry.pending=false
+    entry.url=`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/SONGS/${fileName}?t=${Date.now()}`
+    toast(`"${displayName}" ya está en GitHub 💜`)
+    uploadStatus.innerText="✓ Subido y confirmado"
+    if(playlist[currentIndex]===entry) nowArtist.innerText="💜 Video"
+    renderPlaylist()
+    uploadBtn.innerText="⬆️ Subir"; uploadBtn.disabled=false
+    uploadFileInput.value=""; fileNameDiv.innerText=""; uploadBtn.style.display="none"; pendingFile=null
   }catch(err){
     toast("❌ Error: "+err.message)
-    uploadBtn.disabled=false
-    uploadBtn.innerText="⬆️ Subir a GitHub"
+    uploadStatus.innerText="❌ Falló la subida (sigue sonando localmente)"
+    uploadBtn.disabled=false; uploadBtn.innerText="⬆️ Subir"
   }
 })
+
 // Controles
 document.getElementById("shuffleBtn").addEventListener("click",()=>{isShuffle=!isShuffle;document.getElementById("shuffleBtn").classList.toggle("active",isShuffle)})
 document.getElementById("repeatBtn").addEventListener("click",()=>{isRepeat=!isRepeat;document.getElementById("repeatBtn").classList.toggle("active",isRepeat);mainVideo.loop=isRepeat})
+document.getElementById("back15Btn").addEventListener("click",()=>{if(mainVideo.duration)mainVideo.currentTime=Math.max(0,mainVideo.currentTime-15)})
+document.getElementById("fwd15Btn").addEventListener("click",()=>{if(mainVideo.duration)mainVideo.currentTime=Math.min(mainVideo.duration,mainVideo.currentTime+15)})
 document.getElementById("mainPlayBtn").addEventListener("click",()=>{
   if(!playlist.length)return
   if(isPlaying){mainVideo.pause();isPlaying=false;document.getElementById("mainPlayBtn").innerText="▶"}
   else{if(!mainVideo.src)playSong(0);else mainVideo.play();isPlaying=true;document.getElementById("mainPlayBtn").innerText="⏸"}
   renderPlaylist()
 })
-document.getElementById("prevBtn").addEventListener("click",()=>playSong(isShuffle?Math.floor(Math.random()*playlist.length):(currentIndex-1+playlist.length)%playlist.length))
-document.getElementById("nextBtn").addEventListener("click",()=>playSong(isShuffle?Math.floor(Math.random()*playlist.length):(currentIndex+1)%playlist.length))
-mainVideo.addEventListener("timeupdate",()=>{if(mainVideo.duration)pFill.style.width=(mainVideo.currentTime/mainVideo.duration*100)+"%"})
-mainVideo.addEventListener("ended",()=>{if(!isRepeat)playSong((currentIndex+1)%playlist.length)})
+mainVideo.addEventListener("timeupdate",()=>{
+  if(mainVideo.duration){
+    pFill.style.width=(mainVideo.currentTime/mainVideo.duration*100)+"%"
+    timeCur.innerText=fmtTime(mainVideo.currentTime)
+    timeRest.innerText="-"+fmtTime(mainVideo.duration-mainVideo.currentTime)
+  }
+})
+mainVideo.addEventListener("ended",()=>{if(!isRepeat && playlist.length)playSong(isShuffle?Math.floor(Math.random()*playlist.length):(currentIndex+1)%playlist.length)})
 mainVideo.addEventListener("pause",()=>{if(isPlaying){isPlaying=false;document.getElementById("mainPlayBtn").innerText="▶";renderPlaylist()}})
 mainVideo.addEventListener("play",()=>{if(!isPlaying){isPlaying=true;document.getElementById("mainPlayBtn").innerText="⏸";renderPlaylist()}})
 document.getElementById("progressBar").addEventListener("click",e=>{if(mainVideo.duration){const r=document.getElementById("progressBar").getBoundingClientRect();mainVideo.currentTime=((e.clientX-r.left)/r.width)*mainVideo.duration}})
 
-// Volumen
+// Velocidad
+document.getElementById("speedBtn").addEventListener("click",()=>{
+  speedIdx=(speedIdx+1)%speeds.length
+  mainVideo.playbackRate=speeds[speedIdx]
+  document.getElementById("speedBtn").lastChild.textContent=speeds[speedIdx]+"x"
+})
+
+// Sonido
 mainVideo.volume=0.7
-function updVol(){document.getElementById("volBtn").innerText=mainVideo.volume===0?"🔇":mainVideo.volume<0.4?"🔈":"🔊"}
-document.getElementById("volBtn").addEventListener("click",()=>{if(mainVideo.volume>0){lastVol=mainVideo.volume;mainVideo.volume=0}else mainVideo.volume=lastVol;volFill.style.width=(mainVideo.volume*100)+"%";updVol()})
-document.getElementById("volumeBar").addEventListener("click",e=>{const r=document.getElementById("volumeBar").getBoundingClientRect();mainVideo.volume=Math.min(Math.max((e.clientX-r.left)/r.width,0.05),1);volFill.style.width=(mainVideo.volume*100)+"%";lastVol=mainVideo.volume;updVol()})
+function updMuteIcon(){document.getElementById("muteIcon").innerText=mainVideo.muted||mainVideo.volume===0?"🔇":"🔊"}
+document.getElementById("muteBtn").addEventListener("click",()=>{mainVideo.muted=!mainVideo.muted;updMuteIcon()})
+
+// Fullscreen (dentro de la ventana flotante)
+let savedP={}
+function toggleFs(){
+  if(vidCont.classList.contains("fs")){vidCont.classList.remove("fs");document.getElementById("fullscreenBtn").innerText="⛶";vidCont.style.left=savedP.l+"px";vidCont.style.top=savedP.t+"px";vidCont.style.width=savedP.w+"px"}
+  else{const rc=vidCont.getBoundingClientRect();savedP={l:rc.left,t:rc.top,w:rc.width};vidCont.classList.add("fs");document.getElementById("fullscreenBtn").innerText="⊡"}
+}
+document.getElementById("fullscreenBtn").addEventListener("click",toggleFs)
+document.getElementById("fsBtn").addEventListener("click",toggleFs)
+document.getElementById("closeVideoBtn").addEventListener("click",()=>{mainVideo.pause();isPlaying=false;document.getElementById("mainPlayBtn").innerText="▶";vidCont.classList.remove("visible");renderPlaylist()})
 
 // Video flotante: mover
 let drag=false,dStart={},cStart={}
@@ -525,7 +829,6 @@ document.getElementById("videoHeader").addEventListener("mousedown",e=>{
 })
 window.addEventListener("mousemove",e=>{if(!drag)return;vidCont.style.left=Math.max(0,Math.min(cStart.x+(e.clientX-dStart.x),innerWidth-200))+"px";vidCont.style.top=Math.max(0,Math.min(cStart.y+(e.clientY-dStart.y),innerHeight-100))+"px"})
 window.addEventListener("mouseup",()=>drag=false)
-// Touch
 document.getElementById("videoHeader").addEventListener("touchstart",e=>{if(vidCont.classList.contains("fs"))return;const t=e.touches[0],rc=vidCont.getBoundingClientRect();drag=true;dStart={x:t.clientX,y:t.clientY};cStart={x:rc.left,y:rc.top};vidCont.style.right="auto";vidCont.style.bottom="auto";vidCont.style.left=rc.left+"px";vidCont.style.top=rc.top+"px"},{passive:true})
 window.addEventListener("touchmove",e=>{if(!drag)return;const t=e.touches[0];vidCont.style.left=Math.max(0,cStart.x+(t.clientX-dStart.x))+"px";vidCont.style.top=Math.max(0,cStart.y+(t.clientY-dStart.y))+"px"},{passive:true})
 window.addEventListener("touchend",()=>drag=false)
@@ -534,17 +837,28 @@ let rsz=false,rStart={}
 document.getElementById("resizeHandle").addEventListener("mousedown",e=>{rsz=true;rStart={x:e.clientX,w:vidCont.offsetWidth};e.preventDefault();e.stopPropagation()})
 window.addEventListener("mousemove",e=>{if(!rsz)return;vidCont.style.width=Math.max(220,Math.min(rStart.w+(e.clientX-rStart.x),innerWidth-20))+"px"})
 window.addEventListener("mouseup",()=>rsz=false)
-// Fullscreen
-let savedP={}
-document.getElementById("fullscreenBtn").addEventListener("click",()=>{
-  if(vidCont.classList.contains("fs")){vidCont.classList.remove("fs");document.getElementById("fullscreenBtn").innerText="⛶";vidCont.style.left=savedP.l+"px";vidCont.style.top=savedP.t+"px";vidCont.style.width=savedP.w+"px"}
-  else{const rc=vidCont.getBoundingClientRect();savedP={l:rc.left,t:rc.top,w:rc.width};vidCont.classList.add("fs");document.getElementById("fullscreenBtn").innerText="⊡"}
-})
-document.getElementById("closeVideoBtn").addEventListener("click",()=>{mainVideo.pause();isPlaying=false;document.getElementById("mainPlayBtn").innerText="▶";vidCont.classList.remove("visible");renderPlaylist()})
 
-/* ===== ANIMACIÓN ===== */
-function animate(){
+/* ============================
+   ANIMACIÓN — con ahorro de rendimiento:
+   - pausa total si la pestaña no está visible
+   - pausa el fondo 3D si el video está en pantalla completa (no se ve igual)
+   - baja a ~30fps el fondo 3D si el video está reproduciéndose en modo ventana
+   ============================ */
+let tabHidden=false
+document.addEventListener("visibilitychange",()=>{tabHidden=document.hidden})
+
+let lastFrameTime=0
+function animate(now){
   requestAnimationFrame(animate)
+  if(tabHidden) return
+  if(vidCont.classList.contains("fs")) return // el fondo no se ve, no se renderiza
+
+  const throttle = isPlaying // video sonando en modo ventana: baja a ~30fps
+  if(throttle){
+    if(now-lastFrameTime<33) return
+  }
+  lastFrameTime=now
+
   const t=performance.now()*0.0015
   hG.scale.setScalar(1+Math.sin(t*30)*0.04)
   galaxy.rotation.y+=0.00012
@@ -559,19 +873,19 @@ function animate(){
   venus.mesh.material.emissiveIntensity=hovP===venus.group?0.8:0
   scient.mesh.material.emissiveIntensity=hovP===scient.group?1.2:0.35
   earth.mesh.material.emissiveIntensity=hovP===earth.group?0.7:0
+
+  diskMat.uniforms.time.value=performance.now()*0.001
+  if(halo) halo.material.uniforms.time.value=performance.now()*0.0007
+  gargantua.rotation.y+=0.00006
+  bgDecor.rotation.y+=0.000015
+
   controls.update();composer.render()
 }
-animate()
+requestAnimationFrame(animate)
 window.addEventListener("resize",()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight)})
 </script>
 </body>
 </html>
-
-
-
-
-
-
 
 
 
