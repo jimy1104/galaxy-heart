@@ -26,8 +26,9 @@ canvas{display:block;}
 @keyframes heartFly{0%{opacity:0;transform:translate(0,0) rotate(-45deg) scale(.3);}15%{opacity:1;}100%{opacity:0;transform:translate(var(--tx),var(--ty)) rotate(-45deg) scale(1.4);}}
 #cameraControls{position:fixed;left:30px;bottom:28px;display:flex;flex-direction:column;gap:14px;z-index:999999;}
 #cameraControls button{width:70px;height:70px;border:none;border-radius:50%;background:rgba(255,255,255,.08);color:white;font-size:34px;cursor:pointer;backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);}
-#calebSphere{position:fixed;right:30px;bottom:28px;width:52px;height:52px;border-radius:50%;cursor:pointer;z-index:999999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#9b7dff,#ff66cc);box-shadow:0 0 30px rgba(155,125,255,.5);border:2px solid rgba(255,255,255,.2);transition:.3s;}
+#calebSphere{position:fixed;right:30px;bottom:28px;width:52px;height:52px;border-radius:50%;cursor:pointer;z-index:999999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#9b7dff,#ff66cc);box-shadow:0 0 30px rgba(155,125,255,.5);border:2px solid rgba(255,255,255,.2);transition:.35s;}
 #calebSphere:hover{transform:scale(1.15);}
+#calebSphere.dim{opacity:.3;filter:blur(3px);transform:scale(.88);}
 #calebSphere span{font-size:26px;}
 #perfBadge{position:fixed;left:30px;top:25px;font-size:10px;color:rgba(255,255,255,.35);z-index:999999;letter-spacing:1px;pointer-events:none;}
 #ghBackBtn{position:fixed;top:25px;right:30px;padding:12px 22px;border-radius:50px;border:1px solid rgba(255,220,180,.3);background:rgba(20,14,10,.55);color:#ffe9c9;font-size:13px;cursor:pointer;z-index:999999;backdrop-filter:blur(10px);opacity:0;pointer-events:none;transition:.4s;display:flex;align-items:center;gap:8px;}
@@ -98,6 +99,8 @@ canvas{display:block;}
 #addSection{padding:12px 18px 16px;border-top:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;gap:8px;}
 #selectFileBtn{padding:11px;border-radius:10px;background:rgba(155,125,255,.35);color:#fff;border:none;cursor:pointer;font-size:11.5px;font-weight:600;}
 #fileName{color:rgba(255,255,255,.5);font-size:9.5px;text-align:center;}
+#customNameInput{padding:9px 12px;border-radius:8px;border:1px solid rgba(155,125,255,.3);background:rgba(255,255,255,.06);color:#fff;font-size:11.5px;display:none;}
+#customNameInput::placeholder{color:rgba(255,255,255,.3);}
 #uploadBtn{padding:11px;border-radius:10px;background:linear-gradient(90deg,#9b7dff,#ff66cc);color:#fff;border:none;cursor:pointer;font-size:11.5px;font-weight:600;display:none;}
 #uploadStatus{font-size:9.5px;color:rgba(255,255,255,.4);text-align:center;}
 #tokenRow{display:flex;gap:6px;align-items:center;}
@@ -183,11 +186,11 @@ canvas{display:block;}
     <div id="timeRow"><span id="timeCur">0:00</span><span id="timeRest">-0:00</span></div>
 
     <div id="transportRow">
-      <button id="shuffleBtn" class="tIcon" title="Aleatorio">🔀</button>
+      <button id="shuffleBtn" class="tIcon" title="Aleatorio"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline><line x1="15" y1="15" x2="21" y2="21"></line><line x1="4" y1="4" x2="9" y2="9"></line></svg></button>
       <button id="back15Btn" class="tIcon" title="Retroceder 15s">⟲15</button>
       <button id="mainPlayBtn" title="Reproducir">▶</button>
       <button id="fwd15Btn" class="tIcon" title="Adelantar 15s">⟳15</button>
-      <button id="repeatBtn" class="tIcon" title="Repetir">🔁</button>
+      <button id="repeatBtn" class="tIcon" title="Repetir"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg></button>
     </div>
 
     <div id="secondaryRow">
@@ -198,6 +201,7 @@ canvas{display:block;}
 
     <div id="queueSection">
       <div id="queueHeader"><span class="qt">A continuación</span><span class="qc" id="queueCount">0 videos</span></div>
+      <div style="margin:-4px 2px 8px;font-size:9.5px;color:rgba(255,255,255,.3);">Ordenadas: las más escuchadas primero</div>
       <div id="playlistContent"></div>
     </div>
   </div>
@@ -206,6 +210,7 @@ canvas{display:block;}
     <input id="uploadFile" type="file" accept=".mp4,.mp3,.wav" style="display:none;">
     <button id="selectFileBtn">📁 Seleccionar video</button>
     <div id="fileName"></div>
+    <input id="customNameInput" type="text" placeholder="Nombre con el que se guardará">
     <button id="uploadBtn">⬆️ Subir</button>
     <div id="uploadStatus"></div>
     <div id="tokenRow">
@@ -542,9 +547,15 @@ function fText(x,y){const t=document.createElement("div");t.className="floatText
 function fHeart(x,y){const h=document.createElement("div");h.className="miniHeart";h.style.left=x+"px";h.style.top=y+"px";const a=(Math.random()*Math.PI)-Math.PI/2;h.style.setProperty("--tx",`${Math.cos(a)*(60+Math.random()*180)}px`);h.style.setProperty("--ty",`${-Math.random()*260}px`);const s=8+Math.random()*18;h.style.width=s+"px";h.style.height=s+"px";const dur=2+Math.random()*2;h.style.animationDuration=dur+"s";document.body.appendChild(h);setTimeout(()=>h.remove(),dur*1000)}
 
 /* ===== PLAYLIST ===== */
-let playlist=[],currentIndex=0,isPlaying=false,isShuffle=false,isRepeat=false,lastVol=0.7,speedIdx=0
+let playlist=[],currentIndex=0,isPlaying=false,isShuffle=false,isRepeat=false,lastVol=0.7,speedIdx=0,countedThisPlay=false
 const speeds=[1,1.25,1.5,1.75,2,0.75]
 let ghToken=localStorage.getItem("yuleb_token")||""
+let playCounts={}
+try{playCounts=JSON.parse(localStorage.getItem("yuleb_playcounts")||"{}")}catch(e){playCounts={}}
+function bumpPlayCount(file){
+  playCounts[file]=(playCounts[file]||0)+1
+  localStorage.setItem("yuleb_playcounts",JSON.stringify(playCounts))
+}
 
 const vidCont=document.getElementById("videoContainer")
 const mainVideo=document.getElementById("mainVideo")
@@ -575,8 +586,14 @@ saveTokenBtn.addEventListener("click",()=>{
   updateTokenUI()
 })
 
-document.getElementById("calebSphere").addEventListener("click",()=>plPanel.classList.add("open"))
-document.getElementById("closePlaylist").addEventListener("click",()=>plPanel.classList.remove("open"))
+document.getElementById("calebSphere").addEventListener("click",()=>{
+  const nowOpen=plPanel.classList.toggle("open")
+  document.getElementById("calebSphere").classList.toggle("dim",nowOpen)
+})
+document.getElementById("closePlaylist").addEventListener("click",()=>{
+  plPanel.classList.remove("open")
+  document.getElementById("calebSphere").classList.remove("dim")
+})
 
 /* Unicode-safe base64 helpers (nombres con tildes/emojis) */
 function b64EncodeUnicode(str){return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,(_,p1)=>String.fromCharCode('0x'+p1)))}
@@ -635,10 +652,14 @@ function renderPlaylist(){
   plContent.innerHTML=""
   queueCount.innerText=playlist.length+(playlist.length===1?" video":" videos")
   if(!playlist.length){plContent.innerHTML='<div style="color:rgba(255,255,255,.4);font-size:12px;text-align:center;padding:20px;">Sin videos aún.</div>';return}
-  playlist.forEach((s,i)=>{
+  const order=playlist.map((_,idx)=>idx).sort((a,b)=>(playCounts[playlist[b].file]||0)-(playCounts[playlist[a].file]||0))
+  order.forEach(i=>{
+    const s=playlist[i]
+    const cnt=playCounts[s.file]||0
+    const sub=s.pending?'⏳ subiendo...':(cnt>0?`▶ ${cnt} ${cnt===1?'reproducción':'reproducciones'}`:'💜 Video')
     const d=document.createElement("div")
     d.className="playlistItem"+(i===currentIndex&&isPlaying?" playing":"")
-    d.innerHTML=`<div class="itemThumb"><span class="glyph">💜</span><div class="bars"><span></span><span></span><span></span></div></div><div class="itemInfo"><div class="itemName">${s.name}</div><div class="itemArtist ${s.pending?'pending':''}">${s.pending?'⏳ subiendo...':'💜 Video'}</div></div><button class="itemDel" title="Eliminar">✕</button>`
+    d.innerHTML=`<div class="itemThumb"><span class="glyph">💜</span><div class="bars"><span></span><span></span><span></span></div></div><div class="itemInfo"><div class="itemName">${s.name}</div><div class="itemArtist ${s.pending?'pending':''}">${sub}</div></div><button class="itemDel" title="Eliminar">✕</button>`
     d.querySelector(".itemInfo").addEventListener("click",()=>playSong(i))
     d.querySelector(".itemThumb").addEventListener("click",()=>playSong(i))
     d.querySelector(".itemDel").addEventListener("click",e=>{e.stopPropagation();deleteSong(i,d.querySelector(".itemDel"))})
@@ -649,6 +670,7 @@ function renderPlaylist(){
 function playSong(i){
   if(!playlist.length) return
   currentIndex=i
+  countedThisPlay=false
   mainVideo.src=playlist[i].url
   mainVideo.playbackRate=speeds[speedIdx]
   mainVideo.play()
@@ -698,6 +720,7 @@ function afterListChange(deletedIndex){
 const uploadFileInput=document.getElementById("uploadFile")
 const selectFileBtn=document.getElementById("selectFileBtn")
 const fileNameDiv=document.getElementById("fileName")
+const customNameInput=document.getElementById("customNameInput")
 const uploadBtn=document.getElementById("uploadBtn")
 const uploadStatus=document.getElementById("uploadStatus")
 let pendingFile=null
@@ -710,8 +733,10 @@ uploadFileInput.addEventListener("change",e=>{
     if(file.size>100*1024*1024){toast("Archivo muy grande (máx 100MB)");return}
     pendingFile=file
     fileNameDiv.innerText=file.name
+    customNameInput.value=file.name.replace(/\.[^/.]+$/,"")
+    customNameInput.style.display="block"
     uploadBtn.style.display="block"
-    uploadStatus.innerText="Listo para subir"
+    uploadStatus.innerText="Edita el nombre si quieres, luego sube"
   }
 })
 
@@ -719,7 +744,7 @@ uploadBtn.addEventListener("click",async ()=>{
   if(!ghToken){toast("⚠️ Primero guarda tu GitHub Token");return}
   if(!pendingFile){toast("⚠️ Selecciona un archivo");return}
   const file=pendingFile
-  const displayName=file.name.replace(/\.[^/.]+$/,"")
+  const displayName=customNameInput.value.trim()||file.name.replace(/\.[^/.]+$/,"")
   const fileName=file.name.replace(/\s+/g,"_")
 
   // 1) Reproducir YA MISMO desde el navegador, sin esperar nada de GitHub
@@ -765,7 +790,7 @@ uploadBtn.addEventListener("click",async ()=>{
     if(playlist[currentIndex]===entry) nowArtist.innerText="💜 Video"
     renderPlaylist()
     uploadBtn.innerText="⬆️ Subir"; uploadBtn.disabled=false
-    uploadFileInput.value=""; fileNameDiv.innerText=""; uploadBtn.style.display="none"; pendingFile=null
+    uploadFileInput.value=""; fileNameDiv.innerText=""; customNameInput.value=""; customNameInput.style.display="none"; uploadBtn.style.display="none"; pendingFile=null
   }catch(err){
     toast("❌ Error: "+err.message)
     uploadStatus.innerText="❌ Falló la subida (sigue sonando localmente)"
@@ -789,6 +814,11 @@ mainVideo.addEventListener("timeupdate",()=>{
     pFill.style.width=(mainVideo.currentTime/mainVideo.duration*100)+"%"
     timeCur.innerText=fmtTime(mainVideo.currentTime)
     timeRest.innerText="-"+fmtTime(mainVideo.duration-mainVideo.currentTime)
+  }
+  if(!countedThisPlay && mainVideo.currentTime>8 && playlist[currentIndex]){
+    countedThisPlay=true
+    bumpPlayCount(playlist[currentIndex].file)
+    renderPlaylist()
   }
 })
 mainVideo.addEventListener("ended",()=>{if(!isRepeat && playlist.length)playSong(isShuffle?Math.floor(Math.random()*playlist.length):(currentIndex+1)%playlist.length)})
