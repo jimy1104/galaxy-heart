@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801845213,
+  "updatedAt": 1788801851914,
   "people": [
     "Jimy",
     "Hiba"
@@ -749,7 +749,7 @@
       "emoji": "🕹️",
       "image": "",
       "description": "Harvard's CS50 course on building 2D video games using Lua with the LÖVE framework, plus an intro to Unity.",
-      "free": true,
+      "free": false,
       "freeNote": "Free to audit — paid certificate optional",
       "notes": "One of the best free intros to real game dev — do before the Blender animation course.",
       "priority": 4,
@@ -759,7 +759,7 @@
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788801851914
     },
     {
       "id": "ai-for-everyone",
