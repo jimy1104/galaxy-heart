@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801954704,
+  "updatedAt": 1788801967727,
   "people": [
     "Jimy",
     "Hiba"
@@ -296,8 +296,8 @@
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "type": "certificate",
-      "updatedAt": 0
+      "type": "first-steps",
+      "updatedAt": 1788801967727
     },
     {
       "id": "blender-tutorial",
