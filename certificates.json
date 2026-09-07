@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801834472,
+  "updatedAt": 1788801836846,
   "people": [
     "Jimy",
     "Hiba"
@@ -413,7 +413,7 @@
       "emoji": "🌐",
       "image": "",
       "description": "Harvard's CS50 course on building web apps: Python/Django on the backend, JavaScript on the front end.",
-      "free": true,
+      "free": false,
       "freeNote": "Free to audit — paid certificate optional",
       "notes": "More advanced — a great follow-up after CS50x.",
       "priority": 4,
@@ -423,7 +423,7 @@
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788801836846
     },
     {
       "id": "mech-vent",
