@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802001005,
+  "updatedAt": 1788802024170,
   "people": [
     "Jimy",
     "Hiba"
@@ -479,14 +479,14 @@
       "free": false,
       "freeNote": "Check current price on the Harvard PLL page — these are usually paid",
       "notes": "More policy-focused — useful context for biomedical/pharma work.",
-      "priority": 4,
+      "priority": 5,
       "status": {
         "a": "pending",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788802024170
     },
     {
       "id": "alison-meds",
