@@ -1,4 +1,5 @@
 {
+  "updatedAt": 0,
   "people": [
     "Jimy",
     "Hiba"
@@ -21,7 +22,9 @@
       "color": "linear-gradient(135deg,#ff9d7a,#ff66cc)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "ielts-speaking",
@@ -40,7 +43,9 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "cyberseg-web",
@@ -59,7 +64,9 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "cyber-mobility",
@@ -78,7 +85,9 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "cyber-risk",
@@ -97,7 +106,9 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "chatgpt-data",
@@ -116,7 +127,9 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "pharma",
@@ -135,7 +148,9 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "biomedical-equip",
@@ -154,7 +169,9 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "asl",
@@ -173,7 +190,9 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "singing",
@@ -192,7 +211,9 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "producing",
@@ -211,7 +232,9 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "songwriting",
@@ -230,7 +253,9 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "anatomy",
@@ -249,7 +274,9 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "free": true,
       "freeNote": "",
-      "description": ""
+      "description": "",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "intro-alice",
@@ -268,7 +295,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "blender-tutorial",
@@ -287,7 +316,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "blender-course",
@@ -306,7 +337,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "blender-char-anim",
@@ -325,7 +358,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "santander-cyber",
@@ -344,7 +379,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "santander-excel",
@@ -363,7 +400,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "cs50-web",
@@ -382,7 +421,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "mech-vent",
@@ -401,7 +442,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "quant-bio",
@@ -420,7 +463,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "drug-regulation",
@@ -439,7 +484,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "alison-meds",
@@ -458,7 +505,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "alison-pet-cpr",
@@ -477,7 +526,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "alison-cpr-aed",
@@ -496,7 +547,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "cs50x",
@@ -515,7 +568,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "cs50-ai",
@@ -534,7 +589,9 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     },
     {
       "id": "google-ai-essentials",
@@ -553,9 +610,180 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
+    },
+    {
+      "id": "script-writing",
+      "title": "Script Writing",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/script-writing",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "✍️",
+      "image": "",
+      "description": "Fundamentals of writing a screenplay: structure, character, dialogue and formatting for film/TV.",
+      "free": true,
+      "freeNote": "Free (Coursera program access)",
+      "notes": "Fun and free, no prerequisites.",
+      "priority": 1,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
+    },
+    {
+      "id": "ui-ux",
+      "title": "UI / UX Design (Specialization)",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/specializations/ui-ux-design",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🎨",
+      "image": "",
+      "description": "Multi-course specialization covering user research, wireframing, prototyping and visual UI design.",
+      "free": true,
+      "freeNote": "Free (Coursera program access)",
+      "notes": "Full specialization — several courses, plan for a few weeks.",
+      "priority": 3,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
+    },
+    {
+      "id": "arguments",
+      "title": "Understanding Arguments",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/understanding-arguments?source=search",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🧠",
+      "image": "",
+      "description": "A critical-thinking course on how to identify, construct and evaluate logical arguments.",
+      "free": true,
+      "freeNote": "Free (Coursera program access)",
+      "notes": "Great for critical thinking, useful in any field.",
+      "priority": 2,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
+    },
+    {
+      "id": "pro-singer",
+      "title": "Building Your Career as a Professional Singer",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/building-your-career-as-a-professional-singer?source=search",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🎙️",
+      "image": "",
+      "description": "Covers the business side of becoming a professional singer: branding, gigs and career-building.",
+      "free": true,
+      "freeNote": "Free (Coursera program access)",
+      "notes": "Only if the music path becomes serious.",
+      "priority": 1,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
+    },
+    {
+      "id": "game-character-design",
+      "title": "Game Character Design",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/game-character-design?source=search",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🧑‍🎨",
+      "image": "",
+      "description": "Covers designing original characters for video games, from concept sketch to a finished design.",
+      "free": true,
+      "freeNote": "Free (Coursera program access)",
+      "notes": "Good before the Blender character-animation course.",
+      "priority": 1,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
+    },
+    {
+      "id": "low-poly",
+      "title": "Low Poly Art For Video Games",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/low-poly-art-video-games?source=search",
+      "category": "course",
+      "platform": "Coursera · Michigan State",
+      "emoji": "🔺",
+      "image": "",
+      "description": "Teaches how to model simple, stylized low-poly 3D assets for video games.",
+      "free": true,
+      "freeNote": "Free (Coursera program access)",
+      "notes": "Nice companion to the Blender courses.",
+      "priority": 1,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
+    },
+    {
+      "id": "cs50-2d-games",
+      "title": "CS50's Introduction to 2D Game Development",
+      "url": "https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-2d-game-development",
+      "category": "course",
+      "platform": "edX · Harvard",
+      "emoji": "🕹️",
+      "image": "",
+      "description": "Harvard's CS50 course on building 2D video games using Lua with the LÖVE framework, plus an intro to Unity.",
+      "free": true,
+      "freeNote": "Free to audit — paid certificate optional",
+      "notes": "One of the best free intros to real game dev — do before the Blender animation course.",
+      "priority": 4,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
+    },
+    {
+      "id": "ai-for-everyone",
+      "title": "AI For Everyone",
+      "url": "https://www.coursera.org/learn/ai-for-everyone",
+      "category": "course",
+      "platform": "Coursera · DeepLearning.AI",
+      "emoji": "🌟",
+      "image": "",
+      "description": "Non-technical overview by Andrew Ng of what AI can (and can't) do, and how to spot AI opportunities.",
+      "free": true,
+      "freeNote": "Free to audit — paid certificate optional",
+      "notes": "Great non-technical starting point before CS50 AI.",
+      "priority": 4,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "type": "certificate",
+      "updatedAt": 0
     }
   ],
+  "deletedIds": [],
   "futureCareers": [
     {
       "id": "cgspectrum-essentials",
