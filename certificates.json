@@ -252,25 +252,6 @@
       "description": ""
     },
     {
-      "id": "game-character-design",
-      "title": "Game Character Design",
-      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/game-character-design?source=search",
-      "category": "course",
-      "platform": "Coursera",
-      "emoji": "🧑‍🎨",
-      "image": "",
-      "description": "Covers designing original characters for video games, from concept sketch to a finished design.",
-      "free": true,
-      "freeNote": "Free (Coursera program access)",
-      "notes": "Good before the Blender character-animation course.",
-      "priority": 2,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
-    },
-    {
       "id": "intro-alice",
       "title": "Introduction to Programming and Animation with Alice",
       "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/introtoalice?source=search",
