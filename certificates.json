@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802268698,
+  "updatedAt": 1788802271968,
   "people": [
     "Jimy",
     "Hiba"
@@ -86,8 +86,8 @@
       "free": true,
       "freeNote": "",
       "description": "",
-      "type": "certificate",
-      "updatedAt": 0
+      "type": "first-steps",
+      "updatedAt": 1788802271968
     },
     {
       "id": "cyber-risk",
