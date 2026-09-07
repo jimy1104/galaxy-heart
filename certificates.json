@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801838831,
+  "updatedAt": 1788801843135,
   "people": [
     "Jimy",
     "Hiba"
@@ -560,7 +560,7 @@
       "emoji": "💻",
       "image": "",
       "description": "Harvard's famous introduction to computer science and programming — the foundation for all of CS50's other courses.",
-      "free": true,
+      "free": false,
       "freeNote": "Free to audit — paid certificate optional",
       "notes": "The classic starting point — do this before the other CS50 courses if you haven't already.",
       "priority": 4,
@@ -570,7 +570,7 @@
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788801843135
     },
     {
       "id": "cs50-ai",
