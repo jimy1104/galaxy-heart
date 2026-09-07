@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802090879,
+  "updatedAt": 1788802141857,
   "people": [
     "Jimy",
     "Hiba"
@@ -615,69 +615,6 @@
       "updatedAt": 0
     },
     {
-      "id": "script-writing",
-      "title": "Script Writing",
-      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/script-writing",
-      "category": "course",
-      "platform": "Coursera",
-      "emoji": "✍️",
-      "image": "",
-      "description": "Fundamentals of writing a screenplay: structure, character, dialogue and formatting for film/TV.",
-      "free": true,
-      "freeNote": "Free (Coursera program access)",
-      "notes": "Fun and free, no prerequisites.",
-      "priority": 1,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "type": "certificate",
-      "updatedAt": 0
-    },
-    {
-      "id": "arguments",
-      "title": "Understanding Arguments",
-      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/understanding-arguments?source=search",
-      "category": "course",
-      "platform": "Coursera",
-      "emoji": "🧠",
-      "image": "",
-      "description": "A critical-thinking course on how to identify, construct and evaluate logical arguments.",
-      "free": true,
-      "freeNote": "Free (Coursera program access)",
-      "notes": "Great for critical thinking, useful in any field.",
-      "priority": 2,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "type": "certificate",
-      "updatedAt": 0
-    },
-    {
-      "id": "pro-singer",
-      "title": "Building Your Career as a Professional Singer",
-      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/building-your-career-as-a-professional-singer?source=search",
-      "category": "course",
-      "platform": "Coursera",
-      "emoji": "🎙️",
-      "image": "",
-      "description": "Covers the business side of becoming a professional singer: branding, gigs and career-building.",
-      "free": true,
-      "freeNote": "Free (Coursera program access)",
-      "notes": "Only if the music path becomes serious.",
-      "priority": 1,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "type": "certificate",
-      "updatedAt": 0
-    },
-    {
       "id": "game-character-design",
       "title": "Game Character Design",
       "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/game-character-design?source=search",
@@ -743,7 +680,10 @@
   ],
   "deletedIds": [
     "ai-for-everyone",
-    "ui-ux"
+    "ui-ux",
+    "arguments",
+    "script-writing",
+    "pro-singer"
   ],
   "futureCareers": [
     {
