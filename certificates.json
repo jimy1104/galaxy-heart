@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801819384,
+  "updatedAt": 1788801822349,
   "people": [
     "Jimy",
     "Hiba"
@@ -392,7 +392,7 @@
       "emoji": "📊",
       "image": "",
       "description": "Free Santander Open Academy course teaching Excel from the basics through intermediate skills.",
-      "free": true,
+      "free": false,
       "freeNote": "Free (Santander Open Academy)",
       "notes": "Practical, everyday-useful skill.",
       "priority": 5,
@@ -402,7 +402,7 @@
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788801822349
     },
     {
       "id": "cs50-web",
