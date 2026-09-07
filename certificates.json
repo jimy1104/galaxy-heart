@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802024170,
+  "updatedAt": 1788802036302,
   "people": [
     "Jimy",
     "Hiba"
@@ -311,14 +311,14 @@
       "free": false,
       "freeNote": "Free with coupon code — check it's still valid at checkout",
       "notes": "Start here before the other two Blender courses.",
-      "priority": 4,
+      "priority": 3,
       "status": {
         "a": "pending",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "first-steps",
-      "updatedAt": 1788802001005
+      "updatedAt": 1788802036302
     },
     {
       "id": "blender-course",
