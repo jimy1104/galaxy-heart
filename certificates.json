@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801836846,
+  "updatedAt": 1788801838831,
   "people": [
     "Jimy",
     "Hiba"
@@ -434,7 +434,7 @@
       "emoji": "🫁",
       "image": "",
       "description": "Harvard Medical School course teaching healthcare workers the fundamentals of operating mechanical ventilators.",
-      "free": true,
+      "free": false,
       "freeNote": "Free to audit — paid certificate optional",
       "notes": "Directly relevant to biomedical / healthcare equipment work.",
       "priority": 4,
@@ -444,7 +444,7 @@
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788801838831
     },
     {
       "id": "quant-bio",
