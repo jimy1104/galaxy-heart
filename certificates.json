@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801800604,
+  "updatedAt": 1788801814920,
   "people": [
     "Jimy",
     "Hiba"
@@ -20,11 +20,11 @@
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#ff9d7a,#ff66cc)",
-      "free": true,
+      "free": false,
       "freeNote": "",
       "description": "",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788801814920
     },
     {
       "id": "ielts-speaking",
