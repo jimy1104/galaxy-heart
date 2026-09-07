@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802081073,
+  "updatedAt": 1788802084618,
   "people": [
     "Jimy",
     "Hiba"
@@ -350,7 +350,7 @@
       "emoji": "🚶",
       "image": "",
       "description": "Focused course on rigging and animating 3D characters in Blender.",
-      "free": true,
+      "free": false,
       "freeNote": "Free with coupon code — check it's still valid at checkout",
       "notes": "Do this last of the three Blender courses.",
       "priority": 3,
@@ -360,7 +360,7 @@
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 1788802081073
+      "updatedAt": 1788802084618
     },
     {
       "id": "santander-cyber",
