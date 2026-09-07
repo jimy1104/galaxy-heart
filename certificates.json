@@ -1,0 +1,280 @@
+{
+  "people": [
+    "Jimy",
+    "Person 2"
+  ],
+  "items": [
+    {
+      "id": "ielts",
+      "title": "IELTS Online — British Council",
+      "url": "https://ieltsregistration.britishcouncil.org/iol/find-test",
+      "category": "exam",
+      "platform": "British Council",
+      "emoji": "🌍",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#ff9d7a,#ff66cc)"
+    },
+    {
+      "id": "ielts-speaking",
+      "title": "IELTS Success Online — IELTS Speaking",
+      "url": "https://www.udemy.com/course/ielts-success-online-ielts-speaking/?portfolio=ROW-English&couponCode=PMNVD3025",
+      "category": "course",
+      "platform": "Udemy",
+      "emoji": "🗣️",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "script-writing",
+      "title": "Script Writing",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/script-writing",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "✍️",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "cyberseg-web",
+      "title": "Cybersécurité : Sécurité des Sites Web",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/cybersecurite-site-web-securite",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🔐",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "cyber-mobility",
+      "title": "Cybersecurity and Mobility",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/cybersecurity-mobility",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🛡️",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "cyber-risk",
+      "title": "Cybersecurity: Managing Risk in the Information Age",
+      "url": "https://www.edx.org/executive-education/harvard-university-cybersecurity-managing-risk-in-the-information-age",
+      "category": "course",
+      "platform": "edX · Harvard",
+      "emoji": "🔒",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "ui-ux",
+      "title": "UI / UX Design (Specialization)",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/specializations/ui-ux-design",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🎨",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "chatgpt-data",
+      "title": "ChatGPT Advanced Data Analysis",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/chatgpt-advanced-data-analysis",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🤖",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "arguments",
+      "title": "Understanding Arguments",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/understanding-arguments?source=search",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🧠",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "pharma",
+      "title": "Introduction to the Pharmaceutical Industry",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/introduction-to-the-pharmaceutical-industry?source=search",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "💊",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "biomedical-equip",
+      "title": "Biomedical Equipment: Repairing and Maintaining Biomedical Devices",
+      "url": "https://www.edx.org/learn/biomedical-engineering/delft-university-of-technology-biomedical-equipment-repairing-and-maintaining-biomedical-devices",
+      "category": "course",
+      "platform": "edX · TU Delft",
+      "emoji": "🩺",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "asl",
+      "title": "ASL: First 500 Basic Signs",
+      "url": "https://www.udemy.com/course/asl-first-500-basic-signs/?couponCode=PMNVD3025",
+      "category": "course",
+      "platform": "Udemy",
+      "emoji": "🤟",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "singing",
+      "title": "Singing: Popular Music",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/singing-popular-music?source=search",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🎤",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "producing",
+      "title": "Producing Music",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/producing-music?source=search",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🎚️",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "songwriting",
+      "title": "Songwriting: Writing the Music",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/songwriting-writing-the-music?source=search",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🎼",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "pro-singer",
+      "title": "Building Your Career as a Professional Singer",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/building-your-career-as-a-professional-singer?source=search",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🎙️",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "anatomy",
+      "title": "Anatomy",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/anatomy403-1x?source=search",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🫀",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    }
+  ]
+}
