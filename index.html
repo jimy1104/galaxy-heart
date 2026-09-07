@@ -234,12 +234,47 @@ canvas{display:block;}
 #certSyncBar button:hover{background:rgba(255,255,255,.1);}
 #certSyncStatus{font-size:10.5px;color:rgba(255,255,255,.35);text-align:center;margin:0 5vw 10px;}
 
+/* Free / Paid badge + description */
+.certFreeBadge{font-size:8.5px;padding:3px 9px;border-radius:8px;font-weight:700;letter-spacing:.4px;}
+.certFreeBadge.free{background:rgba(97,222,150,.2);color:#7be3a0;}
+.certFreeBadge.paid{background:rgba(255,140,105,.18);color:#ff9d7a;}
+.certDesc{color:rgba(255,255,255,.45);font-size:11px;margin-top:6px;line-height:1.45;font-style:italic;}
+
+/* Browse by platform */
+#certPlatformsSection{margin:26px 5vw 0;}
+#certPlatformsTitle{color:#fff;font-size:14px;font-weight:700;letter-spacing:.3px;margin-bottom:2px;}
+#certPlatformsSub{color:rgba(255,255,255,.4);font-size:11px;margin-bottom:12px;}
+#certPlatforms{display:flex;gap:8px;flex-wrap:wrap;}
+.platformChip{display:flex;align-items:center;gap:7px;padding:8px 14px;border-radius:50px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.7);font-size:11.5px;cursor:pointer;}
+.platformChip:hover{background:rgba(255,255,255,.08);}
+.platformChip.active{background:linear-gradient(90deg,#9b7dff,#ff66cc);color:#fff;border-color:transparent;}
+.platformChip .count{opacity:.55;font-size:10px;}
+.platformChip .badge{font-size:8px;padding:2px 7px;border-radius:6px;font-weight:700;letter-spacing:.3px;}
+.platformChip .badge.free{background:rgba(97,222,150,.25);color:#8ef0b3;}
+.platformChip .badge.paid{background:rgba(255,140,105,.25);color:#ffb18e;}
+.platformChip .badge.mixed{background:rgba(255,181,71,.25);color:#ffd98a;}
+
+/* Future career paths */
+#certFutureSection{margin:26px 5vw 0;}
+#certFutureTitle{color:#fff;font-size:14px;font-weight:700;letter-spacing:.3px;margin-bottom:2px;}
+#certFutureSub{color:rgba(255,255,255,.4);font-size:11px;margin-bottom:12px;}
+#certFutureList{display:flex;flex-direction:column;gap:12px;}
+.futureCard{background:linear-gradient(135deg,rgba(255,184,107,.12),rgba(255,102,204,.07));border:1px solid rgba(255,184,107,.3);border-radius:18px;padding:18px;display:flex;gap:14px;align-items:flex-start;}
+.futureThumb{width:54px;height:54px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px;background:linear-gradient(135deg,#ffb86b,#ff66cc);}
+.futureBody{flex:1;min-width:0;}
+.futureBody .ftTitle{color:#fff;font-size:15px;font-weight:700;}
+.futureBody .ftDesc{color:rgba(255,255,255,.55);font-size:11.5px;margin-top:6px;line-height:1.5;}
+.futureBody .ftLink{color:#ffcf9d;font-size:10.5px;margin-top:8px;display:inline-block;text-decoration:none;word-break:break-all;}
+.futureBody .ftLink:hover{color:#fff;}
+.futureBody .ftNotes{margin-top:8px;font-size:11px;color:rgba(255,255,255,.6);font-style:italic;}
+
 @media(max-width:720px){
   .certCard{flex-wrap:wrap;}
   .certStatuses{flex-direction:row;flex-wrap:wrap;width:100%;}
   .certLink{max-width:160px;}
   .podiumSlot{width:100px;}
   .podiumName{max-width:92px;}
+  .futureCard{flex-direction:column;}
 }
 </style>
 </head>
@@ -290,6 +325,13 @@ canvas{display:block;}
     </div>
 
     <div id="certStats"></div>
+
+    <div id="certPlatformsSection">
+      <div id="certPlatformsTitle">📚 Browse by Platform</div>
+      <div id="certPlatformsSub">Tap a platform to see just those — the badge tells you where you can move fast for free.</div>
+      <div id="certPlatforms"></div>
+    </div>
+
     <div id="certFilters">
       <button class="certFilterBtn active" data-filter="all">All</button>
       <button class="certFilterBtn" data-filter="pending">Pending</button>
@@ -297,6 +339,13 @@ canvas{display:block;}
       <button class="certFilterBtn" data-filter="completed">Completed</button>
     </div>
     <div id="certList"></div>
+
+    <div id="certFutureSection">
+      <div id="certFutureTitle">🚀 Future Career Paths</div>
+      <div id="certFutureSub">Bigger, longer-term programs — worth exploring once the shorter certificates above are done.</div>
+      <div id="certFutureList"></div>
+    </div>
+
     <div id="certAddBar">
       <button id="certAddBtn">+ Add certificate</button>
       <div id="certAddForm">
@@ -1084,38 +1133,194 @@ window.addEventListener("resize",()=>{camera.aspect=innerWidth/innerHeight;camer
    already defined above for the playlist.
    ============================ */
 const CERT_PATH="certificates.json"
-function cert(id,title,url,category,platform,emoji,color){
-  return {id,title,url,category,platform,emoji,image:"",notes:"",priority:0,status:{a:"pending",b:"pending"},
-    color:color||(category==="exam"?"linear-gradient(135deg,#ff9d7a,#ff66cc)":"linear-gradient(135deg,#7d5cff,#ff7de0)")}
+function cert(id,title,url,category,platform,emoji,opts){
+  opts=opts||{}
+  return {
+    id,title,url,category,platform,emoji,
+    image:"",
+    description:opts.description||"",
+    free:opts.free!==undefined?opts.free:true,
+    freeNote:opts.freeNote||"",
+    notes:opts.notes||"",
+    priority:opts.priority||0,
+    status:{a:"pending",b:"pending"},
+    color:opts.color||(category==="exam"?"linear-gradient(135deg,#ff9d7a,#ff66cc)":"linear-gradient(135deg,#7d5cff,#ff7de0)")
+  }
 }
 function defaultCertificates(){
   const base="https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/"
   return {
     people:["Person 1","Person 2"],
     items:[
-      cert("ielts","IELTS Online — British Council","https://ieltsregistration.britishcouncil.org/iol/find-test","exam","British Council","🌍"),
-      cert("ielts-speaking","IELTS Success Online — IELTS Speaking","https://www.udemy.com/course/ielts-success-online-ielts-speaking/?portfolio=ROW-English&couponCode=PMNVD3025","course","Udemy","🗣️"),
-      cert("script-writing","Script Writing",base+"learn/script-writing","course","Coursera","✍️"),
-      cert("cyberseg-web","Cybersécurité : Sécurité des Sites Web",base+"learn/cybersecurite-site-web-securite","course","Coursera","🔐"),
-      cert("cyber-mobility","Cybersecurity and Mobility",base+"learn/cybersecurity-mobility","course","Coursera","🛡️"),
-      cert("cyber-risk","Cybersecurity: Managing Risk in the Information Age","https://www.edx.org/executive-education/harvard-university-cybersecurity-managing-risk-in-the-information-age","course","edX · Harvard","🔒"),
-      cert("ui-ux","UI / UX Design (Specialization)",base+"specializations/ui-ux-design","course","Coursera","🎨"),
-      cert("chatgpt-data","ChatGPT Advanced Data Analysis",base+"learn/chatgpt-advanced-data-analysis","course","Coursera","🤖"),
-      cert("arguments","Understanding Arguments",base+"learn/understanding-arguments?source=search","course","Coursera","🧠"),
-      cert("pharma","Introduction to the Pharmaceutical Industry",base+"learn/introduction-to-the-pharmaceutical-industry?source=search","course","Coursera","💊"),
-      cert("biomedical-equip","Biomedical Equipment: Repairing and Maintaining Biomedical Devices","https://www.edx.org/learn/biomedical-engineering/delft-university-of-technology-biomedical-equipment-repairing-and-maintaining-biomedical-devices","course","edX · TU Delft","🩺"),
-      cert("asl","ASL: First 500 Basic Signs","https://www.udemy.com/course/asl-first-500-basic-signs/?couponCode=PMNVD3025","course","Udemy","🤟"),
-      cert("singing","Singing: Popular Music",base+"learn/singing-popular-music?source=search","course","Coursera","🎤"),
-      cert("producing","Producing Music",base+"learn/producing-music?source=search","course","Coursera","🎚️"),
-      cert("songwriting","Songwriting: Writing the Music",base+"learn/songwriting-writing-the-music?source=search","course","Coursera","🎼"),
-      cert("pro-singer","Building Your Career as a Professional Singer",base+"learn/building-your-career-as-a-professional-singer?source=search","course","Coursera","🎙️"),
-      cert("anatomy","Anatomy",base+"learn/anatomy403-1x?source=search","course","Coursera","🫀")
+      cert("ielts","IELTS Online — British Council","https://ieltsregistration.britishcouncil.org/iol/find-test","exam","British Council","🌍",{
+        description:"Official registration for the IELTS test (Academic, General Training or Life Skills) — book your online or in-person exam slot.",
+        free:false,freeNote:"Paid exam — this is the real test, not a course",priority:4,
+        notes:"Book this once you feel ready — do the free Udemy speaking prep below first."}),
+      cert("ielts-speaking","IELTS Success Online — IELTS Speaking","https://www.udemy.com/course/ielts-success-online-ielts-speaking/?portfolio=ROW-English&couponCode=PMNVD3025","course","Udemy","🗣️",{
+        description:"Practice course for the IELTS Speaking module: sample questions, band-score tips and mock speaking tests.",
+        free:true,freeNote:"Free with coupon code — check it's still valid at checkout",priority:2,
+        notes:"Good free step 1 before booking the official (paid) IELTS exam above."}),
+      cert("script-writing","Script Writing",base+"learn/script-writing","course","Coursera","✍️",{
+        description:"Fundamentals of writing a screenplay: structure, character, dialogue and formatting for film/TV.",
+        free:true,freeNote:"Free (Coursera program access)",priority:1,
+        notes:"Fun and free, no prerequisites."}),
+      cert("cyberseg-web","Cybersécurité : Sécurité des Sites Web",base+"learn/cybersecurite-site-web-securite","course","Coursera","🔐",{
+        description:"Introduces web security concepts: common vulnerabilities, secure site design and best practices (in French).",
+        free:true,freeNote:"Free (Coursera program access)",priority:2,
+        notes:"Good intro to web security — taught in French."}),
+      cert("cyber-mobility","Cybersecurity and Mobility",base+"learn/cybersecurity-mobility","course","Coursera","🛡️",{
+        description:"Covers security risks and protections specific to mobile devices and mobile app ecosystems.",
+        free:true,freeNote:"Free (Coursera program access)",priority:2,
+        notes:"Short and practical mobile-security basics."}),
+      cert("cyber-risk","Cybersecurity: Managing Risk in the Information Age","https://www.edx.org/executive-education/harvard-university-cybersecurity-managing-risk-in-the-information-age","course","edX · Harvard","🔒",{
+        description:"Harvard Executive Education course on identifying, assessing and managing cybersecurity risk at an organizational level.",
+        free:false,freeNote:"Paid — Harvard Executive Education",priority:4,
+        notes:"Heavier and likely paid, but a strong name for a resume."}),
+      cert("ui-ux","UI / UX Design (Specialization)",base+"specializations/ui-ux-design","course","Coursera","🎨",{
+        description:"Multi-course specialization covering user research, wireframing, prototyping and visual UI design.",
+        free:true,freeNote:"Free (Coursera program access)",priority:3,
+        notes:"Full specialization — several courses, plan for a few weeks."}),
+      cert("chatgpt-data","ChatGPT Advanced Data Analysis",base+"learn/chatgpt-advanced-data-analysis","course","Coursera","🤖",{
+        description:"Hands-on course using ChatGPT's Advanced Data Analysis (Code Interpreter) feature to explore and visualize datasets.",
+        free:true,freeNote:"Free (Coursera program access)",priority:2,
+        notes:"Quick, practical, very current skill."}),
+      cert("arguments","Understanding Arguments",base+"learn/understanding-arguments?source=search","course","Coursera","🧠",{
+        description:"A critical-thinking course on how to identify, construct and evaluate logical arguments.",
+        free:true,freeNote:"Free (Coursera program access)",priority:2,
+        notes:"Great for critical thinking, useful in any field."}),
+      cert("pharma","Introduction to the Pharmaceutical Industry",base+"learn/introduction-to-the-pharmaceutical-industry?source=search","course","Coursera","💊",{
+        description:"Overview of how the pharmaceutical industry discovers, develops, and brings drugs to market.",
+        free:true,freeNote:"Free (Coursera program access)",priority:3,
+        notes:"Directly useful for a biomedical engineering path."}),
+      cert("biomedical-equip","Biomedical Equipment: Repairing and Maintaining Biomedical Devices","https://www.edx.org/learn/biomedical-engineering/delft-university-of-technology-biomedical-equipment-repairing-and-maintaining-biomedical-devices","course","edX · TU Delft","🩺",{
+        description:"Covers how biomedical equipment works, and how to repair and maintain it safely in a clinical setting.",
+        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
+        notes:"Very relevant to your degree — high priority."}),
+      cert("asl","ASL: First 500 Basic Signs","https://www.udemy.com/course/asl-first-500-basic-signs/?couponCode=PMNVD3025","course","Udemy","🤟",{
+        description:"Teaches the first 500 basic signs of American Sign Language for everyday communication.",
+        free:true,freeNote:"Free with coupon code — check it's still valid at checkout",priority:2,
+        notes:"A nice life skill, free with the coupon."}),
+      cert("singing","Singing: Popular Music",base+"learn/singing-popular-music?source=search","course","Coursera","🎤",{
+        description:"Vocal technique course focused on singing contemporary and popular music styles.",
+        free:true,freeNote:"Free (Coursera program access)",priority:1,
+        notes:"Just for fun — the music side of things."}),
+      cert("producing","Producing Music",base+"learn/producing-music?source=search","course","Coursera","🎚️",{
+        description:"Introduces the fundamentals of music production: recording, mixing and arranging a song.",
+        free:true,freeNote:"Free (Coursera program access)",priority:1,
+        notes:"Fun, low pressure — do whenever."}),
+      cert("songwriting","Songwriting: Writing the Music",base+"learn/songwriting-writing-the-music?source=search","course","Coursera","🎼",{
+        description:"Covers how to write melodies and music for a song, pairing composition with lyrics.",
+        free:true,freeNote:"Free (Coursera program access)",priority:1,
+        notes:"Pairs well with the Producing Music course."}),
+      cert("pro-singer","Building Your Career as a Professional Singer",base+"learn/building-your-career-as-a-professional-singer?source=search","course","Coursera","🎙️",{
+        description:"Covers the business side of becoming a professional singer: branding, gigs and career-building.",
+        free:true,freeNote:"Free (Coursera program access)",priority:1,
+        notes:"Only if the music path becomes serious."}),
+      cert("anatomy","Anatomy",base+"learn/anatomy403-1x?source=search","course","Coursera","🫀",{
+        description:"Introductory human anatomy course covering the major body systems.",
+        free:true,freeNote:"Free (Coursera program access)",priority:3,
+        notes:"Solid refresher for biomedical engineering."}),
+
+      cert("game-character-design","Game Character Design",base+"learn/game-character-design?source=search","course","Coursera","🧑‍🎨",{
+        description:"Covers designing original characters for video games, from concept sketch to a finished design.",
+        free:true,freeNote:"Free (Coursera program access)",priority:1,
+        notes:"Good before the Blender character-animation course."}),
+      cert("intro-alice","Introduction to Programming and Animation with Alice",base+"learn/introtoalice?source=search","course","Coursera · Duke","🧩",{
+        description:"Teaches programming fundamentals through Alice's drag-and-drop 3D animation environment — a beginner-friendly intro to logic and object-oriented thinking.",
+        free:true,freeNote:"Free (Coursera program access)",priority:2,
+        notes:"Easy on-ramp into programming if code feels intimidating."}),
+      cert("low-poly","Low Poly Art For Video Games",base+"learn/low-poly-art-video-games?source=search","course","Coursera · Michigan State","🔺",{
+        description:"Teaches how to model simple, stylized low-poly 3D assets for video games.",
+        free:true,freeNote:"Free (Coursera program access)",priority:1,
+        notes:"Nice companion to the Blender courses."}),
+      cert("cs50-2d-games","CS50's Introduction to 2D Game Development","https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-2d-game-development","course","edX · Harvard","🕹️",{
+        description:"Harvard's CS50 course on building 2D video games using Lua with the LÖVE framework, plus an intro to Unity.",
+        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
+        notes:"One of the best free intros to real game dev — do before the Blender animation course."}),
+      cert("blender-tutorial","Blender Tutorial for Beginners","https://www.udemy.com/course/blendertutorial/?couponCode=MT260907G2","course","Udemy","🧱",{
+        description:"Beginner Blender tutorial covering the interface and core 3D modeling tools.",
+        free:true,freeNote:"Free with coupon code — check it's still valid at checkout",priority:1,
+        notes:"Start here before the other two Blender courses."}),
+      cert("blender-course","Blender Course","https://www.udemy.com/course/blendercourse/?couponCode=MT260907G2","course","Udemy","🪑",{
+        description:"A broader Blender course covering modeling, texturing, lighting and rendering.",
+        free:true,freeNote:"Free with coupon code — check it's still valid at checkout",priority:1,
+        notes:"Do after the beginner tutorial above."}),
+      cert("blender-char-anim","Blender 3D Character Animation","https://www.udemy.com/course/blender3dcharacteranimation/?couponCode=MT260907G2","course","Udemy","🚶",{
+        description:"Focused course on rigging and animating 3D characters in Blender.",
+        free:true,freeNote:"Free with coupon code — check it's still valid at checkout",priority:2,
+        notes:"Do this last of the three Blender courses."}),
+      cert("santander-cyber","Cybersecurity Fundamentals","https://app.santanderopenacademy.com/en/course/cybersecurity-fundamentals","course","Santander Open Academy","🔰",{
+        description:"IBM-backed intro course on core cybersecurity concepts: threats, authentication and the security mindset.",
+        free:true,freeNote:"Free (Santander Open Academy)",priority:2,
+        notes:"Free and short — a quick win."}),
+      cert("santander-excel","Excel","https://app.santanderopenacademy.com/es/course/excel","course","Santander Open Academy","📊",{
+        description:"Free Santander Open Academy course teaching Excel from the basics through intermediate skills.",
+        free:true,freeNote:"Free (Santander Open Academy)",priority:1,
+        notes:"Practical, everyday-useful skill."}),
+      cert("cs50-web","CS50's Web Programming with Python and JavaScript","https://www.classcentral.com/course/web-development-harvard-university-cs50-s-web-pro-11506","course","Class Central → edX · Harvard","🌐",{
+        description:"Harvard's CS50 course on building web apps: Python/Django on the backend, JavaScript on the front end.",
+        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
+        notes:"More advanced — a great follow-up after CS50x."}),
+      cert("mech-vent","Mechanical Ventilation for COVID-19","https://www.classcentral.com/course/healthcare-harvard-university-mechanical-ventilat-19347","course","Class Central → edX · Harvard","🫁",{
+        description:"Harvard Medical School course teaching healthcare workers the fundamentals of operating mechanical ventilators.",
+        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
+        notes:"Directly relevant to biomedical / healthcare equipment work."}),
+      cert("quant-bio","Quantitative Methods for Biology","https://pll.harvard.edu/course/quantitative-methods-biology","course","Harvard PLL","📈",{
+        description:"Harvard course applying quantitative and computational methods (e.g. MATLAB) to biological problems.",
+        free:false,freeNote:"Check current price on the Harvard PLL page — these are usually paid",priority:4,
+        notes:"Excellent fit for biomedical engineering — verify the price before enrolling."}),
+      cert("drug-regulation","Prescription Drug Regulation, Cost, and Access","https://pll.harvard.edu/course/prescription-drug-regulation-cost-and-access-current-controversies-context","course","Harvard PLL","💊",{
+        description:"Harvard course examining how prescription drugs are regulated, priced and accessed, through real policy debates.",
+        free:false,freeNote:"Check current price on the Harvard PLL page — these are usually paid",priority:3,
+        notes:"More policy-focused — useful context for biomedical/pharma work."}),
+      cert("alison-meds","Medication Management and Administration","https://alison.com/es/curso/gestion-y-administracion-de-medicamentos","course","Alison","💉",{
+        description:"Covers safe medication management and administration practices.",
+        free:true,freeNote:"Free (paid option for a physical certificate)",priority:2,
+        notes:"Free and practical, good to have."}),
+      cert("alison-pet-cpr","Pet First Aid and CPR","https://alison.com/es/curso/primeros-auxilios-y-reanimacion-cardiopulmonar-para-mascotas","course","Alison","🐾",{
+        description:"Teaches first aid and CPR techniques for pets in an emergency.",
+        free:true,freeNote:"Free (paid option for a physical certificate)",priority:1,
+        notes:"Nice to have, low priority."}),
+      cert("alison-cpr-aed","CPR, AED and First Aid","https://alison.com/es/curso/rcp-dea-y-primeros-auxilios","course","Alison","🚑",{
+        description:"Covers CPR, AED use and first-aid response for human emergencies.",
+        free:true,freeNote:"Free (paid option for a physical certificate)",priority:2,
+        notes:"A genuinely useful life-safety skill."}),
+
+      cert("cs50x","CS50x: Introduction to Computer Science","https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-computer-science","course","edX · Harvard","💻",{
+        description:"Harvard's famous introduction to computer science and programming — the foundation for all of CS50's other courses.",
+        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
+        notes:"The classic starting point — do this before the other CS50 courses if you haven't already."}),
+      cert("cs50-ai","CS50's Introduction to Artificial Intelligence with Python","https://www.edx.org/learn/artificial-intelligence/harvard-university-cs50-s-introduction-to-artificial-intelligence-with-python","course","edX · Harvard","🧠",{
+        description:"Harvard's CS50 course on the concepts and algorithms behind modern AI: search, machine learning, neural networks.",
+        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
+        notes:"Do after CS50x — one of the best free AI courses available."}),
+      cert("google-ai-essentials","Google AI Essentials","https://www.coursera.org/learn/google-ai-essentials","course","Coursera · Google","✨",{
+        description:"Google's beginner course on using generative AI tools effectively and responsibly in everyday work.",
+        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
+        notes:"Short, free, and from Google — a quick, credible AI certificate."}),
+      cert("ai-for-everyone","AI For Everyone","https://www.coursera.org/learn/ai-for-everyone","course","Coursera · DeepLearning.AI","🌟",{
+        description:"Non-technical overview by Andrew Ng of what AI can (and can't) do, and how to spot AI opportunities.",
+        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
+        notes:"Great non-technical starting point before CS50 AI."})
     ]
   }
+}
+function defaultFutureCareers(){
+  return [
+    {
+      id:"cgspectrum-essentials",
+      title:"CG Spectrum — 3D Animation / VFX Career Track",
+      url:"https://www.cgspectrum.com/thanks-course-submission-essentials?submissionGuid=df11a54c-4f6d-4e39-a4ea-4a1490c816c1",
+      emoji:"🎬",
+      description:"An industry-mentored online school for 3D animation, VFX, game art and character animation — closer to a full diploma/degree track than a single short certificate.",
+      notes:"Bigger long-term investment. Worth exploring once you've built a small portfolio with the free Blender & game-art courses above."
+    }
+  ]
 }
 
 let certState=null
 let certFilter="all"
+let platformFilter=null
 let certSaveTimer=null
 const STATUS_CYCLE=["pending","progress","completed"]
 const STATUS_LABEL={pending:"Pending",progress:"In Progress",completed:"Completed"}
@@ -1158,11 +1363,24 @@ async function initCertificates(){
   certState=remote||loadCertLocal()||defaultCertificates()
   if(!certState.people) certState.people=["Person 1","Person 2"]
   if(!certState.items) certState.items=[]
+
+  // Merge in any new default certificates the saved state doesn't have yet
+  // (so upgrading to a newer version of this app adds new items without wiping progress).
+  const defaults=defaultCertificates()
+  const existingIds=new Set(certState.items.map(i=>i.id))
+  defaults.items.forEach(d=>{ if(!existingIds.has(d.id)) certState.items.push(d) })
+
   certState.items.forEach(it=>{
     if(!it.status) it.status={a:"pending",b:"pending"}
     if(typeof it.priority!=="number") it.priority=0
     if(!it.platform) it.platform=it.category==="exam"?"Exam":"Course"
+    if(typeof it.free!=="boolean") it.free=true
+    if(!it.freeNote) it.freeNote=""
+    if(!it.description) it.description=""
   })
+
+  if(!certState.futureCareers||!certState.futureCareers.length) certState.futureCareers=defaultFutureCareers()
+
   persistCertLocal()
   renderCertPeople()
   renderCertificates()
@@ -1182,19 +1400,21 @@ function itemCombinedStatus(it){
 
 function computeCertStats(){
   const items=certState.items
-  let pend=0,prog=0,comp=0,compBoth=0
+  let pend=0,prog=0,comp=0,compBoth=0,freeCount=0
   items.forEach(it=>{
     const c=itemCombinedStatus(it)
     if(c==="pending")pend++;else if(c==="progress")prog++;else comp++
     if(it.status.a==="completed"&&it.status.b==="completed")compBoth++
+    if(it.free)freeCount++
   })
-  return {total:items.length,pend,prog,comp,compBoth}
+  return {total:items.length,pend,prog,comp,compBoth,freeCount}
 }
 
 function renderCertStats(){
   const s=computeCertStats()
   document.getElementById("certStats").innerHTML=`
     <div class="certStat"><div class="n">${s.total}</div><div class="l">Total</div></div>
+    <div class="certStat"><div class="n">${s.freeCount}</div><div class="l">🆓 Free</div></div>
     <div class="certStat"><div class="n">${s.pend}</div><div class="l">Pending</div></div>
     <div class="certStat"><div class="n">${s.prog}</div><div class="l">In Progress</div></div>
     <div class="certStat"><div class="n">${s.comp}</div><div class="l">Completed</div></div>
@@ -1235,14 +1455,63 @@ function renderPodium(){
   `).join("")
 }
 
+function renderPlatforms(){
+  const wrap=document.getElementById("certPlatforms")
+  const groups={}
+  certState.items.forEach(it=>{
+    const p=it.platform||"Other"
+    if(!groups[p]) groups[p]={count:0,freeCount:0}
+    groups[p].count++
+    if(it.free) groups[p].freeCount++
+  })
+  const platforms=Object.keys(groups).sort()
+  wrap.innerHTML=platforms.map(p=>{
+    const g=groups[p]
+    let badge="paid",label="PAID"
+    if(g.freeCount===g.count){badge="free";label="FREE"}
+    else if(g.freeCount>0){badge="mixed";label="MIXED"}
+    const active=platformFilter===p?"active":""
+    return `<div class="platformChip ${active}" data-platform="${escapeHtml(p)}"><span>${escapeHtml(p)}</span><span class="count">${g.count}</span><span class="badge ${badge}">${label}</span></div>`
+  }).join("")
+  wrap.querySelectorAll(".platformChip").forEach(chip=>{
+    chip.addEventListener("click",()=>{
+      const p=chip.dataset.platform
+      platformFilter=(platformFilter===p)?null:p
+      renderCertificates()
+    })
+  })
+}
+
+function renderFutureCareers(){
+  const wrap=document.getElementById("certFutureList")
+  const items=certState.futureCareers||[]
+  if(!items.length){wrap.innerHTML="";return}
+  wrap.innerHTML=items.map(f=>`
+    <div class="futureCard">
+      <div class="futureThumb">${f.emoji||"🚀"}</div>
+      <div class="futureBody">
+        <div class="ftTitle">${escapeHtml(f.title)}</div>
+        <div class="ftDesc">${escapeHtml(f.description||"")}</div>
+        <a class="ftLink" href="${escapeHtml(f.url)}" target="_blank" rel="noopener">${escapeHtml(f.url)}</a>
+        ${f.notes?`<div class="ftNotes">💭 ${escapeHtml(f.notes)}</div>`:""}
+      </div>
+    </div>
+  `).join("")
+}
+
 function renderCertificates(){
   renderCertStats()
   renderPodium()
+  renderPlatforms()
+  renderFutureCareers()
   const list=document.getElementById("certList")
   list.innerHTML=""
-  const items=certState.items.filter(it=>certFilter==="all"||itemCombinedStatus(it)===certFilter)
+  const items=certState.items.filter(it=>
+    (certFilter==="all"||itemCombinedStatus(it)===certFilter) &&
+    (!platformFilter||it.platform===platformFilter)
+  )
   if(!items.length){
-    list.innerHTML='<div style="color:rgba(255,255,255,.35);font-size:12.5px;text-align:center;padding:30px;">No certificates in this category.</div>'
+    list.innerHTML='<div style="color:rgba(255,255,255,.35);font-size:12.5px;text-align:center;padding:30px;">No certificates match this filter.</div>'
     return
   }
   items.forEach(it=>{
@@ -1257,8 +1526,10 @@ function renderCertificates(){
         <div class="certTitle" contenteditable="true" data-idx="${idx}">${escapeHtml(it.title)}</div>
         <div class="certMeta">
           <span class="certCat ${it.category}">${it.category==='exam'?'Exam':'Course'}</span>
+          <span class="certFreeBadge ${it.free?'free':'paid'}" title="${escapeHtml(it.freeNote||'')}">${it.free?'FREE':'PAID'}</span>
           <a class="certLink" href="${escapeHtml(it.url)}" target="_blank" rel="noopener">${escapeHtml(it.url)}</a>
         </div>
+        ${it.description?`<div class="certDesc">${escapeHtml(it.description)}</div>`:""}
         <div class="certStars" title="Set priority">${starsHtml}</div>
         <input class="certNotes" placeholder="Notes (optional)..." value="${escapeHtml(it.notes||'')}" data-idx="${idx}">
       </div>
@@ -1364,7 +1635,7 @@ document.getElementById("certAddSubmit").addEventListener("click",()=>{
   const emoji=document.getElementById("certAddEmoji").value.trim()||"🎓"
   const img=document.getElementById("certAddImg").value.trim()
   if(!title||!url){toast("⚠️ Fill in at least the title and the link");return}
-  certState.items.push({id:"c"+Date.now(),title,url,category:"course",platform:"Custom",emoji,image:img,notes:"",priority:0,status:{a:"pending",b:"pending"},color:"linear-gradient(135deg,#7d5cff,#ff7de0)"})
+  certState.items.push({id:"c"+Date.now(),title,url,category:"course",platform:"Custom",emoji,image:img,description:"",free:true,freeNote:"",notes:"",priority:0,status:{a:"pending",b:"pending"},color:"linear-gradient(135deg,#7d5cff,#ff7de0)"})
   persistCertLocal();scheduleCertAutosave();renderCertificates()
   document.getElementById("certAddTitle").value=""
   document.getElementById("certAddUrl").value=""
@@ -1383,6 +1654,9 @@ document.getElementById("certReloadBtn").addEventListener("click",async ()=>{
 })
 
 initCertificates()
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
