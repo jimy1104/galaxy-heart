@@ -43,25 +43,6 @@
       "description": ""
     },
     {
-      "id": "script-writing",
-      "title": "Script Writing",
-      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/script-writing",
-      "category": "course",
-      "platform": "Coursera",
-      "emoji": "✍️",
-      "image": "",
-      "notes": "",
-      "priority": 1,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "free": true,
-      "freeNote": "",
-      "description": ""
-    },
-    {
       "id": "cyberseg-web",
       "title": "Cybersécurité : Sécurité des Sites Web",
       "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/cybersecurite-site-web-securite",
