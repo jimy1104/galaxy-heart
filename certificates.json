@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802053877,
+  "updatedAt": 1788802081073,
   "people": [
     "Jimy",
     "Hiba"
@@ -353,14 +353,14 @@
       "free": true,
       "freeNote": "Free with coupon code — check it's still valid at checkout",
       "notes": "Do this last of the three Blender courses.",
-      "priority": 2,
+      "priority": 3,
       "status": {
         "a": "pending",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788802081073
     },
     {
       "id": "santander-cyber",
