@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802147453,
+  "updatedAt": 1788802152649,
   "people": [
     "Jimy",
     "Hiba"
@@ -266,7 +266,7 @@
       "emoji": "🫀",
       "image": "",
       "notes": "",
-      "priority": 0,
+      "priority": 2,
       "status": {
         "a": "pending",
         "b": "pending"
@@ -276,7 +276,7 @@
       "freeNote": "",
       "description": "",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788802152649
     },
     {
       "id": "intro-alice",
