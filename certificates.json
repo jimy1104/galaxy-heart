@@ -85,22 +85,6 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
     },
     {
-      "id": "ui-ux",
-      "title": "UI / UX Design (Specialization)",
-      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/specializations/ui-ux-design",
-      "category": "course",
-      "platform": "Coursera",
-      "emoji": "🎨",
-      "image": "",
-      "notes": "",
-      "priority": 0,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
-    },
-    {
       "id": "chatgpt-data",
       "title": "ChatGPT Advanced Data Analysis",
       "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/chatgpt-advanced-data-analysis",
