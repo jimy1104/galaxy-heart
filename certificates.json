@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801986639,
+  "updatedAt": 1788802001005,
   "people": [
     "Jimy",
     "Hiba"
@@ -311,14 +311,14 @@
       "free": false,
       "freeNote": "Free with coupon code — check it's still valid at checkout",
       "notes": "Start here before the other two Blender courses.",
-      "priority": 3,
+      "priority": 4,
       "status": {
         "a": "pending",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "first-steps",
-      "updatedAt": 1788801986639
+      "updatedAt": 1788802001005
     },
     {
       "id": "blender-course",
@@ -332,14 +332,14 @@
       "free": false,
       "freeNote": "Free with coupon code — check it's still valid at checkout",
       "notes": "Do after the beginner tutorial above.",
-      "priority": 3,
+      "priority": 4,
       "status": {
         "a": "pending",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 1788801983917
+      "updatedAt": 1788801999729
     },
     {
       "id": "blender-char-anim",
@@ -500,14 +500,14 @@
       "free": true,
       "freeNote": "Free (paid option for a physical certificate)",
       "notes": "Free and practical, good to have.",
-      "priority": 3,
+      "priority": 4,
       "status": {
         "a": "pending",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788801999085
     },
     {
       "id": "alison-pet-cpr",
