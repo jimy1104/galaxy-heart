@@ -119,25 +119,6 @@
       "description": ""
     },
     {
-      "id": "arguments",
-      "title": "Understanding Arguments",
-      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/understanding-arguments?source=search",
-      "category": "course",
-      "platform": "Coursera",
-      "emoji": "🧠",
-      "image": "",
-      "notes": "",
-      "priority": 0,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "free": true,
-      "freeNote": "",
-      "description": ""
-    },
-    {
       "id": "pharma",
       "title": "Introduction to the Pharmaceutical Industry",
       "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/introduction-to-the-pharmaceutical-industry?source=search",
