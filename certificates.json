@@ -472,7 +472,7 @@
       "free": true,
       "freeNote": "Free (paid option for a physical certificate)",
       "notes": "Free and practical, good to have.",
-      "priority": 2,
+      "priority": 3,
       "status": {
         "a": "pending",
         "b": "pending"
