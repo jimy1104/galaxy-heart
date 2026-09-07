@@ -21,22 +21,6 @@
       "color": "linear-gradient(135deg,#ff9d7a,#ff66cc)"
     },
     {
-      "id": "ielts-speaking",
-      "title": "IELTS Success Online — IELTS Speaking",
-      "url": "https://www.udemy.com/course/ielts-success-online-ielts-speaking/?portfolio=ROW-English&couponCode=PMNVD3025",
-      "category": "course",
-      "platform": "Udemy",
-      "emoji": "🗣️",
-      "image": "",
-      "notes": "",
-      "priority": 5,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
-    },
-    {
       "id": "script-writing",
       "title": "Script Writing",
       "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/script-writing",
