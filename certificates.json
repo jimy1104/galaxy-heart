@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801843135,
+  "updatedAt": 1788801845213,
   "people": [
     "Jimy",
     "Hiba"
@@ -581,7 +581,7 @@
       "emoji": "🧠",
       "image": "",
       "description": "Harvard's CS50 course on the concepts and algorithms behind modern AI: search, machine learning, neural networks.",
-      "free": true,
+      "free": false,
       "freeNote": "Free to audit — paid certificate optional",
       "notes": "Do after CS50x — one of the best free AI courses available.",
       "priority": 4,
@@ -591,7 +591,7 @@
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788801845213
     },
     {
       "id": "google-ai-essentials",
