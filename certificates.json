@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801967727,
+  "updatedAt": 1788801983917,
   "people": [
     "Jimy",
     "Hiba"
@@ -329,7 +329,7 @@
       "emoji": "🪑",
       "image": "",
       "description": "A broader Blender course covering modeling, texturing, lighting and rendering.",
-      "free": true,
+      "free": false,
       "freeNote": "Free with coupon code — check it's still valid at checkout",
       "notes": "Do after the beginner tutorial above.",
       "priority": 3,
@@ -339,7 +339,7 @@
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788801983917
     },
     {
       "id": "blender-char-anim",
