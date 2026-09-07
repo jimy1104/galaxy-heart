@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801857987,
+  "updatedAt": 1788801870068,
   "people": [
     "Jimy",
     "Hiba"
@@ -44,8 +44,8 @@
       "free": true,
       "freeNote": "",
       "description": "",
-      "type": "certificate",
-      "updatedAt": 0
+      "type": "first-steps",
+      "updatedAt": 1788801870068
     },
     {
       "id": "cyberseg-web",
