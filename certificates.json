@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802084618,
+  "updatedAt": 1788802090879,
   "people": [
     "Jimy",
     "Hiba"
@@ -374,14 +374,14 @@
       "free": true,
       "freeNote": "Free (Santander Open Academy)",
       "notes": "Free and short — a quick win.",
-      "priority": 2,
+      "priority": 3,
       "status": {
         "a": "pending",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788802090879
     },
     {
       "id": "santander-excel",
