@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802042816,
+  "updatedAt": 1788802053877,
   "people": [
     "Jimy",
     "Hiba"
@@ -636,27 +636,6 @@
       "updatedAt": 0
     },
     {
-      "id": "ui-ux",
-      "title": "UI / UX Design (Specialization)",
-      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/specializations/ui-ux-design",
-      "category": "course",
-      "platform": "Coursera",
-      "emoji": "🎨",
-      "image": "",
-      "description": "Multi-course specialization covering user research, wireframing, prototyping and visual UI design.",
-      "free": true,
-      "freeNote": "Free (Coursera program access)",
-      "notes": "Full specialization — several courses, plan for a few weeks.",
-      "priority": 3,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "type": "certificate",
-      "updatedAt": 0
-    },
-    {
       "id": "arguments",
       "title": "Understanding Arguments",
       "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/understanding-arguments?source=search",
@@ -763,7 +742,8 @@
     }
   ],
   "deletedIds": [
-    "ai-for-everyone"
+    "ai-for-everyone",
+    "ui-ux"
   ],
   "futureCareers": [
     {
