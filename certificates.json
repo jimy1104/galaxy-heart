@@ -271,25 +271,6 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
     },
     {
-      "id": "low-poly",
-      "title": "Low Poly Art For Video Games",
-      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/low-poly-art-video-games?source=search",
-      "category": "course",
-      "platform": "Coursera · Michigan State",
-      "emoji": "🔺",
-      "image": "",
-      "description": "Teaches how to model simple, stylized low-poly 3D assets for video games.",
-      "free": true,
-      "freeNote": "Free (Coursera program access)",
-      "notes": "Nice companion to the Blender courses.",
-      "priority": 1,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
-    },
-    {
       "id": "cs50-2d-games",
       "title": "CS50's Introduction to 2D Game Development",
       "url": "https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-2d-game-development",
