@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802221390,
+  "updatedAt": 1788802268698,
   "people": [
     "Jimy",
     "Hiba"
@@ -65,8 +65,8 @@
       "free": true,
       "freeNote": "",
       "description": "",
-      "type": "certificate",
-      "updatedAt": 0
+      "type": "first-steps",
+      "updatedAt": 1788802268698
     },
     {
       "id": "cyber-mobility",
