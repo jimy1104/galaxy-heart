@@ -573,25 +573,6 @@
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
-    },
-    {
-      "id": "ai-for-everyone",
-      "title": "AI For Everyone",
-      "url": "https://www.coursera.org/learn/ai-for-everyone",
-      "category": "course",
-      "platform": "Coursera · DeepLearning.AI",
-      "emoji": "🌟",
-      "image": "",
-      "description": "Non-technical overview by Andrew Ng of what AI can (and can't) do, and how to spot AI opportunities.",
-      "free": true,
-      "freeNote": "Free to audit — paid certificate optional",
-      "notes": "Great non-technical starting point before CS50 AI.",
-      "priority": 4,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
     }
   ],
   "futureCareers": [
