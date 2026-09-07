@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802291491,
+  "updatedAt": 1788802320904,
   "people": [
     "Jimy",
     "Hiba"
@@ -615,27 +615,6 @@
       "updatedAt": 0
     },
     {
-      "id": "game-character-design",
-      "title": "Game Character Design",
-      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/game-character-design?source=search",
-      "category": "course",
-      "platform": "Coursera",
-      "emoji": "🧑‍🎨",
-      "image": "",
-      "description": "Covers designing original characters for video games, from concept sketch to a finished design.",
-      "free": true,
-      "freeNote": "Free (Coursera program access)",
-      "notes": "Good before the Blender character-animation course.",
-      "priority": 1,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "type": "certificate",
-      "updatedAt": 0
-    },
-    {
       "id": "cs50-2d-games",
       "title": "CS50's Introduction to 2D Game Development",
       "url": "https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-2d-game-development",
@@ -663,7 +642,8 @@
     "arguments",
     "script-writing",
     "pro-singer",
-    "low-poly"
+    "low-poly",
+    "game-character-design"
   ],
   "futureCareers": [
     {
