@@ -18,7 +18,29 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#ff9d7a,#ff66cc)"
+      "color": "linear-gradient(135deg,#ff9d7a,#ff66cc)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
+    },
+    {
+      "id": "ielts-speaking",
+      "title": "IELTS Success Online — IELTS Speaking",
+      "url": "https://www.udemy.com/course/ielts-success-online-ielts-speaking/?portfolio=ROW-English&couponCode=PMNVD3025",
+      "category": "course",
+      "platform": "Udemy",
+      "emoji": "🗣️",
+      "image": "",
+      "notes": "",
+      "priority": 3,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "script-writing",
@@ -34,7 +56,10 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "cyberseg-web",
@@ -50,7 +75,10 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "cyber-mobility",
@@ -66,7 +94,10 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "cyber-risk",
@@ -76,13 +107,35 @@
       "platform": "edX · Harvard",
       "emoji": "🔒",
       "image": "",
-      "notes": "Medium certificate",
-      "priority": 3,
+      "notes": "",
+      "priority": 4,
       "status": {
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
+    },
+    {
+      "id": "ui-ux",
+      "title": "UI / UX Design (Specialization)",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/specializations/ui-ux-design",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🎨",
+      "image": "",
+      "notes": "",
+      "priority": 0,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "chatgpt-data",
@@ -93,12 +146,15 @@
       "emoji": "🤖",
       "image": "",
       "notes": "",
-      "priority": 2,
+      "priority": 0,
       "status": {
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "arguments",
@@ -114,7 +170,10 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "pharma",
@@ -130,7 +189,10 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "biomedical-equip",
@@ -146,7 +208,10 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "asl",
@@ -162,7 +227,10 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "singing",
@@ -178,7 +246,10 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "producing",
@@ -194,7 +265,10 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "songwriting",
@@ -210,7 +284,10 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "pro-singer",
@@ -226,7 +303,10 @@
         "a": "pending",
         "b": "pending"
       },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
     },
     {
       "id": "anatomy",
@@ -242,7 +322,400 @@
         "a": "pending",
         "b": "pending"
       },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
+      "free": true,
+      "freeNote": "",
+      "description": ""
+    },
+    {
+      "id": "game-character-design",
+      "title": "Game Character Design",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/game-character-design?source=search",
+      "category": "course",
+      "platform": "Coursera",
+      "emoji": "🧑‍🎨",
+      "image": "",
+      "description": "Covers designing original characters for video games, from concept sketch to a finished design.",
+      "free": true,
+      "freeNote": "Free (Coursera program access)",
+      "notes": "Good before the Blender character-animation course.",
+      "priority": 1,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "intro-alice",
+      "title": "Introduction to Programming and Animation with Alice",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/introtoalice?source=search",
+      "category": "course",
+      "platform": "Coursera · Duke",
+      "emoji": "🧩",
+      "image": "",
+      "description": "Teaches programming fundamentals through Alice's drag-and-drop 3D animation environment — a beginner-friendly intro to logic and object-oriented thinking.",
+      "free": true,
+      "freeNote": "Free (Coursera program access)",
+      "notes": "Easy on-ramp into programming if code feels intimidating.",
+      "priority": 2,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "low-poly",
+      "title": "Low Poly Art For Video Games",
+      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/low-poly-art-video-games?source=search",
+      "category": "course",
+      "platform": "Coursera · Michigan State",
+      "emoji": "🔺",
+      "image": "",
+      "description": "Teaches how to model simple, stylized low-poly 3D assets for video games.",
+      "free": true,
+      "freeNote": "Free (Coursera program access)",
+      "notes": "Nice companion to the Blender courses.",
+      "priority": 1,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "cs50-2d-games",
+      "title": "CS50's Introduction to 2D Game Development",
+      "url": "https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-2d-game-development",
+      "category": "course",
+      "platform": "edX · Harvard",
+      "emoji": "🕹️",
+      "image": "",
+      "description": "Harvard's CS50 course on building 2D video games using Lua with the LÖVE framework, plus an intro to Unity.",
+      "free": true,
+      "freeNote": "Free to audit — paid certificate optional",
+      "notes": "One of the best free intros to real game dev — do before the Blender animation course.",
+      "priority": 4,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "blender-tutorial",
+      "title": "Blender Tutorial for Beginners",
+      "url": "https://www.udemy.com/course/blendertutorial/?couponCode=MT260907G2",
+      "category": "course",
+      "platform": "Udemy",
+      "emoji": "🧱",
+      "image": "",
+      "description": "Beginner Blender tutorial covering the interface and core 3D modeling tools.",
+      "free": true,
+      "freeNote": "Free with coupon code — check it's still valid at checkout",
+      "notes": "Start here before the other two Blender courses.",
+      "priority": 1,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "blender-course",
+      "title": "Blender Course",
+      "url": "https://www.udemy.com/course/blendercourse/?couponCode=MT260907G2",
+      "category": "course",
+      "platform": "Udemy",
+      "emoji": "🪑",
+      "image": "",
+      "description": "A broader Blender course covering modeling, texturing, lighting and rendering.",
+      "free": true,
+      "freeNote": "Free with coupon code — check it's still valid at checkout",
+      "notes": "Do after the beginner tutorial above.",
+      "priority": 1,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "blender-char-anim",
+      "title": "Blender 3D Character Animation",
+      "url": "https://www.udemy.com/course/blender3dcharacteranimation/?couponCode=MT260907G2",
+      "category": "course",
+      "platform": "Udemy",
+      "emoji": "🚶",
+      "image": "",
+      "description": "Focused course on rigging and animating 3D characters in Blender.",
+      "free": true,
+      "freeNote": "Free with coupon code — check it's still valid at checkout",
+      "notes": "Do this last of the three Blender courses.",
+      "priority": 2,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "santander-cyber",
+      "title": "Cybersecurity Fundamentals",
+      "url": "https://app.santanderopenacademy.com/en/course/cybersecurity-fundamentals",
+      "category": "course",
+      "platform": "Santander Open Academy",
+      "emoji": "🔰",
+      "image": "",
+      "description": "IBM-backed intro course on core cybersecurity concepts: threats, authentication and the security mindset.",
+      "free": true,
+      "freeNote": "Free (Santander Open Academy)",
+      "notes": "Free and short — a quick win.",
+      "priority": 2,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "santander-excel",
+      "title": "Excel",
+      "url": "https://app.santanderopenacademy.com/es/course/excel",
+      "category": "course",
+      "platform": "Santander Open Academy",
+      "emoji": "📊",
+      "image": "",
+      "description": "Free Santander Open Academy course teaching Excel from the basics through intermediate skills.",
+      "free": true,
+      "freeNote": "Free (Santander Open Academy)",
+      "notes": "Practical, everyday-useful skill.",
+      "priority": 1,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "cs50-web",
+      "title": "CS50's Web Programming with Python and JavaScript",
+      "url": "https://www.classcentral.com/course/web-development-harvard-university-cs50-s-web-pro-11506",
+      "category": "course",
+      "platform": "Class Central → edX · Harvard",
+      "emoji": "🌐",
+      "image": "",
+      "description": "Harvard's CS50 course on building web apps: Python/Django on the backend, JavaScript on the front end.",
+      "free": true,
+      "freeNote": "Free to audit — paid certificate optional",
+      "notes": "More advanced — a great follow-up after CS50x.",
+      "priority": 4,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "mech-vent",
+      "title": "Mechanical Ventilation for COVID-19",
+      "url": "https://www.classcentral.com/course/healthcare-harvard-university-mechanical-ventilat-19347",
+      "category": "course",
+      "platform": "Class Central → edX · Harvard",
+      "emoji": "🫁",
+      "image": "",
+      "description": "Harvard Medical School course teaching healthcare workers the fundamentals of operating mechanical ventilators.",
+      "free": true,
+      "freeNote": "Free to audit — paid certificate optional",
+      "notes": "Directly relevant to biomedical / healthcare equipment work.",
+      "priority": 4,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "quant-bio",
+      "title": "Quantitative Methods for Biology",
+      "url": "https://pll.harvard.edu/course/quantitative-methods-biology",
+      "category": "course",
+      "platform": "Harvard PLL",
+      "emoji": "📈",
+      "image": "",
+      "description": "Harvard course applying quantitative and computational methods (e.g. MATLAB) to biological problems.",
+      "free": false,
+      "freeNote": "Check current price on the Harvard PLL page — these are usually paid",
+      "notes": "Excellent fit for biomedical engineering — verify the price before enrolling.",
+      "priority": 4,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "drug-regulation",
+      "title": "Prescription Drug Regulation, Cost, and Access",
+      "url": "https://pll.harvard.edu/course/prescription-drug-regulation-cost-and-access-current-controversies-context",
+      "category": "course",
+      "platform": "Harvard PLL",
+      "emoji": "💊",
+      "image": "",
+      "description": "Harvard course examining how prescription drugs are regulated, priced and accessed, through real policy debates.",
+      "free": false,
+      "freeNote": "Check current price on the Harvard PLL page — these are usually paid",
+      "notes": "More policy-focused — useful context for biomedical/pharma work.",
+      "priority": 3,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "alison-meds",
+      "title": "Medication Management and Administration",
+      "url": "https://alison.com/es/curso/gestion-y-administracion-de-medicamentos",
+      "category": "course",
+      "platform": "Alison",
+      "emoji": "💉",
+      "image": "",
+      "description": "Covers safe medication management and administration practices.",
+      "free": true,
+      "freeNote": "Free (paid option for a physical certificate)",
+      "notes": "Free and practical, good to have.",
+      "priority": 2,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "alison-pet-cpr",
+      "title": "Pet First Aid and CPR",
+      "url": "https://alison.com/es/curso/primeros-auxilios-y-reanimacion-cardiopulmonar-para-mascotas",
+      "category": "course",
+      "platform": "Alison",
+      "emoji": "🐾",
+      "image": "",
+      "description": "Teaches first aid and CPR techniques for pets in an emergency.",
+      "free": true,
+      "freeNote": "Free (paid option for a physical certificate)",
+      "notes": "Nice to have, low priority.",
+      "priority": 1,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "alison-cpr-aed",
+      "title": "CPR, AED and First Aid",
+      "url": "https://alison.com/es/curso/rcp-dea-y-primeros-auxilios",
+      "category": "course",
+      "platform": "Alison",
+      "emoji": "🚑",
+      "image": "",
+      "description": "Covers CPR, AED use and first-aid response for human emergencies.",
+      "free": true,
+      "freeNote": "Free (paid option for a physical certificate)",
+      "notes": "A genuinely useful life-safety skill.",
+      "priority": 2,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "cs50x",
+      "title": "CS50x: Introduction to Computer Science",
+      "url": "https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-computer-science",
+      "category": "course",
+      "platform": "edX · Harvard",
+      "emoji": "💻",
+      "image": "",
+      "description": "Harvard's famous introduction to computer science and programming — the foundation for all of CS50's other courses.",
+      "free": true,
+      "freeNote": "Free to audit — paid certificate optional",
+      "notes": "The classic starting point — do this before the other CS50 courses if you haven't already.",
+      "priority": 4,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "cs50-ai",
+      "title": "CS50's Introduction to Artificial Intelligence with Python",
+      "url": "https://www.edx.org/learn/artificial-intelligence/harvard-university-cs50-s-introduction-to-artificial-intelligence-with-python",
+      "category": "course",
+      "platform": "edX · Harvard",
+      "emoji": "🧠",
+      "image": "",
+      "description": "Harvard's CS50 course on the concepts and algorithms behind modern AI: search, machine learning, neural networks.",
+      "free": true,
+      "freeNote": "Free to audit — paid certificate optional",
+      "notes": "Do after CS50x — one of the best free AI courses available.",
+      "priority": 4,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "google-ai-essentials",
+      "title": "Google AI Essentials",
+      "url": "https://www.coursera.org/learn/google-ai-essentials",
+      "category": "course",
+      "platform": "Coursera · Google",
+      "emoji": "✨",
+      "image": "",
+      "description": "Google's beginner course on using generative AI tools effectively and responsibly in everyday work.",
+      "free": true,
+      "freeNote": "Free to audit — paid certificate optional",
+      "notes": "Short, free, and from Google — a quick, credible AI certificate.",
+      "priority": 4,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    },
+    {
+      "id": "ai-for-everyone",
+      "title": "AI For Everyone",
+      "url": "https://www.coursera.org/learn/ai-for-everyone",
+      "category": "course",
+      "platform": "Coursera · DeepLearning.AI",
+      "emoji": "🌟",
+      "image": "",
+      "description": "Non-technical overview by Andrew Ng of what AI can (and can't) do, and how to spot AI opportunities.",
+      "free": true,
+      "freeNote": "Free to audit — paid certificate optional",
+      "notes": "Great non-technical starting point before CS50 AI.",
+      "priority": 4,
+      "status": {
+        "a": "pending",
+        "b": "pending"
+      },
+      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
+    }
+  ],
+  "futureCareers": [
+    {
+      "id": "cgspectrum-essentials",
+      "title": "CG Spectrum — 3D Animation / VFX Career Track",
+      "url": "https://www.cgspectrum.com/thanks-course-submission-essentials?submissionGuid=df11a54c-4f6d-4e39-a4ea-4a1490c816c1",
+      "emoji": "🎬",
+      "description": "An industry-mentored online school for 3D animation, VFX, game art and character animation — closer to a full diploma/degree track than a single short certificate.",
+      "notes": "Bigger long-term investment. Worth exploring once you've built a small portfolio with the free Blender & game-art courses above."
     }
   ]
 }
