@@ -268,6 +268,19 @@ canvas{display:block;}
 .futureBody .ftLink:hover{color:#fff;}
 .futureBody .ftNotes{margin-top:8px;font-size:11px;color:rgba(255,255,255,.6);font-style:italic;}
 
+/* Editable platform tag, editable free/paid badge, type select + filters */
+.certThumb .tag{cursor:text;outline:none;}
+.certThumb .tag:focus{background:rgba(0,0,0,.65);}
+.certFreeBadge{cursor:pointer;}
+.certFreeBadge:hover{filter:brightness(1.25);}
+.certTypeSelect{appearance:none;-webkit-appearance:none;padding:3px 22px 3px 9px;border-radius:8px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;border:1px solid transparent;cursor:pointer;background-repeat:no-repeat;background-position:right 6px center;background-size:8px;}
+.certTypeSelect option{background:#150e28;color:#fff;}
+.certTypeSelect.type-first-steps{background-color:rgba(125,220,156,.18);color:#8ef0b3;}
+.certTypeSelect.type-certificate{background-color:rgba(125,156,255,.18);color:#9cb8ff;}
+.certTypeSelect.type-degree{background-color:rgba(255,181,71,.18);color:#ffcf7a;}
+#certTypeFilters{display:flex;gap:8px;margin:10px 5vw 4px;flex-wrap:wrap;}
+#certSortNote{color:rgba(255,255,255,.35);font-size:10.5px;margin:14px 5vw 0;}
+
 @media(max-width:720px){
   .certCard{flex-wrap:wrap;}
   .certStatuses{flex-direction:row;flex-wrap:wrap;width:100%;}
@@ -338,6 +351,13 @@ canvas{display:block;}
       <button class="certFilterBtn" data-filter="progress">In Progress</button>
       <button class="certFilterBtn" data-filter="completed">Completed</button>
     </div>
+    <div id="certTypeFilters">
+      <button class="certFilterBtn active" data-type="all">All types</button>
+      <button class="certFilterBtn" data-type="first-steps">🟢 First Steps</button>
+      <button class="certFilterBtn" data-type="certificate">🔵 Certificate</button>
+      <button class="certFilterBtn" data-type="degree">🟣 Degree / Advanced</button>
+    </div>
+    <div id="certSortNote">Sorted by priority ⭐ — like the podium above.</div>
     <div id="certList"></div>
 
     <div id="certFutureSection">
@@ -1131,12 +1151,20 @@ window.addEventListener("resize",()=>{camera.aspect=innerWidth/innerHeight;camer
    Reuses ghToken / GITHUB_OWNER / GITHUB_REPO / GITHUB_BRANCH,
    toast(), b64EncodeUnicode/Decode, ghGetFile and ghPutJson
    already defined above for the playlist.
+
+   v2: per-item + top-level updatedAt timestamps and delete
+   tombstones, so loading never silently discards an edit or
+   an added/deleted certificate from either device — the
+   newest version of each item wins, and after every load the
+   merged result is pushed back to GitHub so both of you
+   converge instead of one side's changes getting overwritten.
    ============================ */
 const CERT_PATH="certificates.json"
 function cert(id,title,url,category,platform,emoji,opts){
   opts=opts||{}
   return {
     id,title,url,category,platform,emoji,
+    type:opts.type||"certificate", // "first-steps" | "certificate" | "degree"
     image:"",
     description:opts.description||"",
     free:opts.free!==undefined?opts.free:true,
@@ -1144,161 +1172,201 @@ function cert(id,title,url,category,platform,emoji,opts){
     notes:opts.notes||"",
     priority:opts.priority||0,
     status:{a:"pending",b:"pending"},
-    color:opts.color||(category==="exam"?"linear-gradient(135deg,#ff9d7a,#ff66cc)":"linear-gradient(135deg,#7d5cff,#ff7de0)")
+    color:opts.color||(category==="exam"?"linear-gradient(135deg,#ff9d7a,#ff66cc)":"linear-gradient(135deg,#7d5cff,#ff7de0)"),
+    updatedAt:0 // factory default — any real edit (local or remote) always outranks this
   }
 }
 function defaultCertificates(){
   const base="https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/"
   return {
+    updatedAt:0,
     people:["Person 1","Person 2"],
+    deletedIds:[],
     items:[
       cert("ielts","IELTS Online — British Council","https://ieltsregistration.britishcouncil.org/iol/find-test","exam","British Council","🌍",{
+        type:"degree",
         description:"Official registration for the IELTS test (Academic, General Training or Life Skills) — book your online or in-person exam slot.",
         free:false,freeNote:"Paid exam — this is the real test, not a course",priority:4,
         notes:"Book this once you feel ready — do the free Udemy speaking prep below first."}),
       cert("ielts-speaking","IELTS Success Online — IELTS Speaking","https://www.udemy.com/course/ielts-success-online-ielts-speaking/?portfolio=ROW-English&couponCode=PMNVD3025","course","Udemy","🗣️",{
+        type:"first-steps",
         description:"Practice course for the IELTS Speaking module: sample questions, band-score tips and mock speaking tests.",
         free:true,freeNote:"Free with coupon code — check it's still valid at checkout",priority:2,
         notes:"Good free step 1 before booking the official (paid) IELTS exam above."}),
       cert("script-writing","Script Writing",base+"learn/script-writing","course","Coursera","✍️",{
-        description:"Fundamentals of writing a screenplay: structure, character, dialogue and formatting for film/TV.",
+        type:"first-steps",
+        description:"Covers how to structure a screenplay end-to-end — concept, three-act structure, character arcs and industry-standard formatting — useful even outside film for structuring any story.",
         free:true,freeNote:"Free (Coursera program access)",priority:1,
         notes:"Fun and free, no prerequisites."}),
       cert("cyberseg-web","Cybersécurité : Sécurité des Sites Web",base+"learn/cybersecurite-site-web-securite","course","Coursera","🔐",{
-        description:"Introduces web security concepts: common vulnerabilities, secure site design and best practices (in French).",
+        type:"certificate",
+        description:"A French-language intro to web security: common vulnerabilities (XSS, injection), secure site design principles and basic hardening steps for a website.",
         free:true,freeNote:"Free (Coursera program access)",priority:2,
         notes:"Good intro to web security — taught in French."}),
       cert("cyber-mobility","Cybersecurity and Mobility",base+"learn/cybersecurity-mobility","course","Coursera","🛡️",{
-        description:"Covers security risks and protections specific to mobile devices and mobile app ecosystems.",
+        type:"certificate",
+        description:"Covers the specific attack surface of mobile devices and apps — data leakage, insecure storage, unsafe APIs — and how to reduce risk on phones.",
         free:true,freeNote:"Free (Coursera program access)",priority:2,
         notes:"Short and practical mobile-security basics."}),
       cert("cyber-risk","Cybersecurity: Managing Risk in the Information Age","https://www.edx.org/executive-education/harvard-university-cybersecurity-managing-risk-in-the-information-age","course","edX · Harvard","🔒",{
+        type:"degree",
         description:"Harvard Executive Education course on identifying, assessing and managing cybersecurity risk at an organizational level.",
-        free:false,freeNote:"Paid — Harvard Executive Education",priority:4,
-        notes:"Heavier and likely paid, but a strong name for a resume."}),
+        free:false,freeNote:"Paid — Harvard Executive Education (all Harvard / edX items here are paid)",priority:4,
+        notes:"Heavier and paid, but a strong name for a resume."}),
       cert("ui-ux","UI / UX Design (Specialization)",base+"specializations/ui-ux-design","course","Coursera","🎨",{
-        description:"Multi-course specialization covering user research, wireframing, prototyping and visual UI design.",
+        type:"certificate",
+        description:"A multi-course specialization (expect several weeks) taking you from user research and wireframes through prototyping to a polished, testable UI — the standard entry path into UX/UI design.",
         free:true,freeNote:"Free (Coursera program access)",priority:3,
         notes:"Full specialization — several courses, plan for a few weeks."}),
       cert("chatgpt-data","ChatGPT Advanced Data Analysis",base+"learn/chatgpt-advanced-data-analysis","course","Coursera","🤖",{
-        description:"Hands-on course using ChatGPT's Advanced Data Analysis (Code Interpreter) feature to explore and visualize datasets.",
+        type:"first-steps",
+        description:"Hands-on with ChatGPT's Code Interpreter / Advanced Data Analysis: upload a dataset and have it clean, chart and summarize the data without writing code yourself.",
         free:true,freeNote:"Free (Coursera program access)",priority:2,
         notes:"Quick, practical, very current skill."}),
       cert("arguments","Understanding Arguments",base+"learn/understanding-arguments?source=search","course","Coursera","🧠",{
-        description:"A critical-thinking course on how to identify, construct and evaluate logical arguments.",
+        type:"first-steps",
+        description:"A Duke University critical-thinking course: how to spot a hidden premise, tell a good argument from a bad one, and build your own airtight case.",
         free:true,freeNote:"Free (Coursera program access)",priority:2,
         notes:"Great for critical thinking, useful in any field."}),
       cert("pharma","Introduction to the Pharmaceutical Industry",base+"learn/introduction-to-the-pharmaceutical-industry?source=search","course","Coursera","💊",{
-        description:"Overview of how the pharmaceutical industry discovers, develops, and brings drugs to market.",
+        type:"certificate",
+        description:"Walks through the pharmaceutical industry end-to-end: drug discovery, clinical trials, regulatory approval and how a drug reaches a pharmacy shelf.",
         free:true,freeNote:"Free (Coursera program access)",priority:3,
         notes:"Directly useful for a biomedical engineering path."}),
       cert("biomedical-equip","Biomedical Equipment: Repairing and Maintaining Biomedical Devices","https://www.edx.org/learn/biomedical-engineering/delft-university-of-technology-biomedical-equipment-repairing-and-maintaining-biomedical-devices","course","edX · TU Delft","🩺",{
+        type:"degree",
         description:"Covers how biomedical equipment works, and how to repair and maintain it safely in a clinical setting.",
-        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
+        free:false,freeNote:"Paid — edX courses have a cost here",priority:4,
         notes:"Very relevant to your degree — high priority."}),
       cert("asl","ASL: First 500 Basic Signs","https://www.udemy.com/course/asl-first-500-basic-signs/?couponCode=PMNVD3025","course","Udemy","🤟",{
+        type:"first-steps",
         description:"Teaches the first 500 basic signs of American Sign Language for everyday communication.",
         free:true,freeNote:"Free with coupon code — check it's still valid at checkout",priority:2,
         notes:"A nice life skill, free with the coupon."}),
       cert("singing","Singing: Popular Music",base+"learn/singing-popular-music?source=search","course","Coursera","🎤",{
+        type:"first-steps",
         description:"Vocal technique course focused on singing contemporary and popular music styles.",
         free:true,freeNote:"Free (Coursera program access)",priority:1,
         notes:"Just for fun — the music side of things."}),
       cert("producing","Producing Music",base+"learn/producing-music?source=search","course","Coursera","🎚️",{
+        type:"first-steps",
         description:"Introduces the fundamentals of music production: recording, mixing and arranging a song.",
         free:true,freeNote:"Free (Coursera program access)",priority:1,
         notes:"Fun, low pressure — do whenever."}),
       cert("songwriting","Songwriting: Writing the Music",base+"learn/songwriting-writing-the-music?source=search","course","Coursera","🎼",{
+        type:"first-steps",
         description:"Covers how to write melodies and music for a song, pairing composition with lyrics.",
         free:true,freeNote:"Free (Coursera program access)",priority:1,
         notes:"Pairs well with the Producing Music course."}),
       cert("pro-singer","Building Your Career as a Professional Singer",base+"learn/building-your-career-as-a-professional-singer?source=search","course","Coursera","🎙️",{
+        type:"first-steps",
         description:"Covers the business side of becoming a professional singer: branding, gigs and career-building.",
         free:true,freeNote:"Free (Coursera program access)",priority:1,
         notes:"Only if the music path becomes serious."}),
       cert("anatomy","Anatomy",base+"learn/anatomy403-1x?source=search","course","Coursera","🫀",{
-        description:"Introductory human anatomy course covering the major body systems.",
+        type:"certificate",
+        description:"A structured tour of the major human body systems (skeletal, muscular, cardiovascular, nervous, etc.) — solid refresher material for biomedical engineering.",
         free:true,freeNote:"Free (Coursera program access)",priority:3,
         notes:"Solid refresher for biomedical engineering."}),
 
       cert("game-character-design","Game Character Design",base+"learn/game-character-design?source=search","course","Coursera","🧑‍🎨",{
-        description:"Covers designing original characters for video games, from concept sketch to a finished design.",
+        type:"first-steps",
+        description:"Walks through designing an original game character from a written concept to a finished illustrated design — sketching, silhouette, color and personality.",
         free:true,freeNote:"Free (Coursera program access)",priority:1,
         notes:"Good before the Blender character-animation course."}),
       cert("intro-alice","Introduction to Programming and Animation with Alice",base+"learn/introtoalice?source=search","course","Coursera · Duke","🧩",{
-        description:"Teaches programming fundamentals through Alice's drag-and-drop 3D animation environment — a beginner-friendly intro to logic and object-oriented thinking.",
+        type:"first-steps",
+        description:"Duke University's beginner-friendly intro to programming logic (loops, conditionals, objects) taught by animating a 3D scene in Alice instead of writing raw code first.",
         free:true,freeNote:"Free (Coursera program access)",priority:2,
         notes:"Easy on-ramp into programming if code feels intimidating."}),
       cert("low-poly","Low Poly Art For Video Games",base+"learn/low-poly-art-video-games?source=search","course","Coursera · Michigan State","🔺",{
-        description:"Teaches how to model simple, stylized low-poly 3D assets for video games.",
+        type:"first-steps",
+        description:"Michigan State University course on modeling simple, stylized 'low poly' 3D objects for games — a lightweight first step into 3D asset creation.",
         free:true,freeNote:"Free (Coursera program access)",priority:1,
         notes:"Nice companion to the Blender courses."}),
       cert("cs50-2d-games","CS50's Introduction to 2D Game Development","https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-2d-game-development","course","edX · Harvard","🕹️",{
+        type:"degree",
         description:"Harvard's CS50 course on building 2D video games using Lua with the LÖVE framework, plus an intro to Unity.",
-        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
-        notes:"One of the best free intros to real game dev — do before the Blender animation course."}),
+        free:false,freeNote:"Paid — Harvard / edX course",priority:4,
+        notes:"One of the best intros to real game dev — do before the Blender animation course."}),
       cert("blender-tutorial","Blender Tutorial for Beginners","https://www.udemy.com/course/blendertutorial/?couponCode=MT260907G2","course","Udemy","🧱",{
+        type:"first-steps",
         description:"Beginner Blender tutorial covering the interface and core 3D modeling tools.",
         free:true,freeNote:"Free with coupon code — check it's still valid at checkout",priority:1,
         notes:"Start here before the other two Blender courses."}),
       cert("blender-course","Blender Course","https://www.udemy.com/course/blendercourse/?couponCode=MT260907G2","course","Udemy","🪑",{
+        type:"certificate",
         description:"A broader Blender course covering modeling, texturing, lighting and rendering.",
         free:true,freeNote:"Free with coupon code — check it's still valid at checkout",priority:1,
         notes:"Do after the beginner tutorial above."}),
       cert("blender-char-anim","Blender 3D Character Animation","https://www.udemy.com/course/blender3dcharacteranimation/?couponCode=MT260907G2","course","Udemy","🚶",{
+        type:"certificate",
         description:"Focused course on rigging and animating 3D characters in Blender.",
         free:true,freeNote:"Free with coupon code — check it's still valid at checkout",priority:2,
         notes:"Do this last of the three Blender courses."}),
       cert("santander-cyber","Cybersecurity Fundamentals","https://app.santanderopenacademy.com/en/course/cybersecurity-fundamentals","course","Santander Open Academy","🔰",{
+        type:"certificate",
         description:"IBM-backed intro course on core cybersecurity concepts: threats, authentication and the security mindset.",
         free:true,freeNote:"Free (Santander Open Academy)",priority:2,
         notes:"Free and short — a quick win."}),
       cert("santander-excel","Excel","https://app.santanderopenacademy.com/es/course/excel","course","Santander Open Academy","📊",{
+        type:"first-steps",
         description:"Free Santander Open Academy course teaching Excel from the basics through intermediate skills.",
         free:true,freeNote:"Free (Santander Open Academy)",priority:1,
         notes:"Practical, everyday-useful skill."}),
       cert("cs50-web","CS50's Web Programming with Python and JavaScript","https://www.classcentral.com/course/web-development-harvard-university-cs50-s-web-pro-11506","course","Class Central → edX · Harvard","🌐",{
+        type:"degree",
         description:"Harvard's CS50 course on building web apps: Python/Django on the backend, JavaScript on the front end.",
-        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
+        free:false,freeNote:"Paid — Harvard / edX course",priority:4,
         notes:"More advanced — a great follow-up after CS50x."}),
       cert("mech-vent","Mechanical Ventilation for COVID-19","https://www.classcentral.com/course/healthcare-harvard-university-mechanical-ventilat-19347","course","Class Central → edX · Harvard","🫁",{
+        type:"degree",
         description:"Harvard Medical School course teaching healthcare workers the fundamentals of operating mechanical ventilators.",
-        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
+        free:false,freeNote:"Paid — Harvard / edX course",priority:4,
         notes:"Directly relevant to biomedical / healthcare equipment work."}),
       cert("quant-bio","Quantitative Methods for Biology","https://pll.harvard.edu/course/quantitative-methods-biology","course","Harvard PLL","📈",{
+        type:"degree",
         description:"Harvard course applying quantitative and computational methods (e.g. MATLAB) to biological problems.",
-        free:false,freeNote:"Check current price on the Harvard PLL page — these are usually paid",priority:4,
-        notes:"Excellent fit for biomedical engineering — verify the price before enrolling."}),
+        free:false,freeNote:"Paid — Harvard PLL",priority:4,
+        notes:"Excellent fit for biomedical engineering — verify the exact price before enrolling."}),
       cert("drug-regulation","Prescription Drug Regulation, Cost, and Access","https://pll.harvard.edu/course/prescription-drug-regulation-cost-and-access-current-controversies-context","course","Harvard PLL","💊",{
+        type:"degree",
         description:"Harvard course examining how prescription drugs are regulated, priced and accessed, through real policy debates.",
-        free:false,freeNote:"Check current price on the Harvard PLL page — these are usually paid",priority:3,
+        free:false,freeNote:"Paid — Harvard PLL",priority:3,
         notes:"More policy-focused — useful context for biomedical/pharma work."}),
       cert("alison-meds","Medication Management and Administration","https://alison.com/es/curso/gestion-y-administracion-de-medicamentos","course","Alison","💉",{
+        type:"first-steps",
         description:"Covers safe medication management and administration practices.",
         free:true,freeNote:"Free (paid option for a physical certificate)",priority:2,
         notes:"Free and practical, good to have."}),
       cert("alison-pet-cpr","Pet First Aid and CPR","https://alison.com/es/curso/primeros-auxilios-y-reanimacion-cardiopulmonar-para-mascotas","course","Alison","🐾",{
+        type:"first-steps",
         description:"Teaches first aid and CPR techniques for pets in an emergency.",
         free:true,freeNote:"Free (paid option for a physical certificate)",priority:1,
         notes:"Nice to have, low priority."}),
       cert("alison-cpr-aed","CPR, AED and First Aid","https://alison.com/es/curso/rcp-dea-y-primeros-auxilios","course","Alison","🚑",{
+        type:"certificate",
         description:"Covers CPR, AED use and first-aid response for human emergencies.",
         free:true,freeNote:"Free (paid option for a physical certificate)",priority:2,
         notes:"A genuinely useful life-safety skill."}),
 
       cert("cs50x","CS50x: Introduction to Computer Science","https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-computer-science","course","edX · Harvard","💻",{
+        type:"degree",
         description:"Harvard's famous introduction to computer science and programming — the foundation for all of CS50's other courses.",
-        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
+        free:false,freeNote:"Paid — Harvard / edX course",priority:4,
         notes:"The classic starting point — do this before the other CS50 courses if you haven't already."}),
       cert("cs50-ai","CS50's Introduction to Artificial Intelligence with Python","https://www.edx.org/learn/artificial-intelligence/harvard-university-cs50-s-introduction-to-artificial-intelligence-with-python","course","edX · Harvard","🧠",{
+        type:"degree",
         description:"Harvard's CS50 course on the concepts and algorithms behind modern AI: search, machine learning, neural networks.",
-        free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
-        notes:"Do after CS50x — one of the best free AI courses available."}),
+        free:false,freeNote:"Paid — Harvard / edX course",priority:4,
+        notes:"Do after CS50x — one of the best AI courses available."}),
       cert("google-ai-essentials","Google AI Essentials","https://www.coursera.org/learn/google-ai-essentials","course","Coursera · Google","✨",{
+        type:"certificate",
         description:"Google's beginner course on using generative AI tools effectively and responsibly in everyday work.",
         free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
         notes:"Short, free, and from Google — a quick, credible AI certificate."}),
       cert("ai-for-everyone","AI For Everyone","https://www.coursera.org/learn/ai-for-everyone","course","Coursera · DeepLearning.AI","🌟",{
+        type:"first-steps",
         description:"Non-technical overview by Andrew Ng of what AI can (and can't) do, and how to spot AI opportunities.",
         free:true,freeNote:"Free to audit — paid certificate optional",priority:4,
         notes:"Great non-technical starting point before CS50 AI."})
@@ -1313,21 +1381,26 @@ function defaultFutureCareers(){
       url:"https://www.cgspectrum.com/thanks-course-submission-essentials?submissionGuid=df11a54c-4f6d-4e39-a4ea-4a1490c816c1",
       emoji:"🎬",
       description:"An industry-mentored online school for 3D animation, VFX, game art and character animation — closer to a full diploma/degree track than a single short certificate.",
-      notes:"Bigger long-term investment. Worth exploring once you've built a small portfolio with the free Blender & game-art courses above."
+      notes:"Bigger long-term investment. Worth exploring once you've built a small portfolio with the free Blender & game-art courses above.",
+      updatedAt:0
     }
   ]
 }
 
 let certState=null
 let certFilter="all"
+let typeFilter="all"
 let platformFilter=null
 let certSaveTimer=null
 const STATUS_CYCLE=["pending","progress","completed"]
 const STATUS_LABEL={pending:"Pending",progress:"In Progress",completed:"Completed"}
+const TYPE_LABEL={"first-steps":"🟢 First Steps",certificate:"🔵 Certificate",degree:"🟣 Degree / Advanced"}
 const MEDALS=["🥇","🥈","🥉"]
 
 function escapeHtml(s){return (s||"").toString().replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function starString(n){return "★".repeat(n)+"☆".repeat(5-n)}
+function touch(it){ it.updatedAt=Date.now(); certState.updatedAt=Date.now() }
+function touchState(){ certState.updatedAt=Date.now() }
 
 function loadCertLocal(){try{return JSON.parse(localStorage.getItem("yuleb_certificates"))}catch(e){return null}}
 function persistCertLocal(){try{localStorage.setItem("yuleb_certificates",JSON.stringify(certState))}catch(e){}}
@@ -1358,32 +1431,79 @@ async function ghUpdateGenericJson(path,mutateFn,message){
   return res.ok
 }
 
+// Union-merge two certificate states so loading never silently drops an
+// edit, an added item, or a deletion made on the OTHER device. Per-item
+// updatedAt decides which version of a shared item wins; deletedIds are
+// tombstones so a deletion sticks even if the other side still has it.
+function mergeCertStates(local,remote){
+  if(!local) return remote
+  if(!remote) return local
+  const deletedIds=new Set([...(local.deletedIds||[]),...(remote.deletedIds||[])])
+  const byId=new Map()
+  ;(remote.items||[]).forEach(it=>byId.set(it.id,it))
+  ;(local.items||[]).forEach(it=>{
+    const ex=byId.get(it.id)
+    if(!ex||(it.updatedAt||0)>=(ex.updatedAt||0)) byId.set(it.id,it)
+  })
+  const items=[...byId.values()].filter(it=>!deletedIds.has(it.id))
+  const futureById=new Map()
+  ;(remote.futureCareers||[]).forEach(f=>futureById.set(f.id,f))
+  ;(local.futureCareers||[]).forEach(f=>{
+    const ex=futureById.get(f.id)
+    if(!ex||(f.updatedAt||0)>=(ex.updatedAt||0)) futureById.set(f.id,f)
+  })
+  const localNewer=(local.updatedAt||0)>=(remote.updatedAt||0)
+  return {
+    updatedAt:Math.max(local.updatedAt||0,remote.updatedAt||0),
+    people:localNewer?local.people:remote.people,
+    items,
+    deletedIds:[...deletedIds],
+    futureCareers:[...futureById.values()]
+  }
+}
+
 async function initCertificates(){
   const remote=await fetchCertificatesFromGithub()
-  certState=remote||loadCertLocal()||defaultCertificates()
-  if(!certState.people) certState.people=["Person 1","Person 2"]
-  if(!certState.items) certState.items=[]
+  const local=loadCertLocal()
+  let merged
+  if(remote&&local) merged=mergeCertStates(local,remote)
+  else merged=local||remote||defaultCertificates()
 
-  // Merge in any new default certificates the saved state doesn't have yet
-  // (so upgrading to a newer version of this app adds new items without wiping progress).
-  const defaults=defaultCertificates()
-  const existingIds=new Set(certState.items.map(i=>i.id))
-  defaults.items.forEach(d=>{ if(!existingIds.has(d.id)) certState.items.push(d) })
+  if(!merged.people) merged.people=["Person 1","Person 2"]
+  if(!merged.items) merged.items=[]
+  if(!merged.deletedIds) merged.deletedIds=[]
+  const deletedSet=new Set(merged.deletedIds)
 
-  certState.items.forEach(it=>{
+  // Add brand-new default certificates the saved state doesn't know about yet
+  // (upgrading this app adds new items without wiping anyone's progress),
+  // but never resurrect one that was intentionally deleted.
+  const existingIds=new Set(merged.items.map(i=>i.id))
+  defaultCertificates().items.forEach(d=>{
+    if(!existingIds.has(d.id)&&!deletedSet.has(d.id)) merged.items.push(d)
+  })
+
+  merged.items.forEach(it=>{
     if(!it.status) it.status={a:"pending",b:"pending"}
     if(typeof it.priority!=="number") it.priority=0
     if(!it.platform) it.platform=it.category==="exam"?"Exam":"Course"
+    if(!it.type) it.type="certificate"
     if(typeof it.free!=="boolean") it.free=true
     if(!it.freeNote) it.freeNote=""
     if(!it.description) it.description=""
+    if(typeof it.updatedAt!=="number") it.updatedAt=0
   })
 
-  if(!certState.futureCareers||!certState.futureCareers.length) certState.futureCareers=defaultFutureCareers()
+  if(!merged.futureCareers||!merged.futureCareers.length) merged.futureCareers=defaultFutureCareers()
 
+  const changedVsRemote=!remote||JSON.stringify(remote)!==JSON.stringify(merged)
+  certState=merged
   persistCertLocal()
   renderCertPeople()
   renderCertificates()
+
+  // Push the merged (union) result back to GitHub so the other device
+  // converges to it too, instead of staying stuck on a stale version.
+  if(ghToken&&changedVsRemote) saveCertificatesToGithub(false)
 }
 
 function renderCertPeople(){
@@ -1506,10 +1626,13 @@ function renderCertificates(){
   renderFutureCareers()
   const list=document.getElementById("certList")
   list.innerHTML=""
-  const items=certState.items.filter(it=>
-    (certFilter==="all"||itemCombinedStatus(it)===certFilter) &&
-    (!platformFilter||it.platform===platformFilter)
-  )
+  const items=certState.items
+    .filter(it=>
+      (certFilter==="all"||itemCombinedStatus(it)===certFilter) &&
+      (typeFilter==="all"||it.type===typeFilter) &&
+      (!platformFilter||it.platform===platformFilter)
+    )
+    .sort((a,b)=>(b.priority||0)-(a.priority||0)) // ordered like the podium, highest priority first
   if(!items.length){
     list.innerHTML='<div style="color:rgba(255,255,255,.35);font-size:12.5px;text-align:center;padding:30px;">No certificates match this filter.</div>'
     return
@@ -1518,15 +1641,17 @@ function renderCertificates(){
     const idx=certState.items.indexOf(it)
     const thumbInner=it.image?`<img src="${escapeHtml(it.image)}" alt="">`:`<span>${it.emoji||"🎓"}</span>`
     const starsHtml=[1,2,3,4,5].map(n=>`<span class="star ${n<=(it.priority||0)?'filled':''}" data-idx="${idx}" data-val="${n}">★</span>`).join("")
+    const typeOptions=Object.keys(TYPE_LABEL).map(k=>`<option value="${k}" ${it.type===k?'selected':''}>${TYPE_LABEL[k]}</option>`).join("")
     const card=document.createElement("div")
     card.className="certCard"
     card.innerHTML=`
-      <div class="certThumb" style="--cg:${it.color||'linear-gradient(135deg,#7d5cff,#ff7de0)'}">${thumbInner}<div class="tag">${escapeHtml(it.platform||(it.category==='exam'?'Exam':'Course'))}</div></div>
+      <div class="certThumb" style="--cg:${it.color||'linear-gradient(135deg,#7d5cff,#ff7de0)'}">${thumbInner}<div class="tag" contenteditable="true" data-idx="${idx}" title="Click to edit which platform this belongs to">${escapeHtml(it.platform||(it.category==='exam'?'Exam':'Course'))}</div></div>
       <div class="certBody">
         <div class="certTitle" contenteditable="true" data-idx="${idx}">${escapeHtml(it.title)}</div>
         <div class="certMeta">
+          <select class="certTypeSelect type-${it.type}" data-idx="${idx}">${typeOptions}</select>
           <span class="certCat ${it.category}">${it.category==='exam'?'Exam':'Course'}</span>
-          <span class="certFreeBadge ${it.free?'free':'paid'}" title="${escapeHtml(it.freeNote||'')}">${it.free?'FREE':'PAID'}</span>
+          <span class="certFreeBadge ${it.free?'free':'paid'}" data-idx="${idx}" title="${escapeHtml(it.freeNote||'')} — click to toggle">${it.free?'FREE':'PAID'}</span>
           <a class="certLink" href="${escapeHtml(it.url)}" target="_blank" rel="noopener">${escapeHtml(it.url)}</a>
         </div>
         ${it.description?`<div class="certDesc">${escapeHtml(it.description)}</div>`:""}
@@ -1546,7 +1671,7 @@ function renderCertificates(){
       const idx=+p.dataset.idx,who=p.dataset.who
       const it=certState.items[idx]
       it.status[who]=STATUS_CYCLE[(STATUS_CYCLE.indexOf(it.status[who])+1)%STATUS_CYCLE.length]
-      persistCertLocal();scheduleCertAutosave();renderCertificates()
+      touch(it);persistCertLocal();scheduleCertAutosave();renderCertificates()
     })
   })
   list.querySelectorAll(".certStars .star").forEach(s=>{
@@ -1554,29 +1679,62 @@ function renderCertificates(){
       const idx=+s.dataset.idx,val=+s.dataset.val
       const it=certState.items[idx]
       it.priority=(it.priority===val)?0:val // click same star again to clear
-      persistCertLocal();scheduleCertAutosave();renderCertificates()
+      touch(it);persistCertLocal();scheduleCertAutosave();renderCertificates()
     })
   })
   list.querySelectorAll(".certTitle").forEach(t=>{
     t.addEventListener("blur",()=>{
       const idx=+t.dataset.idx
-      certState.items[idx].title=t.innerText.trim()||certState.items[idx].title
+      const it=certState.items[idx]
+      const val=t.innerText.trim()
+      if(val&&val!==it.title){ it.title=val; touch(it) }
       persistCertLocal();scheduleCertAutosave()
     })
     t.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();t.blur()}})
   })
+  list.querySelectorAll(".certThumb .tag").forEach(tag=>{
+    tag.addEventListener("blur",()=>{
+      const idx=+tag.dataset.idx
+      const it=certState.items[idx]
+      // NOTE: use textContent, not innerText — the tag has CSS text-transform:uppercase,
+      // and innerText reflects rendered (uppercased) text, which would permanently
+      // corrupt the saved platform name's casing even though the user typed it normally.
+      const val=tag.textContent.trim()
+      if(val&&val!==it.platform){ it.platform=val; touch(it); persistCertLocal();scheduleCertAutosave();renderCertificates() }
+    })
+    tag.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();tag.blur()}})
+  })
+  list.querySelectorAll(".certTypeSelect").forEach(sel=>{
+    sel.addEventListener("change",()=>{
+      const idx=+sel.dataset.idx
+      const it=certState.items[idx]
+      it.type=sel.value
+      touch(it);persistCertLocal();scheduleCertAutosave();renderCertificates()
+    })
+  })
+  list.querySelectorAll(".certFreeBadge").forEach(badge=>{
+    badge.addEventListener("click",()=>{
+      const idx=+badge.dataset.idx
+      const it=certState.items[idx]
+      it.free=!it.free
+      touch(it);persistCertLocal();scheduleCertAutosave();renderCertificates()
+    })
+  })
   list.querySelectorAll(".certNotes").forEach(n=>{
     n.addEventListener("change",()=>{
       const idx=+n.dataset.idx
-      certState.items[idx].notes=n.value
-      persistCertLocal();scheduleCertAutosave()
+      const it=certState.items[idx]
+      it.notes=n.value
+      touch(it);persistCertLocal();scheduleCertAutosave()
     })
   })
   list.querySelectorAll(".certDelBtn").forEach(b=>{
     b.addEventListener("click",()=>{
       const idx=+b.dataset.idx
+      const it=certState.items[idx]
+      certState.deletedIds.push(it.id)
       certState.items.splice(idx,1)
-      persistCertLocal();scheduleCertAutosave();renderCertificates()
+      touchState();persistCertLocal();scheduleCertAutosave();renderCertificates()
       toast("Certificate deleted")
     })
   })
@@ -1611,16 +1769,26 @@ document.getElementById("certCloseBtn").addEventListener("click",()=>{certPanel.
   el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();el.blur()}})
   el.addEventListener("blur",()=>{
     certState.people[i]=el.innerText.trim()||("Person "+(i+1))
-    persistCertLocal();scheduleCertAutosave();renderCertificates()
+    touchState();persistCertLocal();scheduleCertAutosave();renderCertificates()
   })
 })
 
-// Filters
-document.querySelectorAll(".certFilterBtn").forEach(btn=>{
+// Status filter
+document.querySelectorAll("#certFilters .certFilterBtn").forEach(btn=>{
   btn.addEventListener("click",()=>{
-    document.querySelectorAll(".certFilterBtn").forEach(b=>b.classList.remove("active"))
+    document.querySelectorAll("#certFilters .certFilterBtn").forEach(b=>b.classList.remove("active"))
     btn.classList.add("active")
     certFilter=btn.dataset.filter
+    renderCertificates()
+  })
+})
+
+// Type filter (First Steps / Certificate / Degree)
+document.querySelectorAll("#certTypeFilters .certFilterBtn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll("#certTypeFilters .certFilterBtn").forEach(b=>b.classList.remove("active"))
+    btn.classList.add("active")
+    typeFilter=btn.dataset.type
     renderCertificates()
   })
 })
@@ -1635,8 +1803,13 @@ document.getElementById("certAddSubmit").addEventListener("click",()=>{
   const emoji=document.getElementById("certAddEmoji").value.trim()||"🎓"
   const img=document.getElementById("certAddImg").value.trim()
   if(!title||!url){toast("⚠️ Fill in at least the title and the link");return}
-  certState.items.push({id:"c"+Date.now(),title,url,category:"course",platform:"Custom",emoji,image:img,description:"",free:true,freeNote:"",notes:"",priority:0,status:{a:"pending",b:"pending"},color:"linear-gradient(135deg,#7d5cff,#ff7de0)"})
-  persistCertLocal();scheduleCertAutosave();renderCertificates()
+  certState.items.push({
+    id:"c"+Date.now(),title,url,category:"course",platform:"Custom",type:"first-steps",emoji,
+    image:img,description:"",free:true,freeNote:"",notes:"",priority:0,
+    status:{a:"pending",b:"pending"},color:"linear-gradient(135deg,#7d5cff,#ff7de0)",
+    updatedAt:Date.now()
+  })
+  touchState();persistCertLocal();scheduleCertAutosave();renderCertificates()
   document.getElementById("certAddTitle").value=""
   document.getElementById("certAddUrl").value=""
   document.getElementById("certAddEmoji").value=""
@@ -1654,9 +1827,6 @@ document.getElementById("certReloadBtn").addEventListener("click",async ()=>{
 })
 
 initCertificates()
-</script>
-</body>
-</html>
 </script>
 </body>
 </html>
