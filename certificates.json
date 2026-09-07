@@ -339,7 +339,7 @@
       "free": true,
       "freeNote": "Free with coupon code — check it's still valid at checkout",
       "notes": "Do after the beginner tutorial above.",
-      "priority": 1,
+      "priority": 3,
       "status": {
         "a": "pending",
         "b": "pending"
