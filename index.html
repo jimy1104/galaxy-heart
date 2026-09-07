@@ -129,6 +129,118 @@ canvas{display:block;}
 /* TOAST */
 #toast{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:rgba(30,20,50,.95);color:#fff;padding:10px 22px;border-radius:20px;font-size:13px;z-index:9999999;opacity:0;transition:.3s;border:1px solid rgba(155,125,255,.4);pointer-events:none;max-width:80vw;text-align:center;}
 #toast.show{opacity:1;}
+
+/* ================= CERTIFICATES ================= */
+#certBtn{position:fixed;right:100px;bottom:28px;width:52px;height:52px;border-radius:50%;cursor:pointer;z-index:999999;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ffb86b,#ff66cc);box-shadow:0 0 30px rgba(255,150,120,.45);border:2px solid rgba(255,255,255,.2);transition:.35s;}
+#certBtn:hover{transform:scale(1.15);}
+#certBtn span{font-size:24px;}
+
+#certPanel{position:fixed;inset:0;z-index:9999996;background:linear-gradient(160deg,#150e28,#0e0c18 55%,#090812);opacity:0;pointer-events:none;transform:scale(.97);transition:.45s cubic-bezier(.2,.8,.2,1);overflow:hidden;display:flex;flex-direction:column;}
+#certPanel.open{opacity:1;pointer-events:auto;transform:scale(1);}
+#certScroll{flex:1;overflow-y:auto;padding:0 5vw 60px;}
+#certScroll::-webkit-scrollbar{width:6px;}
+#certScroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:3px;}
+
+#certTopBar{position:sticky;top:0;z-index:5;display:flex;justify-content:space-between;align-items:flex-start;padding:26px 5vw 16px;background:linear-gradient(180deg,rgba(9,8,18,.96),rgba(9,8,18,.75) 80%,transparent);backdrop-filter:blur(10px);}
+#certTitleWrap h1{margin:0;color:#fff;font-size:26px;letter-spacing:1px;text-shadow:0 0 10px rgba(255,255,255,.5),0 0 26px rgba(255,150,255,.4);}
+#certTitleWrap p{margin:6px 0 0;color:rgba(255,255,255,.5);font-size:12.5px;}
+#certCloseBtn{border:none;padding:12px 22px;border-radius:50px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;font-size:13px;cursor:pointer;backdrop-filter:blur(10px);flex-shrink:0;}
+#certCloseBtn:hover{background:rgba(255,255,255,.15);}
+
+#certPeople{display:flex;gap:10px;margin:0 5vw;flex-wrap:wrap;}
+.certPersonChip{padding:8px 16px;border-radius:50px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:#fff;font-size:12.5px;display:flex;align-items:center;gap:6px;}
+.certPersonChip .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.certPersonChip:nth-child(1) .dot{background:#9b7dff;}
+.certPersonChip:nth-child(2) .dot{background:#ff66cc;}
+.certPersonChip .nameText{outline:none;min-width:20px;cursor:text;}
+.certPersonChip .nameText:focus{border-bottom:1px dashed rgba(255,255,255,.4);}
+
+/* Priority podium */
+#certPodiumSection{margin:22px 5vw 0;}
+#certPodiumTitle{color:#fff;font-size:14px;font-weight:700;letter-spacing:.3px;margin-bottom:2px;display:flex;align-items:center;gap:8px;}
+#certPodiumSub{color:rgba(255,255,255,.4);font-size:11px;margin-bottom:14px;}
+#certPodium{display:flex;align-items:flex-end;justify-content:center;gap:16px;min-height:170px;}
+.podiumEmpty{color:rgba(255,255,255,.35);font-size:12px;text-align:center;padding:22px;border:1px dashed rgba(255,255,255,.15);border-radius:16px;}
+.podiumSlot{display:flex;flex-direction:column;align-items:center;width:140px;}
+.podiumThumb{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;background:var(--cg,linear-gradient(135deg,#7d5cff,#ff7de0));margin-bottom:8px;border:3px solid rgba(255,255,255,.18);box-shadow:0 4px 14px rgba(0,0,0,.4);overflow:hidden;}
+.podiumThumb img{width:100%;height:100%;object-fit:cover;}
+.podiumName{color:#fff;font-size:11.5px;font-weight:600;text-align:center;max-width:132px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:3px;}
+.podiumStars{font-size:11px;color:#ffd76a;margin-bottom:8px;letter-spacing:1px;}
+.podiumStand{width:100%;border-radius:12px 12px 0 0;display:flex;align-items:flex-start;justify-content:center;padding-top:8px;font-size:22px;box-shadow:inset 0 2px 8px rgba(255,255,255,.25);}
+.podiumStand.gold{height:104px;background:linear-gradient(180deg,#ffe08a,#dfa62c);}
+.podiumStand.silver{height:76px;background:linear-gradient(180deg,#f1f4f8,#b7c0ca);}
+.podiumStand.bronze{height:58px;background:linear-gradient(180deg,#e6ac7c,#b5773f);}
+
+#certPriorityList{margin-top:16px;}
+.priorityRow{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:9px 14px;margin-bottom:6px;}
+.priorityRank{width:24px;text-align:center;font-weight:700;color:rgba(255,255,255,.45);font-size:12px;flex-shrink:0;}
+.priorityStars{color:#ffd76a;font-size:11.5px;flex-shrink:0;letter-spacing:1px;}
+.priorityTitle{flex:1;color:#fff;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.priorityTitle a{color:inherit;text-decoration:none;}
+.priorityTitle a:hover{color:#ff8ad8;}
+
+#certStats{display:flex;gap:12px;margin:26px 5vw 6px;flex-wrap:wrap;}
+.certStat{flex:1;min-width:110px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px 16px;}
+.certStat .n{font-size:22px;font-weight:700;color:#fff;}
+.certStat .l{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+
+#certFilters{display:flex;gap:8px;margin:20px 5vw 4px;flex-wrap:wrap;}
+.certFilterBtn{padding:8px 16px;border-radius:50px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-size:12px;cursor:pointer;}
+.certFilterBtn.active{background:linear-gradient(90deg,#9b7dff,#ff66cc);color:#fff;border-color:transparent;}
+
+#certList{margin:18px 5vw 0;display:flex;flex-direction:column;gap:12px;}
+.certCard{display:flex;gap:16px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:14px;align-items:center;transition:.25s;}
+.certCard:hover{background:rgba(255,255,255,.07);border-color:rgba(155,125,255,.3);}
+.certThumb{width:84px;height:84px;border-radius:14px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:34px;background:var(--cg,linear-gradient(135deg,#7d5cff,#ff7de0));position:relative;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.35);}
+.certThumb img{width:100%;height:100%;object-fit:cover;}
+.certThumb .tag{position:absolute;bottom:3px;left:3px;right:3px;background:rgba(0,0,0,.45);border-radius:6px;font-size:7px;color:#fff;text-align:center;padding:1px 0;letter-spacing:.5px;text-transform:uppercase;}
+.certBody{flex:1;min-width:0;}
+.certTitle{color:#fff;font-size:15px;font-weight:600;outline:none;cursor:text;}
+.certTitle:focus{border-bottom:1px dashed rgba(255,255,255,.3);}
+.certMeta{display:flex;align-items:center;gap:8px;margin-top:5px;flex-wrap:wrap;}
+.certCat{font-size:9.5px;padding:3px 9px;border-radius:8px;text-transform:uppercase;letter-spacing:.4px;}
+.certCat.exam{background:rgba(255,140,105,.18);color:#ff9d7a;}
+.certCat.course{background:rgba(125,156,255,.18);color:#9cb8ff;}
+.certLink{color:rgba(255,255,255,.4);font-size:10.5px;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:280px;display:inline-block;vertical-align:middle;}
+.certLink:hover{color:#ff8ad8;}
+.certStars{display:flex;gap:3px;margin-top:7px;}
+.certStars .star{cursor:pointer;font-size:15px;color:rgba(255,255,255,.22);line-height:1;user-select:none;}
+.certStars .star.filled{color:#ffd76a;}
+.certNotes{margin-top:7px;width:100%;background:transparent;border:none;border-bottom:1px dashed rgba(255,255,255,.12);color:rgba(255,255,255,.55);font-size:11px;padding:3px 0;outline:none;font-family:inherit;}
+.certNotes::placeholder{color:rgba(255,255,255,.25);}
+.certStatuses{display:flex;flex-direction:column;gap:6px;flex-shrink:0;}
+.certStatusRow{display:flex;align-items:center;gap:8px;}
+.certStatusRow .who{font-size:9.5px;color:rgba(255,255,255,.35);min-width:50px;text-align:right;flex-shrink:0;}
+.certPill{padding:6px 12px;border-radius:50px;font-size:10.5px;font-weight:600;cursor:pointer;border:1px solid transparent;white-space:nowrap;min-width:92px;text-align:center;}
+.certPill.pending{background:rgba(255,255,255,.08);color:rgba(255,255,255,.5);}
+.certPill.progress{background:rgba(255,181,71,.18);color:#ffcf7a;}
+.certPill.completed{background:rgba(97,222,150,.2);color:#7be3a0;}
+.certDelBtn{width:28px;height:28px;border:none;border-radius:8px;background:rgba(255,80,80,.12);color:rgba(255,150,150,.8);font-size:12px;cursor:pointer;flex-shrink:0;align-self:flex-start;}
+.certDelBtn:hover{background:rgba(255,80,80,.4);color:#fff;}
+
+#certAddBar{margin:20px 5vw 0;}
+#certAddBtn{width:100%;padding:16px;border-radius:16px;border:1px dashed rgba(255,255,255,.2);background:rgba(255,255,255,.03);color:rgba(255,255,255,.55);font-size:13px;cursor:pointer;}
+#certAddBtn:hover{border-color:rgba(155,125,255,.5);color:#fff;}
+#certAddForm{display:none;margin-top:12px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:16px;flex-direction:column;gap:8px;}
+#certAddForm.open{display:flex;}
+#certAddForm input{padding:10px 12px;border-radius:8px;border:1px solid rgba(155,125,255,.3);background:rgba(255,255,255,.06);color:#fff;font-size:12px;}
+#certAddForm input::placeholder{color:rgba(255,255,255,.3);}
+#certAddForm .row{display:flex;gap:8px;}
+#certAddForm .row input{flex:1;}
+#certAddSubmit{padding:11px;border-radius:10px;background:linear-gradient(90deg,#9b7dff,#ff66cc);color:#fff;border:none;cursor:pointer;font-size:12px;font-weight:600;}
+
+#certSyncBar{margin:26px 5vw 10px;display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;}
+#certSyncBar button{padding:10px 18px;border-radius:50px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:11.5px;cursor:pointer;}
+#certSyncBar button:hover{background:rgba(255,255,255,.1);}
+#certSyncStatus{font-size:10.5px;color:rgba(255,255,255,.35);text-align:center;margin:0 5vw 10px;}
+
+@media(max-width:720px){
+  .certCard{flex-wrap:wrap;}
+  .certStatuses{flex-direction:row;flex-wrap:wrap;width:100%;}
+  .certLink{max-width:160px;}
+  .podiumSlot{width:100px;}
+  .podiumName{max-width:92px;}
+}
 </style>
 </head>
 <body>
@@ -153,6 +265,57 @@ canvas{display:block;}
 </div>
 
 <div id="calebSphere"><span>💜</span></div>
+
+<button id="certBtn" title="Certificates"><span>🎓</span></button>
+
+<div id="certPanel">
+  <div id="certTopBar">
+    <div id="certTitleWrap">
+      <h1>🎓 Our Certificates</h1>
+      <p>Tracking exams and courses — so nothing gets lost</p>
+    </div>
+    <button id="certCloseBtn">✕ Close</button>
+  </div>
+  <div id="certScroll">
+    <div id="certPeople">
+      <div class="certPersonChip"><span class="dot"></span><span class="nameText" id="certNameA" contenteditable="true">Person 1</span></div>
+      <div class="certPersonChip"><span class="dot"></span><span class="nameText" id="certNameB" contenteditable="true">Person 2</span></div>
+    </div>
+
+    <div id="certPodiumSection">
+      <div id="certPodiumTitle">🏆 Priority Podium</div>
+      <div id="certPodiumSub">The courses we absolutely must do — ranked by star priority</div>
+      <div id="certPodium"></div>
+      <div id="certPriorityList"></div>
+    </div>
+
+    <div id="certStats"></div>
+    <div id="certFilters">
+      <button class="certFilterBtn active" data-filter="all">All</button>
+      <button class="certFilterBtn" data-filter="pending">Pending</button>
+      <button class="certFilterBtn" data-filter="progress">In Progress</button>
+      <button class="certFilterBtn" data-filter="completed">Completed</button>
+    </div>
+    <div id="certList"></div>
+    <div id="certAddBar">
+      <button id="certAddBtn">+ Add certificate</button>
+      <div id="certAddForm">
+        <div class="row">
+          <input id="certAddTitle" type="text" placeholder="Certificate title">
+          <input id="certAddEmoji" type="text" placeholder="Emoji" maxlength="4" style="max-width:110px;">
+        </div>
+        <input id="certAddUrl" type="text" placeholder="Certificate / exam link">
+        <input id="certAddImg" type="text" placeholder="Image / screenshot URL (optional)">
+        <button id="certAddSubmit">Add</button>
+      </div>
+    </div>
+    <div id="certSyncBar">
+      <button id="certSaveBtn">☁️ Save to GitHub</button>
+      <button id="certReloadBtn">⟳ Reload</button>
+    </div>
+    <div id="certSyncStatus">Use the same GitHub Token from the playlist panel to sync between the two of you.</div>
+  </div>
+</div>
 
 <!-- VIDEO FLOTANTE -->
 <div id="videoContainer">
@@ -913,9 +1076,313 @@ function animate(now){
 }
 requestAnimationFrame(animate)
 window.addEventListener("resize",()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight)})
+
+/* ============================
+   CERTIFICATES — Notion-style tracker + priority podium
+   Reuses ghToken / GITHUB_OWNER / GITHUB_REPO / GITHUB_BRANCH,
+   toast(), b64EncodeUnicode/Decode, ghGetFile and ghPutJson
+   already defined above for the playlist.
+   ============================ */
+const CERT_PATH="certificates.json"
+function cert(id,title,url,category,platform,emoji,color){
+  return {id,title,url,category,platform,emoji,image:"",notes:"",priority:0,status:{a:"pending",b:"pending"},
+    color:color||(category==="exam"?"linear-gradient(135deg,#ff9d7a,#ff66cc)":"linear-gradient(135deg,#7d5cff,#ff7de0)")}
+}
+function defaultCertificates(){
+  const base="https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/"
+  return {
+    people:["Person 1","Person 2"],
+    items:[
+      cert("ielts","IELTS Online — British Council","https://ieltsregistration.britishcouncil.org/iol/find-test","exam","British Council","🌍"),
+      cert("ielts-speaking","IELTS Success Online — IELTS Speaking","https://www.udemy.com/course/ielts-success-online-ielts-speaking/?portfolio=ROW-English&couponCode=PMNVD3025","course","Udemy","🗣️"),
+      cert("script-writing","Script Writing",base+"learn/script-writing","course","Coursera","✍️"),
+      cert("cyberseg-web","Cybersécurité : Sécurité des Sites Web",base+"learn/cybersecurite-site-web-securite","course","Coursera","🔐"),
+      cert("cyber-mobility","Cybersecurity and Mobility",base+"learn/cybersecurity-mobility","course","Coursera","🛡️"),
+      cert("cyber-risk","Cybersecurity: Managing Risk in the Information Age","https://www.edx.org/executive-education/harvard-university-cybersecurity-managing-risk-in-the-information-age","course","edX · Harvard","🔒"),
+      cert("ui-ux","UI / UX Design (Specialization)",base+"specializations/ui-ux-design","course","Coursera","🎨"),
+      cert("chatgpt-data","ChatGPT Advanced Data Analysis",base+"learn/chatgpt-advanced-data-analysis","course","Coursera","🤖"),
+      cert("arguments","Understanding Arguments",base+"learn/understanding-arguments?source=search","course","Coursera","🧠"),
+      cert("pharma","Introduction to the Pharmaceutical Industry",base+"learn/introduction-to-the-pharmaceutical-industry?source=search","course","Coursera","💊"),
+      cert("biomedical-equip","Biomedical Equipment: Repairing and Maintaining Biomedical Devices","https://www.edx.org/learn/biomedical-engineering/delft-university-of-technology-biomedical-equipment-repairing-and-maintaining-biomedical-devices","course","edX · TU Delft","🩺"),
+      cert("asl","ASL: First 500 Basic Signs","https://www.udemy.com/course/asl-first-500-basic-signs/?couponCode=PMNVD3025","course","Udemy","🤟"),
+      cert("singing","Singing: Popular Music",base+"learn/singing-popular-music?source=search","course","Coursera","🎤"),
+      cert("producing","Producing Music",base+"learn/producing-music?source=search","course","Coursera","🎚️"),
+      cert("songwriting","Songwriting: Writing the Music",base+"learn/songwriting-writing-the-music?source=search","course","Coursera","🎼"),
+      cert("pro-singer","Building Your Career as a Professional Singer",base+"learn/building-your-career-as-a-professional-singer?source=search","course","Coursera","🎙️"),
+      cert("anatomy","Anatomy",base+"learn/anatomy403-1x?source=search","course","Coursera","🫀")
+    ]
+  }
+}
+
+let certState=null
+let certFilter="all"
+let certSaveTimer=null
+const STATUS_CYCLE=["pending","progress","completed"]
+const STATUS_LABEL={pending:"Pending",progress:"In Progress",completed:"Completed"}
+const MEDALS=["🥇","🥈","🥉"]
+
+function escapeHtml(s){return (s||"").toString().replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function starString(n){return "★".repeat(n)+"☆".repeat(5-n)}
+
+function loadCertLocal(){try{return JSON.parse(localStorage.getItem("yuleb_certificates"))}catch(e){return null}}
+function persistCertLocal(){try{localStorage.setItem("yuleb_certificates",JSON.stringify(certState))}catch(e){}}
+
+async function fetchCertificatesFromGithub(){
+  try{
+    const url=`https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${GITHUB_BRANCH}/${CERT_PATH}?t=${Date.now()}`
+    const ctrl=new AbortController()
+    const timer=setTimeout(()=>ctrl.abort(),7000)
+    const r=await fetch(url,{cache:"no-store",signal:ctrl.signal})
+    clearTimeout(timer)
+    if(!r.ok) throw new Error()
+    return await r.json()
+  }catch(e){return null}
+}
+
+async function ghUpdateGenericJson(path,mutateFn,message){
+  let file=await ghGetFile(path)
+  let obj=file?JSON.parse(b64DecodeUnicode(file.content)):null
+  obj=mutateFn(obj)
+  let res=await ghPutJson(path,obj,file?file.sha:undefined,message)
+  if(res.status===409){
+    file=await ghGetFile(path)
+    obj=file?JSON.parse(b64DecodeUnicode(file.content)):null
+    obj=mutateFn(obj)
+    res=await ghPutJson(path,obj,file?file.sha:undefined,message)
+  }
+  return res.ok
+}
+
+async function initCertificates(){
+  const remote=await fetchCertificatesFromGithub()
+  certState=remote||loadCertLocal()||defaultCertificates()
+  if(!certState.people) certState.people=["Person 1","Person 2"]
+  if(!certState.items) certState.items=[]
+  certState.items.forEach(it=>{
+    if(!it.status) it.status={a:"pending",b:"pending"}
+    if(typeof it.priority!=="number") it.priority=0
+    if(!it.platform) it.platform=it.category==="exam"?"Exam":"Course"
+  })
+  persistCertLocal()
+  renderCertPeople()
+  renderCertificates()
+}
+
+function renderCertPeople(){
+  document.getElementById("certNameA").innerText=certState.people[0]
+  document.getElementById("certNameB").innerText=certState.people[1]
+}
+
+function itemCombinedStatus(it){
+  const sa=it.status.a,sb=it.status.b
+  if(sa==="completed"&&sb==="completed") return "completed"
+  if(sa==="pending"&&sb==="pending") return "pending"
+  return "progress"
+}
+
+function computeCertStats(){
+  const items=certState.items
+  let pend=0,prog=0,comp=0,compBoth=0
+  items.forEach(it=>{
+    const c=itemCombinedStatus(it)
+    if(c==="pending")pend++;else if(c==="progress")prog++;else comp++
+    if(it.status.a==="completed"&&it.status.b==="completed")compBoth++
+  })
+  return {total:items.length,pend,prog,comp,compBoth}
+}
+
+function renderCertStats(){
+  const s=computeCertStats()
+  document.getElementById("certStats").innerHTML=`
+    <div class="certStat"><div class="n">${s.total}</div><div class="l">Total</div></div>
+    <div class="certStat"><div class="n">${s.pend}</div><div class="l">Pending</div></div>
+    <div class="certStat"><div class="n">${s.prog}</div><div class="l">In Progress</div></div>
+    <div class="certStat"><div class="n">${s.comp}</div><div class="l">Completed</div></div>
+    <div class="certStat"><div class="n">${s.compBoth}</div><div class="l">🏆 Together</div></div>
+  `
+}
+
+function renderPodium(){
+  const podiumEl=document.getElementById("certPodium")
+  const listEl=document.getElementById("certPriorityList")
+  const ranked=certState.items.filter(it=>it.priority>0).sort((a,b)=>b.priority-a.priority)
+  if(!ranked.length){
+    podiumEl.innerHTML='<div class="podiumEmpty">Rate a certificate with ⭐ stars below to build your priority podium — the courses you must do first.</div>'
+    listEl.innerHTML=""
+    return
+  }
+  const top3=ranked.slice(0,3)
+  const order=[top3[1],top3[0],top3[2]] // silver, gold, bronze visual order
+  const standClass=["silver","gold","bronze"]
+  podiumEl.innerHTML=order.map((it,i)=>{
+    if(!it) return `<div class="podiumSlot" style="visibility:hidden"><div class="podiumStand ${standClass[i]}"></div></div>`
+    const rank=top3.indexOf(it)
+    const thumbInner=it.image?`<img src="${escapeHtml(it.image)}" alt="">`:`<span>${it.emoji||"🎓"}</span>`
+    return `
+      <div class="podiumSlot">
+        <div class="podiumThumb" style="--cg:${it.color||'linear-gradient(135deg,#7d5cff,#ff7de0)'}">${thumbInner}</div>
+        <div class="podiumName" title="${escapeHtml(it.title)}">${escapeHtml(it.title)}</div>
+        <div class="podiumStars">${starString(it.priority)}</div>
+        <div class="podiumStand ${standClass[i]}">${MEDALS[rank]}</div>
+      </div>`
+  }).join("")
+  listEl.innerHTML=ranked.map((it,i)=>`
+    <div class="priorityRow">
+      <div class="priorityRank">${i<3?MEDALS[i]:(i+1)}</div>
+      <div class="priorityStars">${starString(it.priority)}</div>
+      <div class="priorityTitle"><a href="${escapeHtml(it.url)}" target="_blank" rel="noopener">${escapeHtml(it.title)}</a></div>
+    </div>
+  `).join("")
+}
+
+function renderCertificates(){
+  renderCertStats()
+  renderPodium()
+  const list=document.getElementById("certList")
+  list.innerHTML=""
+  const items=certState.items.filter(it=>certFilter==="all"||itemCombinedStatus(it)===certFilter)
+  if(!items.length){
+    list.innerHTML='<div style="color:rgba(255,255,255,.35);font-size:12.5px;text-align:center;padding:30px;">No certificates in this category.</div>'
+    return
+  }
+  items.forEach(it=>{
+    const idx=certState.items.indexOf(it)
+    const thumbInner=it.image?`<img src="${escapeHtml(it.image)}" alt="">`:`<span>${it.emoji||"🎓"}</span>`
+    const starsHtml=[1,2,3,4,5].map(n=>`<span class="star ${n<=(it.priority||0)?'filled':''}" data-idx="${idx}" data-val="${n}">★</span>`).join("")
+    const card=document.createElement("div")
+    card.className="certCard"
+    card.innerHTML=`
+      <div class="certThumb" style="--cg:${it.color||'linear-gradient(135deg,#7d5cff,#ff7de0)'}">${thumbInner}<div class="tag">${escapeHtml(it.platform||(it.category==='exam'?'Exam':'Course'))}</div></div>
+      <div class="certBody">
+        <div class="certTitle" contenteditable="true" data-idx="${idx}">${escapeHtml(it.title)}</div>
+        <div class="certMeta">
+          <span class="certCat ${it.category}">${it.category==='exam'?'Exam':'Course'}</span>
+          <a class="certLink" href="${escapeHtml(it.url)}" target="_blank" rel="noopener">${escapeHtml(it.url)}</a>
+        </div>
+        <div class="certStars" title="Set priority">${starsHtml}</div>
+        <input class="certNotes" placeholder="Notes (optional)..." value="${escapeHtml(it.notes||'')}" data-idx="${idx}">
+      </div>
+      <div class="certStatuses">
+        <div class="certStatusRow"><span class="who">${escapeHtml(certState.people[0])}</span><span class="certPill ${it.status.a}" data-idx="${idx}" data-who="a">${STATUS_LABEL[it.status.a]}</span></div>
+        <div class="certStatusRow"><span class="who">${escapeHtml(certState.people[1])}</span><span class="certPill ${it.status.b}" data-idx="${idx}" data-who="b">${STATUS_LABEL[it.status.b]}</span></div>
+      </div>
+      <button class="certDelBtn" data-idx="${idx}" title="Delete">✕</button>
+    `
+    list.appendChild(card)
+  })
+  list.querySelectorAll(".certPill").forEach(p=>{
+    p.addEventListener("click",()=>{
+      const idx=+p.dataset.idx,who=p.dataset.who
+      const it=certState.items[idx]
+      it.status[who]=STATUS_CYCLE[(STATUS_CYCLE.indexOf(it.status[who])+1)%STATUS_CYCLE.length]
+      persistCertLocal();scheduleCertAutosave();renderCertificates()
+    })
+  })
+  list.querySelectorAll(".certStars .star").forEach(s=>{
+    s.addEventListener("click",()=>{
+      const idx=+s.dataset.idx,val=+s.dataset.val
+      const it=certState.items[idx]
+      it.priority=(it.priority===val)?0:val // click same star again to clear
+      persistCertLocal();scheduleCertAutosave();renderCertificates()
+    })
+  })
+  list.querySelectorAll(".certTitle").forEach(t=>{
+    t.addEventListener("blur",()=>{
+      const idx=+t.dataset.idx
+      certState.items[idx].title=t.innerText.trim()||certState.items[idx].title
+      persistCertLocal();scheduleCertAutosave()
+    })
+    t.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();t.blur()}})
+  })
+  list.querySelectorAll(".certNotes").forEach(n=>{
+    n.addEventListener("change",()=>{
+      const idx=+n.dataset.idx
+      certState.items[idx].notes=n.value
+      persistCertLocal();scheduleCertAutosave()
+    })
+  })
+  list.querySelectorAll(".certDelBtn").forEach(b=>{
+    b.addEventListener("click",()=>{
+      const idx=+b.dataset.idx
+      certState.items.splice(idx,1)
+      persistCertLocal();scheduleCertAutosave();renderCertificates()
+      toast("Certificate deleted")
+    })
+  })
+}
+
+async function saveCertificatesToGithub(showToast){
+  const statusEl=document.getElementById("certSyncStatus")
+  if(!ghToken){
+    if(showToast) toast("⚠️ Set your GitHub Token (playlist panel) to sync")
+    if(statusEl) statusEl.innerText="No token: changes are only saved in this browser."
+    return false
+  }
+  if(statusEl) statusEl.innerText="Saving to GitHub..."
+  const ok=await ghUpdateGenericJson(CERT_PATH,()=>certState,"Update certificates.json")
+  if(statusEl) statusEl.innerText=ok?("✓ Synced — "+new Date().toLocaleTimeString()):"❌ Save failed, check your token"
+  if(showToast) toast(ok?"✅ Certificates saved to GitHub":"❌ Save failed")
+  return ok
+}
+function scheduleCertAutosave(){
+  clearTimeout(certSaveTimer)
+  certSaveTimer=setTimeout(()=>{if(ghToken) saveCertificatesToGithub(false)},1500)
+}
+
+// Open/close panel
+const certPanel=document.getElementById("certPanel")
+document.getElementById("certBtn").addEventListener("click",()=>{certPanel.classList.add("open")})
+document.getElementById("certCloseBtn").addEventListener("click",()=>{certPanel.classList.remove("open")})
+
+// Editable names
+;["certNameA","certNameB"].forEach((id,i)=>{
+  const el=document.getElementById(id)
+  el.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();el.blur()}})
+  el.addEventListener("blur",()=>{
+    certState.people[i]=el.innerText.trim()||("Person "+(i+1))
+    persistCertLocal();scheduleCertAutosave();renderCertificates()
+  })
+})
+
+// Filters
+document.querySelectorAll(".certFilterBtn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".certFilterBtn").forEach(b=>b.classList.remove("active"))
+    btn.classList.add("active")
+    certFilter=btn.dataset.filter
+    renderCertificates()
+  })
+})
+
+// Add certificate
+document.getElementById("certAddBtn").addEventListener("click",()=>{
+  document.getElementById("certAddForm").classList.toggle("open")
+})
+document.getElementById("certAddSubmit").addEventListener("click",()=>{
+  const title=document.getElementById("certAddTitle").value.trim()
+  const url=document.getElementById("certAddUrl").value.trim()
+  const emoji=document.getElementById("certAddEmoji").value.trim()||"🎓"
+  const img=document.getElementById("certAddImg").value.trim()
+  if(!title||!url){toast("⚠️ Fill in at least the title and the link");return}
+  certState.items.push({id:"c"+Date.now(),title,url,category:"course",platform:"Custom",emoji,image:img,notes:"",priority:0,status:{a:"pending",b:"pending"},color:"linear-gradient(135deg,#7d5cff,#ff7de0)"})
+  persistCertLocal();scheduleCertAutosave();renderCertificates()
+  document.getElementById("certAddTitle").value=""
+  document.getElementById("certAddUrl").value=""
+  document.getElementById("certAddEmoji").value=""
+  document.getElementById("certAddImg").value=""
+  document.getElementById("certAddForm").classList.remove("open")
+  toast("Certificate added 🎓")
+})
+
+// Manual sync
+document.getElementById("certSaveBtn").addEventListener("click",()=>saveCertificatesToGithub(true))
+document.getElementById("certReloadBtn").addEventListener("click",async ()=>{
+  toast("Reloading...")
+  await initCertificates()
+  toast("✅ Reloaded")
+})
+
+initCertificates()
 </script>
 </body>
 </html>
-
-
-
