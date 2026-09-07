@@ -233,25 +233,6 @@
       "description": ""
     },
     {
-      "id": "pro-singer",
-      "title": "Building Your Career as a Professional Singer",
-      "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/building-your-career-as-a-professional-singer?source=search",
-      "category": "course",
-      "platform": "Coursera",
-      "emoji": "🎙️",
-      "image": "",
-      "notes": "",
-      "priority": 0,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "free": true,
-      "freeNote": "",
-      "description": ""
-    },
-    {
       "id": "anatomy",
       "title": "Anatomy",
       "url": "https://www.coursera.org/programs/pontificia-universidad-catolica-del-peru-learning-program-efhcw/learn/anatomy403-1x?source=search",
