@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802152649,
+  "updatedAt": 1788802217267,
   "people": [
     "Jimy",
     "Hiba"
@@ -163,7 +163,7 @@
       "notes": "",
       "priority": 5,
       "status": {
-        "a": "pending",
+        "a": "progress",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
@@ -171,7 +171,7 @@
       "freeNote": "",
       "description": "",
       "type": "certificate",
-      "updatedAt": 1788802042816
+      "updatedAt": 1788802217267
     },
     {
       "id": "asl",
