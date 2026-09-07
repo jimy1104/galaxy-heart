@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802036302,
+  "updatedAt": 1788802039934,
   "people": [
     "Jimy",
     "Hiba"
@@ -332,14 +332,14 @@
       "free": false,
       "freeNote": "Free with coupon code — check it's still valid at checkout",
       "notes": "Do after the beginner tutorial above.",
-      "priority": 4,
+      "priority": 3,
       "status": {
         "a": "pending",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "certificate",
-      "updatedAt": 1788801999729
+      "updatedAt": 1788802039934
     },
     {
       "id": "blender-char-anim",
