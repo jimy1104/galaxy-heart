@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801814920,
+  "updatedAt": 1788801819384,
   "people": [
     "Jimy",
     "Hiba"
@@ -104,11 +104,11 @@
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "free": true,
+      "free": false,
       "freeNote": "",
       "description": "",
       "type": "certificate",
-      "updatedAt": 0
+      "updatedAt": 1788801819384
     },
     {
       "id": "chatgpt-data",
