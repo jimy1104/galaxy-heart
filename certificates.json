@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788801983917,
+  "updatedAt": 1788801986639,
   "people": [
     "Jimy",
     "Hiba"
@@ -308,7 +308,7 @@
       "emoji": "🧱",
       "image": "",
       "description": "Beginner Blender tutorial covering the interface and core 3D modeling tools.",
-      "free": true,
+      "free": false,
       "freeNote": "Free with coupon code — check it's still valid at checkout",
       "notes": "Start here before the other two Blender courses.",
       "priority": 3,
@@ -318,7 +318,7 @@
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
       "type": "first-steps",
-      "updatedAt": 1788801954704
+      "updatedAt": 1788801986639
     },
     {
       "id": "blender-course",
