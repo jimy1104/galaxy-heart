@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788802271968,
+  "updatedAt": 1788802291491,
   "people": [
     "Jimy",
     "Hiba"
@@ -380,8 +380,8 @@
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "type": "certificate",
-      "updatedAt": 1788802090879
+      "type": "first-steps",
+      "updatedAt": 1788802291491
     },
     {
       "id": "santander-excel",
