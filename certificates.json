@@ -271,25 +271,6 @@
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
     },
     {
-      "id": "cs50-2d-games",
-      "title": "CS50's Introduction to 2D Game Development",
-      "url": "https://www.edx.org/learn/computer-science/harvard-university-cs50-s-introduction-to-2d-game-development",
-      "category": "course",
-      "platform": "edX · Harvard",
-      "emoji": "🕹️",
-      "image": "",
-      "description": "Harvard's CS50 course on building 2D video games using Lua with the LÖVE framework, plus an intro to Unity.",
-      "free": true,
-      "freeNote": "Free to audit — paid certificate optional",
-      "notes": "One of the best free intros to real game dev — do before the Blender animation course.",
-      "priority": 4,
-      "status": {
-        "a": "pending",
-        "b": "pending"
-      },
-      "color": "linear-gradient(135deg,#7d5cff,#ff7de0)"
-    },
-    {
       "id": "blender-tutorial",
       "title": "Blender Tutorial for Beginners",
       "url": "https://www.udemy.com/course/blendertutorial/?couponCode=MT260907G2",
