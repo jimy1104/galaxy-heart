@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788853965023,
+  "updatedAt": 1788853972242,
   "people": [
     "Jimy",
     "Hiba"
@@ -668,14 +668,14 @@
       "description": "",
       "free": true,
       "freeNote": "",
-      "notes": "THE BEST FOR LEAR AND PRACTICE ",
+      "notes": "THE BEST FOR LEARN AND PRACTICE ",
       "priority": 5,
       "status": {
         "a": "pending",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "updatedAt": 1788853965023
+      "updatedAt": 1788853972242
     }
   ],
   "deletedIds": [
