@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788853972242,
+  "updatedAt": 1788853992783,
   "people": [
     "Jimy",
     "Hiba"
@@ -647,14 +647,14 @@
       "description": "",
       "free": true,
       "freeNote": "",
-      "notes": "",
+      "notes": "NICE VIDEOS POR LEARN",
       "priority": 4,
       "status": {
         "a": "pending",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "updatedAt": 1788853701668
+      "updatedAt": 1788853992783
     },
     {
       "id": "c1788853919294",
