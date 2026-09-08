@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788853919294,
+  "updatedAt": 1788853923239,
   "people": [
     "Jimy",
     "Hiba"
@@ -669,13 +669,13 @@
       "free": true,
       "freeNote": "",
       "notes": "",
-      "priority": 0,
+      "priority": 5,
       "status": {
         "a": "pending",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "updatedAt": 1788853919294
+      "updatedAt": 1788853923239
     }
   ],
   "deletedIds": [
