@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788853661948,
+  "updatedAt": 1788853701668,
   "people": [
     "Jimy",
     "Hiba"
@@ -637,7 +637,7 @@
     },
     {
       "id": "c1788853638441",
-      "title": "Cambridge English: Advanced (CAE) - Test Prep & Study Guide",
+      "title": "Cambridge C1 Exam Preparation Course (CAE)",
       "url": "https://www.udemy.com/course/cambridge-c1-advanced-preparation-course/?portfolio=ROW-English&utm_audience=mx&utm_tactic=nb&funnel=&test=&campaignid=22894903176&adgroupid=185568239684&device=c&keyword=&matchtype=&network=g&devicemodel=&creativeid=769665429539&assetgroupid=&targetid=dsa-2436670176379&extensionid=&placement=&couponCode=PMNVD3025",
       "category": "course",
       "platform": "Custom",
@@ -654,7 +654,7 @@
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "updatedAt": 1788853661948
+      "updatedAt": 1788853701668
     }
   ],
   "deletedIds": [
