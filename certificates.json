@@ -1,5 +1,5 @@
 {
-  "updatedAt": 1788999790299,
+  "updatedAt": 1789001312303,
   "people": [
     "Jimy",
     "Hiba"
@@ -668,14 +668,14 @@
       "description": "",
       "free": true,
       "freeNote": "",
-      "notes": "THE BEST FOR LEARN AND PRACTICE ",
+      "notes": "THE BEST FOR LEARN AND PRACTICE https://study.com/academy/course/cambridge-english-advanced-cae-test-prep-study-guide.html?adkey=81b99b454dbf432fa8cb8ad2c69ac333",
       "priority": 5,
       "status": {
         "a": "pending",
         "b": "pending"
       },
       "color": "linear-gradient(135deg,#7d5cff,#ff7de0)",
-      "updatedAt": 1788853972242
+      "updatedAt": 1789001312303
     }
   ],
   "deletedIds": [
